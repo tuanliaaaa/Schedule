@@ -9,13 +9,70 @@
     >
 
     <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="548dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        android:id="@+id/header_assigment"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/headerBack_assigment"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="76dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                app:tint="#000000" />
+
+            <TextView
+                android:id="@+id/headerTitle_accountFeature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Assigment"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <ImageView
+                android:id="@+id/headerAvatarGroup_assigment"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="60dp"
+                android:src="@drawable/background_iconadd"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/footerList_assigment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_assigment">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -33,7 +90,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/labelAssignment_assigment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Assigment"
@@ -58,7 +115,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/labelGroupName_assigment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Group Name"
@@ -94,7 +151,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView11"
+                                android:id="@+id/labelStartDate_assigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -121,7 +178,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView10"
+                                android:id="@+id/labelStartTime_assigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -162,7 +219,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView13"
+                                android:id="@+id/labelEndDate_assigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -189,7 +246,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView14"
+                                android:id="@+id/labelEndTime_assigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -219,7 +276,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/labelDescription_assigment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Description"
@@ -244,7 +301,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/footerList_assigment"
         android:layout_width="match_parent"
         android:layout_height="95dp"
         android:orientation="horizontal"
@@ -336,14 +393,14 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/footerMainIcon_assigment"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginBottom="48dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -352,7 +409,7 @@
             android:background="@drawable/background_iconadd">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/footerImgIcon_assigment"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
 
@@ -363,62 +420,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/white" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="415dp"
-        android:layout_height="87dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="76dp"
-                android:src="@drawable/ic_back"
-                app:layout_constraintBottom_toBottomOf="parent"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                app:tint="#000000" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Assigment"
-                android:textColor="#000000"
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.43"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView6"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="60dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.9"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                android:src="@drawable/background_iconadd" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
