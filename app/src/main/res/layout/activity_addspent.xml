@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".activities.MainActivity"
     android:background="@color/white"
     >
 
     <LinearLayout
-        android:id="@+id/header_addspend"
+        android:id="@+id/header_addspentt"
         android:layout_width="match_parent"
         android:layout_height="87dp"
         android:orientation="horizontal"
@@ -22,7 +22,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/headerBack_addSpend"
+                android:id="@+id/headerBack_addspentt"
                 android:layout_width="27dp"
                 android:layout_height="27dp"
                 android:layout_marginStart="32dp"
@@ -36,10 +36,10 @@
                 app:tint="#000000" />
 
             <TextView
-                android:id="@+id/headerTitle_spend"
+                android:id="@+id/headerTitle_spentt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Spend"
+                android:text="Add spentt"
                 android:textColor="#000000"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +50,7 @@
                 app:layout_constraintVertical_bias="0.5" />
 
             <ImageView
-                android:id="@+id/headerAvatarGroup_addspend"
+                android:id="@+id/headerAvatarGroup_addspentt"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="60dp"
@@ -70,10 +70,10 @@
         android:paddingRight="30dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/footerList_addSpend"
+        app:layout_constraintBottom_toTopOf="@+id/footerList_addspentt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_addspend">
+        app:layout_constraintTop_toBottomOf="@+id/header_addspentt">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -91,10 +91,10 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/labelSpendName_addspend"
+                        android:id="@+id/labelspenttName_addspentt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Spend Name"
+                        android:text="spentt Name"
                         android:textSize="16dp" />
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -116,7 +116,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/labelMoney_addspend"
+                        android:id="@+id/labelMoney_addspentt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Money"
@@ -141,7 +141,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/labelDescription_addspend"
+                        android:id="@+id/labelDescription_addspentt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Description"
@@ -166,7 +166,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/footerList_addSpend"
+        android:id="@+id/footerList_addspentt"
         android:layout_width="match_parent"
         android:layout_height="95dp"
         android:orientation="horizontal"
@@ -258,7 +258,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/footerMainIcon_addSpend"
+        android:id="@+id/footerMainIcon_addspentt"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginBottom="48dp"
