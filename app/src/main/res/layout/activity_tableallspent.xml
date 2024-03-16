@@ -49,12 +49,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/headerAvatarGroup_tableAllSpent"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="60dp"
-                android:src="@drawable/background_iconadd"
+                app:shapeAppearanceOverlay="@style/circular"
+                android:src="@drawable/den"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.9"

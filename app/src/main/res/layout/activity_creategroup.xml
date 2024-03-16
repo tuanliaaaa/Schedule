@@ -204,6 +204,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_weight="33"
                         android:orientation="horizontal">
 
@@ -217,15 +218,17 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
-                                <ImageView
+                                <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/imageView7a"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/background_iconadd" />
+
+                                    app:shapeAppearanceOverlay="@style/circular"
+                                    app:srcCompat="@drawable/tuan" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
 
@@ -249,6 +252,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_weight="33"
                         android:orientation="horizontal">
 
@@ -262,15 +266,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
-                                <ImageView
+                                <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/imageView7b"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/background_iconadd" />
+                                    app:shapeAppearanceOverlay="@style/circular"
+                                    app:srcCompat="@drawable/nhi" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
 
@@ -286,7 +291,7 @@
                                 android:id="@+id/textView7b"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Nhật tuấn"
+                                android:text="Quỳnh Nhi"
                                 android:textSize="20dp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -294,6 +299,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_weight="33"
                         android:orientation="horizontal">
 
@@ -307,15 +313,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
-                                <ImageView
+                                <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/imageView7"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/background_iconadd" />
+                                    app:shapeAppearanceOverlay="@style/circular"
+                                    app:srcCompat="@drawable/thao" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
 
@@ -331,7 +338,7 @@
                                 android:id="@+id/textView6"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Nhật tuấn"
+                                android:text="Thu Thảo"
                                 android:textSize="20dp" />
                         </LinearLayout>
                     </LinearLayout>
