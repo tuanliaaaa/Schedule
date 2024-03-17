@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Tạo Intent để chuyển từ MainActivity sang Activity mới
-                Intent intent = new Intent(MainActivity.this, TableAllSpentActivity.class);
+                Intent intent = new Intent(MainActivity.this, ChartMoneyManageActivity.class);
                 startActivity(intent); // Bắt đầu Activity mới
             }
         });

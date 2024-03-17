@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="pink">#F8F6FF</color>
     <color name="blueIcon">#4B7BE5</color>
+    <color name="backgroundInput">#F5F5F5</color>
 </resources>

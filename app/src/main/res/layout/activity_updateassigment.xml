@@ -87,32 +87,37 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/labelAssignment_updateAssigment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:text="Assigment"
                         android:textSize="16dp" />
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <EditText
+                        android:id="@+id/inputAssignment_updateAssigment"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:hint="Design" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="50dp"
+                        android:background="@drawable/custom_inputtext"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="Design"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -131,20 +136,23 @@
                                 android:id="@+id/labelStartDate_updateAssigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="Start Date"
                                 android:textSize="16dp" />
 
-                            <com.google.android.material.textfield.TextInputLayout
+                            <EditText
+                                android:id="@+id/inputStartDate_updateAssigment"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:hint="22/12/2002" />
-                            </com.google.android.material.textfield.TextInputLayout>
+                                android:layout_height="50dp"
+                                android:background="@drawable/custom_inputtext"
+                                android:ems="10"
+                                android:inputType="text"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:text="22/12/2002"
+                                android:textSize="20sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -158,20 +166,23 @@
                                 android:id="@+id/labelStartTime_updateAssigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="Start Time"
                                 android:textSize="16dp" />
 
-                            <com.google.android.material.textfield.TextInputLayout
+                            <EditText
+                                android:id="@+id/inputStartTime_updateAssigment"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:hint="22:20" />
-                            </com.google.android.material.textfield.TextInputLayout>
+                                android:layout_height="50dp"
+                                android:background="@drawable/custom_inputtext"
+                                android:ems="10"
+                                android:inputType="text"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:text="22:10 pm"
+                                android:textSize="20sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -181,6 +192,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -199,20 +211,23 @@
                                 android:id="@+id/labelEndDate_updateAssigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="End Date"
                                 android:textSize="16dp" />
 
-                            <com.google.android.material.textfield.TextInputLayout
+                            <EditText
+                                android:id="@+id/inputEndDate_updateAssigment"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:hint="22/12/2002" />
-                            </com.google.android.material.textfield.TextInputLayout>
+                                android:layout_height="50dp"
+                                android:background="@drawable/custom_inputtext"
+                                android:ems="10"
+                                android:inputType="text"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:text="22/12/2002"
+                                android:textSize="20sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -226,20 +241,23 @@
                                 android:id="@+id/labelEndTime_updateAssigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="End Time"
                                 android:textSize="16dp" />
 
-                            <com.google.android.material.textfield.TextInputLayout
+                            <EditText
+                                android:id="@+id/inputEndTime_updateAssigment"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:hint="22:20" />
-                            </com.google.android.material.textfield.TextInputLayout>
+                                android:layout_height="50dp"
+                                android:background="@drawable/custom_inputtext"
+                                android:ems="10"
+                                android:inputType="text"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:text="22:10 pm"
+                                android:textSize="20sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -249,6 +267,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="0.3"
                     android:orientation="vertical">
 
@@ -256,33 +275,38 @@
                         android:id="@+id/labelDescription_updateAssigment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:text="Description"
-                        android:textSize="16dp"/>
+                        android:textSize="16dp" />
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <EditText
+                        android:id="@+id/inputDescription_updateAssigment"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:hint="Build a Startup Website with Design about Covid 19 with Responsive with java" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_inputtext"
+                        android:ems="10"
+                        android:inputType="textMultiLine"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="10dp"
+                        android:text="Build a Startup Website with Design about Covid 19 with Responsive with java"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/labelProcess_updateAssigment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:text="Process"
-                        android:textSize="16dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:textSize="16dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

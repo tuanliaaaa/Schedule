@@ -9,7 +9,7 @@
     >
 
     <LinearLayout
-        android:id="@+id/header_addspentt"
+        android:id="@+id/header_addSpent"
         android:layout_width="match_parent"
         android:layout_height="87dp"
         android:orientation="horizontal"
@@ -22,7 +22,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/headerBack_addspentt"
+                android:id="@+id/headerBack_addSpent"
                 android:layout_width="27dp"
                 android:layout_height="27dp"
                 android:layout_marginStart="32dp"
@@ -36,10 +36,10 @@
                 app:tint="#000000" />
 
             <TextView
-                android:id="@+id/headerTitle_spentt"
+                android:id="@+id/headerTitle_spent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add spentt"
+                android:text="Add spent"
                 android:textColor="#000000"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +50,7 @@
                 app:layout_constraintVertical_bias="0.5" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/headerAvatarGroup_addspentt"
+                android:id="@+id/headerAvatarGroup_addSpent"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="60dp"
@@ -71,10 +71,10 @@
         android:paddingRight="30dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/footerList_addspentt"
+        app:layout_constraintBottom_toTopOf="@+id/footerList_addSpent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_addspentt">
+        app:layout_constraintTop_toBottomOf="@+id/header_addSpent">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -87,76 +87,99 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/labelspenttName_addspentt"
+                        android:id="@+id/labelSpentName_addSpent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="spentt Name"
-                        android:textSize="16dp" />
+                        android:layout_marginBottom="5dp"
+                        android:text="Spent Name"
+                        android:textColor="#b3b3b3"
+                        android:textSize="16sp" />
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <EditText
+                        android:id="@+id/inputSpentName_addSpent"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="50dp"
+                        android:background="@drawable/custom_inputtext"
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:hint="Design" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:ems="10"
+
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="Design"
+                        android:textSize="20sp" />
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.3"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp">
 
                     <TextView
-                        android:id="@+id/labelMoney_addspentt"
+                        android:id="@+id/labelMoney_addSpent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:text="Money"
-                        android:textSize="16dp" />
+                        android:textColor="#b3b3b3"
+                        android:textSize="16sp" />
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <EditText
+                        android:id="@+id/inputMoney_addSpent"
                         android:layout_width="match_parent"
-                        android:layout_height="72dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:hint="10$" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="50dp"
+                        android:background="@drawable/custom_inputtext"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="100 $"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.3"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/labelDescription_addspentt"
+                        android:id="@+id/labelDescription_addSpent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:text="Description"
-                        android:textSize="16dp"/>
+                        android:textColor="#b3b3b3"
+                        android:textSize="16sp" />
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <EditText
+                        android:id="@+id/inputDescription_addSpent"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_inputtext"
+                        android:ems="10"
+                        android:inputType="textMultiLine"
+                        android:minHeight="50dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="10dp"
+                        android:text="Build a Startup Website with Design about Covid 19 with Responsive with java"
+                        android:textSize="20sp" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:hint="Build a Startup Website with Design about Covid 19 with Responsive with java" />
-                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
@@ -167,7 +190,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/footerList_addspentt"
+        android:id="@+id/footerList_addSpent"
         android:layout_width="match_parent"
         android:layout_height="95dp"
         android:orientation="horizontal"
@@ -259,7 +282,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/footerMainIcon_addspentt"
+        android:id="@+id/footerMainIcon_addSpent"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginBottom="48dp"

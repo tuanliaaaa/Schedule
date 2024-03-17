@@ -88,6 +88,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="0.3"
                     android:orientation="vertical">
 
@@ -95,6 +96,7 @@
                         android:id="@+id/labelAssignment_tableAllSpent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:text="Assigment"
                         android:textSize="16dp" />
 
@@ -103,17 +105,19 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <EditText
+                            android:id="@+id/inputAssignment_TableAllSpent"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="40dp"
-                            android:layout_weight="0.7">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:hint="Design" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_height="50dp"
+                            android:layout_weight="0.7"
+                            android:background="@drawable/custom_inputtext"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="Design"
+                            android:textSize="20sp" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -125,12 +129,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
-                                <ImageView
+                                <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/save_tableAllSpent"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="1"
+                                    app:layout_constraintVertical_bias="1"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:srcCompat="@drawable/ic_save" />
@@ -145,36 +151,32 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="20dp"
-                    >
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="0.3"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <Button
+                        android:id="@+id/buttonAddSpent_tableAllSpent"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:gravity="center"
-                            android:hint="Thêm nguồn chi" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_inputtext"
+                        android:text="Thêm nguồn chi"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="0.3"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="20dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/labelDescription_tableAllSpent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:text="Description"
                         android:textSize="16dp" />
 
