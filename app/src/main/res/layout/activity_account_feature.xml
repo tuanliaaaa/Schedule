@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity"
+    tools:context=".controller.activities.MainActivity"
     android:background="@color/white"
     >
 
@@ -34,19 +34,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:tint="#000000" />
-
-            <TextView
-                android:id="@+id/headerTitle_accountFeature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Spend"
-                android:textColor="#000000"
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
@@ -88,7 +75,8 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0" />
+                        app:layout_constraintVertical_bias="0"
+                        android:layout_marginBottom="20dp"/>
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/containerGroupAvatar_accountFuture"
@@ -100,7 +88,8 @@
                         app:shapeAppearanceOverlay="@style/circular"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/containerGroupName_accountFuture"
-                        app:srcCompat="@drawable/den" />
+                        app:srcCompat="@drawable/den"
+                        android:layout_marginTop="10dp"/>
 
                     <LinearLayout
                         android:id="@+id/linearLayout4"
@@ -116,7 +105,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Button" />
+                            android:text="Edit"
+                            />
 
                         <ImageView
                             android:id="@+id/imageView12"
@@ -132,6 +122,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/addAssigment_accountFeature"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="20dp"
@@ -139,13 +130,14 @@
                         android:orientation="horizontal">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
+
                             android:layout_width="match_parent"
                             android:layout_height="70dp">
 
                             <LinearLayout
                                 android:id="@+id/linearLayout5"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -156,8 +148,8 @@
 
                                 <ImageView
                                     android:id="@+id/iconUpdateProcess_accountFeature"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     app:srcCompat="@drawable/ic_star" />
                             </LinearLayout>
 
@@ -166,7 +158,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
 
-                                android:text="TextView"
+                                android:text="Thêm Tiến Trính"
+                                android:textColor="@color/black"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.148"
@@ -177,6 +170,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/managePocessWork_accountFeature"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="20dp"
@@ -189,8 +183,8 @@
 
                             <LinearLayout
                                 android:id="@+id/linearLayout6"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -201,8 +195,9 @@
 
                                 <ImageView
                                     android:id="@+id/iconViewProcess_accountFeature"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_width="30dp"
+                                    android:layout_height="40dp"
+                                    android:backgroundTint="#ccc"
                                     app:srcCompat="@drawable/ic_star" />
                             </LinearLayout>
 
@@ -211,7 +206,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
 
-                                android:text="TextView"
+                                android:text="Quản lý tiến trình làm việc"
+                                android:textColor="@color/black"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.148"
@@ -222,6 +218,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/manageSpent_accountFeature"
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
                         android:layout_marginBottom="20dp"
@@ -234,8 +231,8 @@
 
                             <LinearLayout
                                 android:id="@+id/linearLayout8"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -246,8 +243,9 @@
 
                                 <ImageView
                                     android:id="@+id/imageView15"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_width="30dp"
+                                    android:layout_height="40dp"
+                                    android:backgroundTint="#ccc"
                                     app:srcCompat="@drawable/ic_star" />
                             </LinearLayout>
 
@@ -256,7 +254,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
 
-                                android:text="TextView"
+                                android:text="Theo dõi nguồn lực tài chính"
+                                android:textColor="@color/black"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.148"

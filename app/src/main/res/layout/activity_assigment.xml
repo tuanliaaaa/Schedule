@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity"
+    tools:context=".controller.activities.MainActivity"
     android:background="@color/white"
     >
 
@@ -98,18 +98,44 @@
                         android:text="Assigment"
                         android:textSize="16dp" />
 
-                    <EditText
-                        android:id="@+id/inputAssignment_assigment"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/custom_inputtext"
-                        android:ems="10"
-                        android:inputType="text"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:text="Design"
-                        android:textSize="20sp" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/inputAssignment_assigment"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.8"
+                            android:layout_height="50dp"
+                            android:background="@drawable/custom_inputtext"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="Design"
+                            android:textSize="20sp" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/save_assigment"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintHorizontal_bias="1"
+                                app:layout_constraintVertical_bias="1"
+                                app:srcCompat="@drawable/ic_save" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -137,7 +163,7 @@
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:text="Design"
+                        android:text="Nhi"
                         android:textSize="20sp" />
                 </LinearLayout>
 

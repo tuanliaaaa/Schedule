@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity"
+    tools:context=".controller.activities.MainActivity"
     android:background="@color/white"
     >
 
@@ -50,11 +50,11 @@
                 app:layout_constraintVertical_bias="0.5" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/headerAvatarGroup_tableAllProcess"
-                android:layout_width="60dp"
+                android:id="@+id/edit_tableAllProcess"
+                android:layout_width="50dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="60dp"
-                android:src="@drawable/den"
+                android:src="@drawable/icon_edit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.9"
@@ -354,7 +354,7 @@
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
                                 android:padding="10dp"
-                                android:text="Cell 2"
+                                android:text="Process"
                                 android:textFontWeight="600"
                                 android:textSize="16dp" />
 
@@ -364,7 +364,7 @@
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
                                 android:padding="10dp"
-                                android:text="Cell 3"
+                                android:text="Status"
 
                                 android:textColor="@color/black"
                                 android:textFontWeight="600"
@@ -383,7 +383,7 @@
                                 android:gravity="center"
                                 android:padding="10dp"
 
-                                android:text="Cell 4"
+                                android:text="Tuấn"
                                 android:textColor="@color/black" />
 
                             <TextView
@@ -394,7 +394,7 @@
                                 android:gravity="center"
                                 android:padding="10dp"
 
-                                android:text="Cell 5"
+                                android:text="20%"
                                 android:textColor="@color/black" />
 
                             <TextView
@@ -403,7 +403,7 @@
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
                                 android:padding="10dp"
-                                android:text="Cell 6"
+                                android:text="Trễ"
 
                                 android:textColor="@color/black" />
                         </TableRow>
@@ -421,7 +421,7 @@
                                 android:gravity="center"
                                 android:padding="10dp"
 
-                                android:text="Cell 7"
+                                android:text="Nhi"
                                 android:textColor="@color/black" />
 
                             <TextView
@@ -432,7 +432,7 @@
                                 android:gravity="center"
                                 android:padding="10dp"
 
-                                android:text="Cell 8"
+                                android:text="50%"
                                 android:textColor="@color/black" />
 
                             <TextView
@@ -441,7 +441,7 @@
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
                                 android:padding="10dp"
-                                android:text="Cell 9"
+                                android:text="Trễ"
 
                                 android:textColor="@color/black" />
                         </TableRow>

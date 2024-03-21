@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity"
+    tools:context=".controller.activities.MainActivity"
     android:background="@color/white"
     >
 
@@ -39,7 +39,7 @@
                 android:id="@+id/headerTitle_chartMoneyManage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Assigment:  Design"
+                android:text="Manage money"
                 android:textColor="#000000"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -176,11 +176,11 @@
                                 android:layout_height="50dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintVertical_bias="1"
                                 app:layout_constraintHorizontal_bias="1"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_save" />
+                                app:layout_constraintVertical_bias="1"
+                                app:srcCompat="@drawable/ic_export" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </LinearLayout>
@@ -356,57 +356,24 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="0.3"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/labelDescription_chartMoneyManage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="Description"
-                        android:textSize="16dp" />
-
-                    <EditText
-                        android:id="@+id/inputDescription_chartMoneyManage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_inputtext"
-                        android:ems="10"
-                        android:inputType="textMultiLine"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="10dp"
-                        android:text="Build a Startup Website with Design about Covid 19 with Responsive with java"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3"
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <ImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imgChart_chartMoneyManage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:scaleType="center"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0"
-                            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                            app:srcCompat="@drawable/chart" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </LinearLayout>
 
 

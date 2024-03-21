@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".controller.activities.gggg"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,31 +22,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AccountFeatureActivity"
+            android:name=".controller.activities.AccountFeatureActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".activities.AddSpentActivity"
+            android:name=".controller.activities.AddSpentActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".activities.AssigmentActivity"
+            android:name=".controller.activities.AssigmentActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".activities.ChartMoneyManageActivity"
+            android:name=".controller.activities.ChartMoneyManageActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".activities.CreateGroupActivity"
+            android:name=".controller.activities.CreateGroupActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".activities.TableAllProcessActivity"
+            android:name=".controller.activities.TableAllProcessActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".activities.TableAllSpentActivity"
+            android:name=".controller.activities.TableAllSpentActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".controller.activities.UpdateAssigmentActivity"
             android:exported="true">
         </activity>
     </application>
