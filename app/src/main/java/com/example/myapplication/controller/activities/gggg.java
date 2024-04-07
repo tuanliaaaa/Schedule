@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.myapplication.R;
@@ -14,7 +15,14 @@ public class gggg extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groupmess);
         LinearLayout linearLayout = findViewById(R.id.ahihi);
-
+        ImageView i= findViewById(R.id.footerImgIcon_updateAssigment);
+        i.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(gggg.this, MainActivity.class);
+                startActivity(intent); // Bắt đầu Activity mới
+            }
+        });
         // Thiết lập sự kiện lắng nghe cho LinearLayout
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
