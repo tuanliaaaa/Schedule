@@ -19,7 +19,7 @@ public class gggg extends Activity {
         i.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(gggg.this, MainActivity.class);
+                Intent intent = new Intent(gggg.this, CreateGroupActivity.class);
                 startActivity(intent); // Bắt đầu Activity mới
             }
         });
