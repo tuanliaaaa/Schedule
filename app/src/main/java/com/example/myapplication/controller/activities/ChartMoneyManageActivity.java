@@ -14,7 +14,7 @@ public class ChartMoneyManageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chartmoneymanage);
         Button linearLayout1 = findViewById(R.id.buttonViewSpent_chartMoneyManage);
-        // Thiết lập sự kiện lắng nghe cho LinearLayout
+
         linearLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
