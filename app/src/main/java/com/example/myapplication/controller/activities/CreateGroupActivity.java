@@ -127,8 +127,6 @@ public class CreateGroupActivity extends Activity {
                                         }
                                     });
                                 }
-
-
                             }
                         },
                         new Response.ErrorListener() {

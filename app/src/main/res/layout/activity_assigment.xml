@@ -194,17 +194,16 @@
                                 android:text="Start Date"
                                 android:textSize="16dp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputStartDate_assigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
+                                android:inputType="date"
                                 android:paddingLeft="10dp"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="22/12/2002"
+                                android:paddingTop="10dp"
+                                android:text="--/--/----"
+                                android:textColor="@color/black"
                                 android:textSize="20sp" />
                         </LinearLayout>
 
@@ -224,17 +223,16 @@
                                 android:text="Start Time"
                                 android:textSize="16dp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputStartTime_assigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
+                                android:inputType="date"
                                 android:paddingLeft="10dp"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="22:10 pm"
+                                android:paddingTop="10dp"
+                                android:text="--:--"
+                                android:textColor="@color/black"
                                 android:textSize="20sp" />
                         </LinearLayout>
 
@@ -269,17 +267,16 @@
                                 android:text="End Date"
                                 android:textSize="16dp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputEndDate_assigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
+                                android:inputType="date"
                                 android:paddingLeft="10dp"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="22/12/2002"
+                                android:paddingTop="10dp"
+                                android:text="--/--/----"
+                                android:textColor="@color/black"
                                 android:textSize="20sp" />
                         </LinearLayout>
 
@@ -299,18 +296,17 @@
                                 android:text="End Time"
                                 android:textSize="16dp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputEndTime_assigment"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
+                                android:inputType="date"
                                 android:paddingLeft="10dp"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="22:10 pm"
-                                android:textSize="20sp" />
+                                android:paddingTop="10dp"
+                                android:text="--:--"
+                                android:textColor="@color/black"
+                                android:textSize="20sp"  />
                         </LinearLayout>
 
                     </LinearLayout>
