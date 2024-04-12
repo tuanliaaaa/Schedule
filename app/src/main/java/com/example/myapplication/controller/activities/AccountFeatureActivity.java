@@ -3,41 +3,219 @@ package com.example.myapplication.controller.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.myapplication.R;
+import com.example.myapplication.dto.ApiResponse;
+import com.example.myapplication.dto.ErrorResponse;
+import com.example.myapplication.dto.response.AssigmentResponse;
+import com.example.myapplication.dto.response.InforResponse;
+import com.example.myapplication.dto.response.RoleResponse;
+import com.example.myapplication.utils.LocalDateTimeAdapter;
+import com.example.myapplication.utils.LocalDateTimeUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AccountFeatureActivity extends Activity {
+    private RequestQueue mRequestQueue;
+    private StringRequest mStringRequest;
+    private String domain;
+    private LinearLayout toAssigment,toManageSpent,toManageProcessWork;
+    private ImageView loadIcon_AccountFeature;
+    private LinearLayout loading_AccountFeature;
+    private ScrollView scrollviewcontent_AccountFeature;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_feature);
-        LinearLayout toAssigment = findViewById(R.id.addAssigment_accountFeature);
-        LinearLayout toManageSpent = findViewById(R.id.manageSpent_accountFeature);
-        LinearLayout toManageProcessWork = findViewById(R.id.managePocessWork_accountFeature);
+        try{
+            loading_AccountFeature = findViewById(R.id.loading_AccountFeature);
+            loadIcon_AccountFeature =findViewById(R.id.loadIcon_AccountFeature);
+            scrollviewcontent_AccountFeature= findViewById(R.id.scrollviewcontent_AccountFeature);
+            RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f);
 
-        toManageSpent.setOnClickListener(new View.OnClickListener() {
+            // Set animation properties
+            rotateAnimation.setInterpolator(new LinearInterpolator());
+            rotateAnimation.setRepeatCount(Animation.INFINITE); // Infinite rotation
+            rotateAnimation.setDuration(2000); // 2 seconds for each rotation
+            loadIcon_AccountFeature.startAnimation(rotateAnimation);
+            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+            domain= getResources().getString(R.string.domain);
+            getRoles();
+
+            toAssigment = findViewById(R.id.addAssigment_accountFeature);
+            toManageSpent = findViewById(R.id.manageSpent_accountFeature);
+            toManageProcessWork = findViewById(R.id.managePocessWork_accountFeature);
+        }catch (Exception e){
+            Log.e("Error",e.toString());
+        }
+    }
+    public void getRoles(){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, domain + "/api/auth/infor", null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Xử lý phản hồi thành công
+                        Log.i("success", "in onResponse");
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter());
+                        Gson gson = gsonBuilder.create();
+                        try {
+                            Type responseType = new TypeToken<ApiResponse<InforResponse>>(){}.getType();
+                            ApiResponse<InforResponse> apiResponse = gson.fromJson(response.toString(), responseType);
+                            InforResponse assigmentResponse =(InforResponse) apiResponse.getData();
+                            List<String> roleNames = new ArrayList<>();
+
+                            // Duyệt qua mảng roles và thêm giá trị roleName vào danh sách
+                            for (RoleResponse role : assigmentResponse.getRoles()) {
+                                String roleName = role.getRoleName();
+                                roleNames.add(roleName);
+                            }
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                    try{
+                                        if(roleNames.contains("admin"))setAdmin();
+                                        else setUser();
+                                    }catch (Exception e){
+                                        Log.e("Error","lỗi giao diện");
+                                    }
+                                }
+                            });
+                        } catch (Exception e) {
+                            Log.e("Error", "Giải mã sai định dạng trả về");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "Giải mã sai định dạng trả về", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loading_AccountFeature.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Xử lý lỗi
+                        Log.i("Success", "in onErrorResponse");
+                        if (error instanceof TimeoutError) {
+                            Toast.makeText(getApplicationContext(), "Request Time Out", Toast.LENGTH_LONG).show();
+                            Log.e("Error", "Request Time Out");
+                        } else {
+                            Log.e("Error", error.toString());
+                            if (error.networkResponse != null && error.networkResponse.statusCode == 400) {
+                                Gson gson = new Gson();
+                                String errorResponse = new String(error.networkResponse.data);
+                                Type responseType = new TypeToken<ErrorResponse<?>>(){}.getType();
+                                ErrorResponse<?> apiResponse = gson.fromJson(errorResponse, responseType);
+                                Toast.makeText(getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
+                                Log.e("Error", "Bad request: " + apiResponse.getError());
+                            } else {
+                                Gson gson = new Gson();
+                                String errorResponse = new String(error.networkResponse.data);
+                                Type responseType = new TypeToken<ErrorResponse<?>>(){}.getType();
+                                ErrorResponse<?> apiResponse = gson.fromJson(errorResponse, responseType);
+                                Log.e("Error", "Server: " + apiResponse.getError());
+                                Toast.makeText(getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loading_AccountFeature.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                    }
+                }) {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AccountFeatureActivity.this, ChartMoneyManageActivity.class);
-                startActivity(intent);
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                // Thêm token vào header
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEyODkwMDUyLCJleHAiOjE3MTI4OTM2NTJ9.9u0O5DA-omPp4LwQlz4i6MsM_bjSQiVNWRx3u7kOR8M");
+                return headers;
+            }
+        };
+
+// Đặt retry policy
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+// Thêm yêu cầu vào hàng đợi
+        mRequestQueue.add(jsonObjectRequest);
+    }
+    public void setAdmin(){
+
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                loading_AccountFeature.setVisibility(View.INVISIBLE);
+                scrollviewcontent_AccountFeature.setVisibility(View.VISIBLE);
+                toManageSpent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(AccountFeatureActivity.this, ChartMoneyManageActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                toAssigment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Tạo Intent để chuyển từ MainActivity sang Activity mới
+                        Intent intent = new Intent(AccountFeatureActivity.this, AssigmentActivity.class);
+                        startActivity(intent); // Bắt đầu Activity mới
+                    }
+                });
+                toManageProcessWork.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(AccountFeatureActivity.this, UpdateAssigmentManageActivity.class);
+                        startActivity(intent);
+                    }
+                });
             }
         });
-        toAssigment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Tạo Intent để chuyển từ MainActivity sang Activity mới
-                Intent intent = new Intent(AccountFeatureActivity.this, AssigmentActivity.class);
-                startActivity(intent); // Bắt đầu Activity mới
-            }
-        });
-        toManageProcessWork.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AccountFeatureActivity.this, TableAllProcessActivity.class);
-                startActivity(intent);
-            }
-        });
+
+    }
+
+    public void setUser(){
+
     }
 }
