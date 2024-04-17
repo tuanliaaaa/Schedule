@@ -55,6 +55,7 @@
                     android:drawableLeft="@drawable/ic_button_home"
                     android:drawablePadding="8dp"
                     android:hint="Username"
+                    android:inputType="textImeMultiLine"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background" />

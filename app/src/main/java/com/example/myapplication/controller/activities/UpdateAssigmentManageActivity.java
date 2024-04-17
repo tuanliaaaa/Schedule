@@ -97,7 +97,6 @@ public class UpdateAssigmentManageActivity extends Activity {
                     if(!isClickedStartDay) {
                         isClickedStartDay=true;
                         showStartDatePickerDialog();
-
                     }
                 }
             });
@@ -367,11 +366,7 @@ public class UpdateAssigmentManageActivity extends Activity {
                 return headers;
             }
         };
-
-// Đặt retry policy
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-// Thêm yêu cầu vào hàng đợi
         mRequestQueue.add(jsonObjectRequest);
 
     }
@@ -417,7 +412,7 @@ public class UpdateAssigmentManageActivity extends Activity {
                     isClickedEndDay=false;
                 }
             }, year, month, dayOfMonth);
-
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
             // Hiển thị DatePickerDialog
             datePickerDialog.show();
         }catch (Exception e){

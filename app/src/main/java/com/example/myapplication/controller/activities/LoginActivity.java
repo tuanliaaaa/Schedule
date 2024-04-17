@@ -35,9 +35,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         try{
-
             loading_login = findViewById(R.id.loading_login);
             loading_login.setVisibility(View.INVISIBLE);
             loadIcon_login =findViewById(R.id.loadIcon_login);

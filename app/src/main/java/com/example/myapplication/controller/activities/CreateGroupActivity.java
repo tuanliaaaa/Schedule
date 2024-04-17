@@ -1,10 +1,10 @@
 package com.example.myapplication.controller.activities;
 
-import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,10 +14,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
-
-import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -27,14 +24,14 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.R;
 import com.example.myapplication.dto.ApiResponse;
 import com.example.myapplication.dto.ErrorResponse;
-import com.example.myapplication.dto.request.Team;
-import com.example.myapplication.dto.response.CostResponse;
+import com.example.myapplication.dto.response.RecommendUserResponse;
 import com.example.myapplication.dto.response.TeamCreateResponse;
+import com.example.myapplication.service.RecommendUserInterFace;
+import com.example.myapplication.service.ServiceImpl.RecommendUserImpl;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -49,11 +46,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CreateGroupActivity extends Activity {
+    private String token;
     private RequestQueue mRequestQueue;
-    private StringRequest mStringRequest;
-
-
-
     private ImageView loadIcon_createGroup;
     private LinearLayout loading_createGroup;
     private Context context;
@@ -67,8 +61,8 @@ public class CreateGroupActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creategroup);
-
         try{
+            checkLogin();
             loading_createGroup = findViewById(R.id.loading_createGroup);
             loadIcon_createGroup =findViewById(R.id.loadIcon_createGroup);
             RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
@@ -101,6 +95,29 @@ public class CreateGroupActivity extends Activity {
     }
 
     public void getSuggestUser(){
+        RecommendUserImpl recommendUser = new RecommendUserImpl(new RecommendUserInterFace() {
+            @Override
+            public void onSuccess(List<RecommendUserResponse> result) {
+
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError errorResponse) {
+
+            }
+
+            @Override
+            public void onError(String error) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),"Lỗi",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            }
+        },domain,token);
+        recommendUser.getAllUser(CreateGroupActivity.this);
 
     }
 
@@ -206,4 +223,14 @@ public class CreateGroupActivity extends Activity {
         }
     }
 
+
+    private void checkLogin(){
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        token = sharedPref.getString("Token", null);
+        if(token == null){
+            finish();
+            Intent intent = new Intent(CreateGroupActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
 }

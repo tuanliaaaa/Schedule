@@ -35,9 +35,6 @@ import java.net.URISyntaxException;
 import dev.gustavoavila.websocketclient.WebSocketClient;
 
 public class gggg extends Activity {
-    private WebSocketClient client;
-    private int notificationId = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +57,12 @@ public class gggg extends Activity {
             public void onClick(View v) {
                 // Tạo Intent để chuyển từ MainActivity sang Activity mới
                 Intent intent = new Intent(gggg.this, AccountFeatureActivity.class);
-                startActivity(intent); // Bắt đầu Activity mới
+                startActivity(intent);
             }
         });
     }
 
     private void checkLogin(){
-        // Đọc token từ SharedPreferences
         SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
         String token = sharedPref.getString("Token", null);
         if(token == null){
@@ -76,5 +72,4 @@ public class gggg extends Activity {
             startActivity(intent);
         }
     }
-
 }

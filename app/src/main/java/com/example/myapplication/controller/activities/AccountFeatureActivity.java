@@ -1,7 +1,9 @@
 package com.example.myapplication.controller.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +40,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.net.ConnectException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +50,7 @@ import java.util.Map;
 public class AccountFeatureActivity extends Activity {
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
+    private String token;
     private String domain;
     private LinearLayout toAssigment,toManageSpent,toManageProcessWork;
     private ImageView loadIcon_AccountFeature;
@@ -57,6 +61,7 @@ public class AccountFeatureActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_feature);
         try{
+            checkLogin();
             loading_AccountFeature = findViewById(R.id.loading_AccountFeature);
             loadIcon_AccountFeature =findViewById(R.id.loadIcon_AccountFeature);
             scrollviewcontent_AccountFeature= findViewById(R.id.scrollviewcontent_AccountFeature);
@@ -134,14 +139,11 @@ public class AccountFeatureActivity extends Activity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // Xử lý lỗi
-                        Log.i("Success", "in onErrorResponse");
-                        if (error instanceof TimeoutError) {
-                            Toast.makeText(getApplicationContext(), "Request Time Out", Toast.LENGTH_LONG).show();
-                            Log.e("Error", "Request Time Out");
-                        } else {
-                            Log.e("Error", error.toString());
-                            if (error.networkResponse != null && error.networkResponse.statusCode == 400) {
+                        Log.i("Success", "in onError");
+                        Log.e("Error", error.toString());
+                        if(error.networkResponse!=null){
+                            Log.i("Success", "in onErrorResponse");
+                            if ( error.networkResponse.statusCode == 400) {
                                 Gson gson = new Gson();
                                 String errorResponse = new String(error.networkResponse.data);
                                 Type responseType = new TypeToken<ErrorResponse<?>>(){}.getType();
@@ -149,6 +151,7 @@ public class AccountFeatureActivity extends Activity {
                                 Toast.makeText(getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
                                 Log.e("Error", "Bad request: " + apiResponse.getError());
                             } else {
+                                clearToken();
                                 Gson gson = new Gson();
                                 String errorResponse = new String(error.networkResponse.data);
                                 Type responseType = new TypeToken<ErrorResponse<?>>(){}.getType();
@@ -156,7 +159,18 @@ public class AccountFeatureActivity extends Activity {
                                 Log.e("Error", "Server: " + apiResponse.getError());
                                 Toast.makeText(getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
                             }
+
+                        }else{
+                            Log.i("Success", "in onError");
+                            if (error instanceof TimeoutError) {
+                                Toast.makeText(getApplicationContext(), "Request Time Out", Toast.LENGTH_LONG).show();
+                                Log.e("Error", "Request Time Out");
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Lỗi Mạng", Toast.LENGTH_LONG).show();
+                                Log.e("Error","Lỗi Mạng");
+                            }
                         }
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -169,7 +183,7 @@ public class AccountFeatureActivity extends Activity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 // Thêm token vào header
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEzMjI4OTIyLCJleHAiOjE3MTMyMzI1MjJ9.rbZO1eGqMhjoMqFtMlbya4F5Fo5h2rD6X3RvOnWgDKk");
+                headers.put("Authorization", "Bearer " +token);
                 return headers;
             }
         };
@@ -217,5 +231,26 @@ public class AccountFeatureActivity extends Activity {
 
     public void setUser(){
 
+    }
+
+    public void checkLogin(){
+        // Đọc token từ SharedPreferences
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        token = sharedPref.getString("Token", null);
+        if(token == null){
+            finish();
+            Intent intent = new Intent(AccountFeatureActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public  void clearToken(){
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("Token");
+        editor.apply();
+        finish();
+        Intent intent = new Intent(AccountFeatureActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }
