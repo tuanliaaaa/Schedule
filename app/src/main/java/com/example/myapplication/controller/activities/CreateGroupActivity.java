@@ -16,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -26,10 +29,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.R;
+import com.example.myapplication.apdater.RecommendUserAdapter;
 import com.example.myapplication.dto.ApiResponse;
 import com.example.myapplication.dto.ErrorResponse;
 import com.example.myapplication.dto.response.RecommendUserResponse;
 import com.example.myapplication.dto.response.TeamCreateResponse;
+import com.example.myapplication.entity.UserRcm;
 import com.example.myapplication.service.RecommendUserInterFace;
 import com.example.myapplication.service.ServiceImpl.RecommendUserImpl;
 import com.google.gson.Gson;
@@ -48,11 +53,15 @@ import java.util.Map;
 public class CreateGroupActivity extends Activity {
     private String token;
     private RequestQueue mRequestQueue;
+    private RecommendUserAdapter recommendUserAdapter;
     private ImageView loadIcon_createGroup;
     private LinearLayout loading_createGroup;
     private Context context;
     private String domain;
     private String jsonPostCreateGroup;
+    private List<UserRcm> dataList;
+    private List<Integer> userList=new ArrayList<>();
+    private RecyclerView recyclerViewRcmuser;
     private EditText inputAddPeople_createGroup;
     private EditText inputGroupName_createGroup;
     private EditText inputBudget_createGroup;
@@ -63,6 +72,25 @@ public class CreateGroupActivity extends Activity {
         setContentView(R.layout.activity_creategroup);
         try{
             checkLogin();
+            inputAddPeople_createGroup = findViewById(R.id.inputAddPeople_createGroup);
+            recyclerViewRcmuser= findViewById(R.id.recyclerViewRcmUser);
+            recyclerViewRcmuser.setLayoutManager(new LinearLayoutManager(this));
+            dataList = new ArrayList<>();
+
+            recommendUserAdapter = new RecommendUserAdapter(this, dataList);
+            recommendUserAdapter.setOnItemClickListener(new RecommendUserAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(UserRcm userRcm,int potition) {
+                    if(!inputAddPeople_createGroup.getText().toString().trim().equals(""))
+                    inputAddPeople_createGroup.setText(inputAddPeople_createGroup.getText()+", "+userRcm.getUsername());
+                    else inputAddPeople_createGroup.setText(userRcm.getUsername());
+                    dataList.get(potition).setStatus("1");
+                    userList.add(dataList.get(potition).getIdUser());
+                    recommendUserAdapter.notifyDataSetChanged();
+                }
+            });
+
+            recyclerViewRcmuser.setAdapter(recommendUserAdapter);
             loading_createGroup = findViewById(R.id.loading_createGroup);
             loadIcon_createGroup =findViewById(R.id.loadIcon_createGroup);
             RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
@@ -98,7 +126,16 @@ public class CreateGroupActivity extends Activity {
         RecommendUserImpl recommendUser = new RecommendUserImpl(new RecommendUserInterFace() {
             @Override
             public void onSuccess(List<RecommendUserResponse> result) {
-
+                dataList.clear();
+                for(RecommendUserResponse response:result)
+                    dataList.add(new UserRcm(response));
+                recommendUserAdapter.notifyDataSetChanged();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading_createGroup.setVisibility(View.INVISIBLE);
+                    }
+                });
             }
 
             @Override
@@ -123,13 +160,7 @@ public class CreateGroupActivity extends Activity {
 
     public  void postTeam(){
         try{
-            List<Integer> users = new ArrayList<>();
-            inputAddPeople_createGroup = findViewById(R.id.inputAddPeople_createGroup);
-            String peopleID = String.valueOf(inputAddPeople_createGroup.getText());
-            String[] peopleIDArray = peopleID.split(",");
-            for (String id : peopleIDArray){
-                users.add(Integer.parseInt(id.trim()));
-            }
+
             inputBudget_createGroup =findViewById(R.id.inputBudget_createGroup);
             inputGroupName_createGroup = findViewById(R.id.inputGroupName_createGroup);
             String nameTeam = String.valueOf(inputGroupName_createGroup.getText());
@@ -139,7 +170,7 @@ public class CreateGroupActivity extends Activity {
 
             try {
                 jsonBody.put("name", nameTeam);
-                JSONArray usersArray = new JSONArray(users);
+                JSONArray usersArray = new JSONArray(userList);
                 jsonBody.put("user", usersArray);
                 jsonBody.put("costExpected", costExpected);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, domain+"/team", jsonBody,
@@ -150,12 +181,14 @@ public class CreateGroupActivity extends Activity {
                                 Log.i("success", "in onResponse");
                                 Gson gson = new Gson();
                                 try{
+                                    Log.d("Data",response.toString());
                                     Type responseType = new TypeToken<ApiResponse<TeamCreateResponse>>(){}.getType();
                                     ApiResponse<TeamCreateResponse> apiResponse = gson.fromJson(response.toString(), responseType);
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(),"Tạo nhóm thành công", Toast.LENGTH_LONG).show();
+                                            finish();
                                             Intent intent = new Intent(CreateGroupActivity.this, gggg.class);
                                             startActivity(intent);
                                         }
@@ -205,7 +238,7 @@ public class CreateGroupActivity extends Activity {
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         // Thêm token vào header
                         Map<String, String> headers = new HashMap<>();
-                        headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEyNzYzNTc0LCJleHAiOjE3MTI3NjcxNzR9.ErekkimHPtAA7eWkuXZAMcefAUcDrsoG3Pic6TwLiyw");
+                        headers.put("Authorization", "Bearer "+token);
                         return headers;
                     }
                 };
