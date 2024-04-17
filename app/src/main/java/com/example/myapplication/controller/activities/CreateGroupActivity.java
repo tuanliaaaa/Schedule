@@ -205,4 +205,5 @@ public class CreateGroupActivity extends Activity {
             Log.e("errors",e.toString());
         }
     }
+
 }

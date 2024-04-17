@@ -8,6 +8,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -41,10 +42,10 @@ public class gggg extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groupmess);
+        checkLogin();
         LinearLayout linearLayout = findViewById(R.id.ahihi);
         ImageView i = findViewById(R.id.footerImgIcon_updateAssigment);
-//        createNotificationChannel();
-//        connectWebSocket();
+
         // Button to AddGroup
         i.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,104 +65,16 @@ public class gggg extends Activity {
         });
     }
 
-//    private void createNotificationChannel() {
-//        // Create the NotificationChannel, but only on API 26+ because
-//        // the NotificationChannel class is new and not in the support library
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = "channel_1";
-//            String description = "channel_description";
-//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel("CHANNEL_1", name, importance);
-//            channel.setDescription(description);
-//            // Register the channel with the system; you can't change the importance
-//            // or other notification behaviors after this
-//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-//            notificationManager.createNotificationChannel(channel);
-//        }
-//    }
-//
-//
-//    private void connectWebSocket() {
-//        URI uri;
-//        try {
-//            uri = new URI("ws://192.168.1.6:8000/ws/notification/broadcast/");
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//            return;
-//        }
-//
-//        client = new WebSocketClient(uri) {
-//            @Override
-//            public void onOpen() {
-//                Log.d("WebSocket", "Connected to server");
-//            }
-//
-//            @Override
-//            public void onTextReceived(String s) {
-//                Log.d("d", s);
-//                showNotification(s);
-//            }
-//
-//            @Override
-//            public void onBinaryReceived(byte[] bytes) {
-//                Log.d("btte", "d");
-//            }
-//
-//            @Override
-//            public void onPingReceived(byte[] bytes) {
-//                Log.d("Ping", "d");
-//            }
-//
-//            @Override
-//            public void onPongReceived(byte[] bytes) {
-//                Log.d("Pong", "d");
-//            }
-//
-//            @Override
-//            public void onException(Exception e) {
-//                Log.d("exp", "d");
-//            }
-//
-//            @Override
-//            public void onCloseReceived(int i, String s) {
-//                Log.d("close", "d");
-//            }
-//
-//
-//        };
-//
-//        client.connect();
-//    }
-//
-//    private void showNotification(String message) {
-//
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(gggg.this,
-//                "CHANNEL_1")
-//                .setContentTitle("Thong Bao")
-//                .setContentText(message)
-//                .setSmallIcon(R.drawable.load_icon)
-//                .setColor(Color.RED)
-//                .setCategory(NotificationCompat.CATEGORY_ALARM)
-//                .setDefaults(NotificationCompat.DEFAULT_SOUND);
-//
-//        // Kiểm tra quyền trước khi hiển thị thông báo
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.USE_FULL_SCREEN_INTENT) == PackageManager.PERMISSION_GRANTED) {
-//            // Nếu quyền đã được cấp, hiển thị thông báo
-//            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
-//            managerCompat.notify(notificationId, builder.build());
-//        } else {
-//            // Nếu quyền chưa được cấp, yêu cầu quyền từ người dùng
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Toast.makeText(getApplicationContext(),"dd",Toast.LENGTH_LONG).show();
-//                }
-//            });
-//        }
-//
-//
-//
-//    }
+    private void checkLogin(){
+        // Đọc token từ SharedPreferences
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        String token = sharedPref.getString("Token", null);
+        if(token == null){
 
+            finish();
+            Intent intent = new Intent(gggg.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
 
 }
