@@ -8,8 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -46,6 +51,11 @@ import java.util.Map;
 public class CreateGroupActivity extends Activity {
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
+
+
+
+    private ImageView loadIcon_createGroup;
+    private LinearLayout loading_createGroup;
     private Context context;
     private String domain;
     private String jsonPostCreateGroup;
@@ -57,7 +67,23 @@ public class CreateGroupActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creategroup);
+
         try{
+            loading_createGroup = findViewById(R.id.loading_createGroup);
+            loadIcon_createGroup =findViewById(R.id.loadIcon_createGroup);
+            RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f);
+
+            // Set animation properties
+            rotateAnimation.setInterpolator(new LinearInterpolator());
+            rotateAnimation.setRepeatCount(Animation.INFINITE); // Infinite rotation
+            rotateAnimation.setDuration(2000); // 2 seconds for each rotation
+
+            // Start the animation
+            loadIcon_createGroup.startAnimation(rotateAnimation);
+
+
             domain= getResources().getString(R.string.domain);
             ImageView linearLayout = findViewById(R.id.save_createGroup);
             getSuggestUser();

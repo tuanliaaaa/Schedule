@@ -169,7 +169,7 @@ public class AccountFeatureActivity extends Activity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 // Thêm token vào header
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEyODkwMDUyLCJleHAiOjE3MTI4OTM2NTJ9.9u0O5DA-omPp4LwQlz4i6MsM_bjSQiVNWRx3u7kOR8M");
+                headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEzMjI4OTIyLCJleHAiOjE3MTMyMzI1MjJ9.rbZO1eGqMhjoMqFtMlbya4F5Fo5h2rD6X3RvOnWgDKk");
                 return headers;
             }
         };

@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
 <!--        <string name="domain">https://awesome-debt-production.up.railway.app</string>-->
-    <string name="domain">http://192.168.88.61:8080</string>
+    <string name="domain">http://10.21.103.83:8080</string>
 </resources>
