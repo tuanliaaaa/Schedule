@@ -3,7 +3,9 @@ package com.example.myapplication.controller.activities;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -53,6 +55,7 @@ import java.util.Map;
 
 public class AssigmentActivity extends Activity {
     private EditText inputAssignment_assignment;
+    private String token;
     private EditText inputForPeople_assignment;
     private TextView inputStartDate_assignment;
     private TextView inputStartTime_assignment;
@@ -69,6 +72,7 @@ public class AssigmentActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assigment);
         try{
+            checkLogin();
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
             domain= getResources().getString(R.string.domain);
             ImageView linearLayout = findViewById(R.id.save_assigment);
@@ -153,7 +157,7 @@ public class AssigmentActivity extends Activity {
                 }
             }, year, month, dayOfMonth);
 
-            // Hiển thị DatePickerDialog
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
             datePickerDialog.show();
         }catch (Exception e){
             Log.e("Error","Lỗi ở onclick inputStartDate");
@@ -177,8 +181,8 @@ public class AssigmentActivity extends Activity {
                     isClickedEndDay=false;
                 }
             }, year, month, dayOfMonth);
-
-            // Hiển thị DatePickerDialog
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                    // Hiển thị DatePickerDialog
             datePickerDialog.show();
         }catch (Exception e){
             Log.e("Error","Lỗi ở onclick inputEndDate");
@@ -235,7 +239,6 @@ public class AssigmentActivity extends Activity {
         try{
             JSONObject jsonBody = new JSONObject();
 
-
             // Tạo danh sách người dùng từ input
             List<Integer> users = new ArrayList<>();
             String peopleID = String.valueOf(inputForPeople_assignment.getText());
@@ -285,6 +288,7 @@ public class AssigmentActivity extends Activity {
                                         @Override
                                         public void run() {
                                             Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                            finish();
                                             Intent intent = new Intent(AssigmentActivity.this, TableAllProcessActivity.class);
                                             startActivity(intent);
                                         }
@@ -333,7 +337,7 @@ public class AssigmentActivity extends Activity {
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         // Thêm token vào header
                         Map<String, String> headers = new HashMap<>();
-                        headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEyODAzMjk5LCJleHAiOjE3MTI4MDY4OTl9.1nOyl-SlwqEWGK9op1ACNtDuM5IuxW2FpoQmtjUNI8A");
+                        headers.put("Authorization", "Bearer "+token);
                         return headers;
                     }
                 };
@@ -346,4 +350,25 @@ public class AssigmentActivity extends Activity {
             Log.e("errors",e.toString());
         }
     }
+
+
+    private void checkLogin(){
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        token = sharedPref.getString("Token", null);
+        if(token == null){
+            finish();
+            Intent intent = new Intent(AssigmentActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+    private  void clearToken(){
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("Token");
+        editor.apply();
+        finish();
+        Intent intent = new Intent(AssigmentActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
 }

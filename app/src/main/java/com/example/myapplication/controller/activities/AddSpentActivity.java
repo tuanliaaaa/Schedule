@@ -71,11 +71,7 @@ public class AddSpentActivity extends Activity {
 
 // Tạo một ArrayAdapter từ mảng dữ liệu
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, options);
-
-// Thiết lập layout cho dropdown
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-// Gán adapter cho Dropdown Menu
         dropdownMenu.setAdapter(adapter);
 
 // Lắng nghe sự kiện chọn của Dropdown Menu

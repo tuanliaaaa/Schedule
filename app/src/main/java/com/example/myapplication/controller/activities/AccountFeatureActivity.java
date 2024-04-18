@@ -124,6 +124,7 @@ public class AccountFeatureActivity extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+
                                     Toast.makeText(getApplicationContext(), "Giải mã sai định dạng trả về", Toast.LENGTH_LONG).show();
                                 }
                             });
@@ -244,7 +245,7 @@ public class AccountFeatureActivity extends Activity {
         }
     }
 
-    public  void clearToken(){
+    private  void clearToken(){
         SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove("Token");

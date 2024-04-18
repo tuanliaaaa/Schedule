@@ -140,11 +140,12 @@ public class CreateGroupActivity extends Activity {
 
             @Override
             public void onErrorResponse(VolleyError errorResponse) {
-
+                clearToken();
             }
 
             @Override
             public void onError(String error) {
+                clearToken();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -266,4 +267,14 @@ public class CreateGroupActivity extends Activity {
             startActivity(intent);
         }
     }
+    private  void clearToken(){
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("Token");
+        editor.apply();
+        finish();
+        Intent intent = new Intent(CreateGroupActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
 }
