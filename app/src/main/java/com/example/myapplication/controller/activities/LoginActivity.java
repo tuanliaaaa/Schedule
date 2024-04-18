@@ -21,11 +21,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.android.volley.VolleyError;
 import com.example.myapplication.R;
 import com.example.myapplication.dto.request.LoginRequest;
 import com.example.myapplication.dto.response.LoginResponse;
-import com.example.myapplication.service.Login;
-import com.example.myapplication.utils.VolleyCallback;
+import com.example.myapplication.service.ServiceImpl.LoginImpl;
+import com.example.myapplication.service.LoginInterFace;
 
 public class LoginActivity extends Activity {
     private Button loginButton;
@@ -89,13 +90,14 @@ public class LoginActivity extends Activity {
                 loading_login.setVisibility(View.VISIBLE);
             }
         });
-        Login volleyManager = new Login(new VolleyCallback() {
+        LoginImpl volleyManager = new LoginImpl(new LoginInterFace() {
             @Override
             public void onSuccess(LoginResponse result) {
+                Log.d("Data",result.toString());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(), result.getToken(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
                     }
                 });
                 SharedPreferences sharedPref = LoginActivity.this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
@@ -112,10 +114,22 @@ public class LoginActivity extends Activity {
                     public void run() {
                         loading_login.setVisibility(View.INVISIBLE);
 
-                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Lỗi mạng", Toast.LENGTH_LONG).show();
                     }
                 });
 
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading_login.setVisibility(View.INVISIBLE);
+
+                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         }, domain);
         volleyManager.postDataToUrl(LoginActivity.this, new LoginRequest(username.getText().toString(), password.getText().toString()));
