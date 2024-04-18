@@ -6,14 +6,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -31,14 +34,15 @@ public class LoginActivity extends Activity {
     private EditText password;
     private ImageView loadIcon_login;
     private LinearLayout loading_login;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        try{
+        try {
             loading_login = findViewById(R.id.loading_login);
             loading_login.setVisibility(View.INVISIBLE);
-            loadIcon_login =findViewById(R.id.loadIcon_login);
+            loadIcon_login = findViewById(R.id.loadIcon_login);
             RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
@@ -50,57 +54,71 @@ public class LoginActivity extends Activity {
 
             // Start the animation
             loadIcon_login.startAnimation(rotateAnimation);
-            
-            domain= getResources().getString(R.string.domain);
 
-            loginButton= findViewById(R.id.loginButton);
-            username =findViewById(R.id.username);
-            password= findViewById(R.id.password);
+            domain = getResources().getString(R.string.domain);
+
+            loginButton = findViewById(R.id.loginButton);
+            username = findViewById(R.id.username);
+            password = findViewById(R.id.password);
+            password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        login();
+                    }
+                    return false; // Cho phép xử lý mặc định nếu không phải nút "tiếp"
+                }
+            });
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            loading_login.setVisibility(View.VISIBLE);
-                        }
-                    });
-                    Login volleyManager = new Login(new VolleyCallback() {
-                        @Override
-                        public void onSuccess(LoginResponse result) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getApplicationContext(), result.getToken(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            SharedPreferences sharedPref = LoginActivity.this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
-                            sharedPref.edit().putString("Token", result.getToken()).apply();
-                            finish();
-                            Intent intent = new Intent(LoginActivity.this, gggg.class);
-                            startActivity(intent); // Bắt đầu Activity mới
-                        }
-
-                        @Override
-                        public void onError(String error) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    loading_login.setVisibility(View.INVISIBLE);
-
-                                    Toast.makeText(getApplicationContext(),"Lỗi",Toast.LENGTH_LONG).show();
-                                }
-                            });
-
-                        }
-                    },domain);
-                    volleyManager.postDataToUrl(LoginActivity.this,new LoginRequest(username.getText().toString(),password.getText().toString()));
+                    login();
                 }
             });
-        }catch (Exception e){
-            Log.i("Error","Lỗi  Login Activity");
+        } catch (Exception e) {
+            Log.i("Error", "Lỗi  Login Activity");
         }
 
     }
 
+    private void login() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loading_login.setVisibility(View.VISIBLE);
+            }
+        });
+        Login volleyManager = new Login(new VolleyCallback() {
+            @Override
+            public void onSuccess(LoginResponse result) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), result.getToken(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                SharedPreferences sharedPref = LoginActivity.this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+                sharedPref.edit().putString("Token", result.getToken()).apply();
+                finish();
+                Intent intent = new Intent(LoginActivity.this, gggg.class);
+                startActivity(intent); // Bắt đầu Activity mới
+            }
+
+            @Override
+            public void onError(String error) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading_login.setVisibility(View.INVISIBLE);
+
+                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            }
+        }, domain);
+        volleyManager.postDataToUrl(LoginActivity.this, new LoginRequest(username.getText().toString(), password.getText().toString()));
+
+    }
 }
