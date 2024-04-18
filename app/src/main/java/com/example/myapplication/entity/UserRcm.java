@@ -13,10 +13,12 @@ public class UserRcm {
     private String username;
     private Integer idUser;
     private String status;
+    private String avatar;
    public UserRcm(RecommendUserResponse response){
        this.idUser=response.getIdUser();
        this.username=response.getUsername();
        this.status="0";
+       this.avatar=response.getAvatar();
 
    }
 }

@@ -11,4 +11,5 @@ public class RecommendUserResponse {
     private String username;
     private int idUser;
     private String password;
+    private String avatar;
 }

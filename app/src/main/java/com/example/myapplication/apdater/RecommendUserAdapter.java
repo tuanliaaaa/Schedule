@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.controller.activities.CreateGroupActivity;
 import com.example.myapplication.entity.UserRcm;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,9 @@ public class RecommendUserAdapter extends RecyclerView.Adapter<RecommendUserAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
         String item = userRcms.get(position).getUsername();
         holder.textView.setText(item);
+
+        String avatar = userRcms.get(position).getAvatar();
+        Picasso.get().load(avatar).into(holder.imgRecommendUser);
         if (userRcms.get(position).getStatus() == "1") {
             ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
             layoutParams.height = 0;
@@ -61,11 +66,13 @@ public class RecommendUserAdapter extends RecyclerView.Adapter<RecommendUserAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
         public LinearLayout linearLayout;
+        public ShapeableImageView imgRecommendUser;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textRecommendUser);
             linearLayout =itemView.findViewById(R.id.item_recommendUser);
+            imgRecommendUser = itemView.findViewById(R.id.imgRecommendUser);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
