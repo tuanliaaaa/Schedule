@@ -31,8 +31,11 @@ import com.android.volley.toolbox.Volley;
 import com.example.myapplication.R;
 import com.example.myapplication.dto.ApiResponse;
 import com.example.myapplication.dto.ErrorResponse;
+import com.example.myapplication.dto.response.AssigmentResponse;
+import com.example.myapplication.dto.response.AssignmentManagerResponse;
 import com.example.myapplication.dto.response.TeamCreateResponse;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -40,12 +43,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddSpentActivity extends Activity {
     private TextView inputSpentName_addSpent;
-    private Spinner dropdown_menu;
+    private Spinner dropdownMenu;
     private TextView inputMoney_addSpent;
     private String domain;
     private TextView inputDescription_addSpent;
@@ -58,7 +63,7 @@ public class AddSpentActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addspent);
         ImageView saved = findViewById(R.id.save_addSpent);
-        Spinner dropdownMenu = findViewById(R.id.dropdown_menu);
+        dropdownMenu = findViewById(R.id.dropdown_menu);
         ImageView loadIcon_addSpend =findViewById(R.id.loadIcon_addSpend);
         RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
                 Animation.RELATIVE_TO_SELF, 0.5f,
@@ -102,15 +107,17 @@ public class AddSpentActivity extends Activity {
 
                 }
             }).start();
-// Tạo một mảng dữ liệu cho các lựa chọn
+
+            getAssignmentManager();
+            // Tạo một mảng dữ liệu cho các lựa chọn
             String[] options = {"Option 1", "Option 2", "Option 3"};
 
-// Tạo một ArrayAdapter từ mảng dữ liệu
+            // Tạo một ArrayAdapter từ mảng dữ liệu
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, options);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dropdownMenu.setAdapter(adapter);
 
-// Lắng nghe sự kiện chọn của Dropdown Menu
+            // Lắng nghe sự kiện chọn của Dropdown Menu
             dropdownMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -144,7 +151,7 @@ public class AddSpentActivity extends Activity {
             inputSpentName_addSpent =findViewById(R.id.inputSpentName_addSpent);
             inputDescription_addSpent = findViewById(R.id.inputDescription_addSpent);
             inputMoney_addSpent = findViewById(R.id.inputMoney_addSpent);
-            dropdown_menu = findViewById(R.id.dropdown_menu);
+            dropdownMenu = findViewById(R.id.dropdown_menu);
             String nameSpent = String.valueOf(inputSpentName_addSpent.getText());
             int costExpected= Integer.parseInt(String.valueOf(inputMoney_addSpent.getText()));
             int idAssignment = 1;
@@ -154,7 +161,7 @@ public class AddSpentActivity extends Activity {
             try {
                 jsonBody.put("costName", nameSpent);
                 jsonBody.put("price", costExpected);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, domain+"/Cost/Assigment/" + idAssignment, jsonBody,
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, domain + "/Assignment/Team/" + idAssignment, jsonBody,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -254,5 +261,79 @@ public class AddSpentActivity extends Activity {
         finish();
         Intent intent = new Intent(AddSpentActivity.this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    private void getAssignmentManager() {
+        // Tạo request để lấy danh sách các nhiệm vụ
+        String idTeam = "1";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Assignment/AssigmentManage" + idTeam, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            // Parse dữ liệu JSON và tạo danh sách các nhiệm vụ
+                            List<AssignmentManagerResponse> assignments = new ArrayList<>();
+                            JSONArray data = response.getJSONArray("data");
+                            for (int i = 0; i < data.length(); i++) {
+                                JSONObject assignmentJson = data.getJSONObject(i);
+                                AssignmentManagerResponse assignment = new AssignmentManagerResponse();
+                                assignment.setIdAssignment(assignmentJson.getInt("idAssignment"));
+                                assignment.setNameAssignment(assignmentJson.getString("teamName"));
+                                assignments.add(assignment);
+                            }
+
+                            // Tạo mảng String chứa tên của các nhiệm vụ
+                            String[] options = new String[assignments.size()];
+                            for (int i = 0; i < assignments.size(); i++) {
+                                options[i] = assignments.get(i).getNameAssignment();
+                            }
+
+                            // Tạo ArrayAdapter từ mảng String
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(AddSpentActivity.this, android.R.layout.simple_spinner_item, options);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            dropdownMenu.setAdapter(adapter);
+
+                            // Lắng nghe sự kiện chọn của spinner
+                            dropdownMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    // Lấy id của nhiệm vụ khi được chọn
+                                    int selectedAssignmentId = assignments.get(position).getIdAssignment();
+                                    Toast.makeText(getApplicationContext(), "Selected assignment id: " + selectedAssignmentId, Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                    // Xử lý khi không có nhiệm vụ nào được chọn
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Xử lý lỗi khi gửi request
+                        Log.e("Error", "Error in request: " + error.toString());
+                        Toast.makeText(getApplicationContext(), "Error in request", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                // Thêm token vào header
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+
+        // Đặt retry policy cho request
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // Thêm request vào hàng đợi
+        mRequestQueue.add(jsonObjectRequest);
     }
 }
