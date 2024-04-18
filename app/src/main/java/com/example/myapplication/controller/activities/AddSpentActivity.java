@@ -265,6 +265,7 @@ public class AddSpentActivity extends Activity {
 
     private void getAssignmentManager() {
         // Tạo request để lấy danh sách các nhiệm vụ
+        domain= getResources().getString(R.string.domain);
         String idTeam = "1";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Assignment/Team/" + idTeam, null,
                 new Response.Listener<JSONObject>() {
