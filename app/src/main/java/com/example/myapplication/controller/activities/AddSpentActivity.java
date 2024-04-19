@@ -110,28 +110,6 @@ public class AddSpentActivity extends Activity {
             }).start();
 
             getAssignmentManager();
-            // Tạo một mảng dữ liệu cho các lựa chọn
-//            String[] options = {"Option 1", "Option 2", "Option 3"};
-//
-//            // Tạo một ArrayAdapter từ mảng dữ liệu
-//            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, options);
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//            dropdownMenu.setAdapter(adapter);
-//
-//            // Lắng nghe sự kiện chọn của Dropdown Menu
-//            dropdownMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                @Override
-//                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-//                    // Xử lý sự kiện khi một lựa chọn được chọn
-//                    String selectedOption = options[position];
-//                    Toast.makeText(getApplicationContext(), "Selected: " + selectedOption, Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onNothingSelected(AdapterView<?> parentView) {
-//                    // Xử lý khi không có lựa chọn nào được chọn
-//                }
-//            });
             saved.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

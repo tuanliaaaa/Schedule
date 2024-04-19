@@ -8,7 +8,8 @@ public class CostResponse {
     private int price;
     private int idTeam;
 
-
+    public CostResponse() {
+    }
 
     public CostResponse(int idCost, String costName, int price, int idTeam) {
         this.idCost = idCost;

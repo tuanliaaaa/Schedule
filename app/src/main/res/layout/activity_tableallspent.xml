@@ -105,19 +105,22 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/inputAssignment_TableAllSpent"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="0.7"
-                            android:background="@drawable/custom_inputtext"
-                            android:ems="10"
-                            android:inputType="text"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="Design"
-                            android:textSize="20sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Spinner
+                                android:id="@+id/inputAssignment_TableAllSpent"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:background="@drawable/custom_inputtext"
+                                android:inputType="text"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -210,7 +213,7 @@
                                 android:gravity="center"
 
                                 android:padding="10dp"
-                                android:text="Name"
+                                android:text="No."
                                 android:textFontWeight="600"
                                 android:textSize="16dp" />
 
@@ -221,7 +224,7 @@
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
                                 android:padding="10dp"
-                                android:text="Cell 2"
+                                android:text="Name"
                                 android:textFontWeight="600"
                                 android:textSize="16dp" />
 
@@ -231,7 +234,7 @@
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
                                 android:padding="10dp"
-                                android:text="Cell 3"
+                                android:text="Price"
 
                                 android:textColor="@color/black"
                                 android:textFontWeight="600"
