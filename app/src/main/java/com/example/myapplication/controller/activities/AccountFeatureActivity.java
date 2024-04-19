@@ -109,7 +109,7 @@ public class AccountFeatureActivity extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+//                                    Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
                                     try{
                                         if(roleNames.contains("admin"))setAdmin();
                                         else setUser();
@@ -218,6 +218,7 @@ public class AccountFeatureActivity extends Activity {
                         startActivity(intent);
                     }
                 });
+                toManageSpent.setVisibility(View.VISIBLE);
                 toAssigment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -226,20 +227,36 @@ public class AccountFeatureActivity extends Activity {
                         startActivity(intent); // Bắt đầu Activity mới
                     }
                 });
+                toAssigment.setVisibility(View.VISIBLE);
                 toManageProcessWork.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(AccountFeatureActivity.this, UpdateAssigmentManageActivity.class);
+                        Intent intent = new Intent(AccountFeatureActivity.this, TableAllProcessActivity.class);
                         startActivity(intent);
                     }
                 });
+                toManageProcessWork.setVisibility(View.VISIBLE);
             }
         });
 
     }
 
     public void setUser(){
+        runOnUiThread(new Runnable() {
 
+            @Override
+            public void run() {
+                toViewAssigment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(AccountFeatureActivity.this, AllAssigmentUserActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                loading_AccountFeature.setVisibility(View.INVISIBLE);
+                scrollviewcontent_AccountFeature.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public void checkLogin(){

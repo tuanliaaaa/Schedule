@@ -250,7 +250,7 @@ public class AssigmentActivity extends Activity {
             // Lấy tên bài tập từ input
 
             String assignment = String.valueOf(inputAssignment_assignment.getText());
-
+//            Toast.makeText(getApplicationContext(),assignment,Toast.LENGTH_LONG).show();
             // Lấy mô tả từ input
 
             String description = String.valueOf(inputDescription_assignment.getText());
@@ -272,6 +272,7 @@ public class AssigmentActivity extends Activity {
                 jsonBody.put("endAt", endDateTime);
                 jsonBody.put("description", description);
                 jsonBody.put("usersId", new JSONArray(users));
+                jsonBody.put("nameAssignment",assignment);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, domain+"/Assignment/Team/47",
                         jsonBody,
                         new Response.Listener<JSONObject>() {

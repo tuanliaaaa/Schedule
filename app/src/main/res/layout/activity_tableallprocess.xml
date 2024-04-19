@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.activities.MainActivity"
+    tools:context=".controller.activities.TableAllProcessActivity"
     android:background="@color/white"
     >
 
@@ -78,7 +78,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,7 +112,6 @@
                             android:layout_height="50dp"
                             android:layout_weight="0.8"
                             android:background="@drawable/custom_inputtext"
-                            android:contentDescription="Enter How Much Cookies You Want"
                             android:ems="10"
                             android:inputType="text"
                             android:paddingLeft="10dp"
@@ -122,8 +122,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.2"
-                            android:orientation="vertical"
-                            >
+                            android:orientation="vertical">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
@@ -136,10 +135,10 @@
                                     android:layout_height="50dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="1"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/ic_save"
-                                    app:layout_constraintHorizontal_bias="1"/>
+                                    app:srcCompat="@drawable/ic_save" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                         </LinearLayout>
@@ -324,129 +323,64 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TableLayout
-                        android:id="@+id/tableLayout"
+                    <LinearLayout
+                        android:id="@+id/table_processUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:stretchColumns="*"
-                        android:background="#ccc">
+                        android:background="#ccc"
+                        android:orientation="vertical">
 
-                        <TableRow
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="42dp">
+                            android:layout_height="42dp"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="42dp"
-                                android:layout_marginRight="-1dp"
+
+                                android:layout_weight="0.3"
+
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
-
                                 android:padding="10dp"
                                 android:text="Name"
+                                android:textColor="@color/black"
                                 android:textFontWeight="600"
                                 android:textSize="16dp" />
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="42dp"
-                                android:layout_marginRight="-1dp"
+                                android:layout_weight="0.3"
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="Process"
+                                android:textColor="@color/black"
                                 android:textFontWeight="600"
                                 android:textSize="16dp" />
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="42dp"
+                                android:layout_weight="0.3"
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="Status"
-
                                 android:textColor="@color/black"
                                 android:textFontWeight="600"
                                 android:textSize="16dp" />
-                        </TableRow>
+                        </LinearLayout>
 
-                        <TableRow
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewListProcessUser"
                             android:layout_width="match_parent"
-                            android:layout_height="113dp">
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="Tuấn"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="20%"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Trễ"
-
-                                android:textColor="@color/black" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="Nhi"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="50%"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Trễ"
-
-                                android:textColor="@color/black" />
-                        </TableRow>
-
-                    </TableLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
 

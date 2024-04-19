@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="none"
-                android:visibility="visible"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +142,7 @@
                             <androidx.constraintlayout.widget.ConstraintLayout
 
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp">
+                                android:layout_height="50dp">
 
                                 <LinearLayout
                                     android:id="@+id/linearLayout10"
@@ -180,110 +180,18 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/viewaAssigment_accountFeature"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="10dp"
-                            android:background="@color/pink"
-                            android:orientation="horizontal">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp">
-
-                                <LinearLayout
-                                    android:id="@+id/linearLayout11"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0.134"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.5">
-
-                                    <com.google.android.material.imageview.ShapeableImageView
-
-                                        android:layout_width="30dp"
-                                        android:layout_height="30dp"
-                                        app:srcCompat="@drawable/ic_star" />
-                                </LinearLayout>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:text="Cập nhập tiến trình"
-                                    android:textColor="@color/black"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0"
-                                    app:layout_constraintStart_toEndOf="@+id/linearLayout11"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.5" />
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/addsAssigment_accountFeature"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="10dp"
-                            android:background="@color/pink"
-                            android:orientation="horizontal">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp">
-
-                                <LinearLayout
-                                    android:id="@+id/linearLayout12"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0.134"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.5">
-
-                                    <com.google.android.material.imageview.ShapeableImageView
-                                        android:layout_width="30dp"
-                                        android:layout_height="30dp"
-                                        app:srcCompat="@drawable/ic_star" />
-                                </LinearLayout>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:text="Thêm Tiến Trính"
-                                    android:textColor="@color/black"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0"
-                                    app:layout_constraintStart_toEndOf="@+id/linearLayout12"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.5" />
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
                             android:id="@+id/addAssigment_accountFeature"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginBottom="10dp"
                             android:background="@color/pink"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="invisible">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
 
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp">
+                                android:layout_height="50dp">
 
                                 <LinearLayout
                                     android:id="@+id/linearLayout5"
@@ -310,7 +218,7 @@
                                     android:layout_height="wrap_content"
 
                                     android:layout_marginLeft="10dp"
-                                    android:text="Thêm Tiến Trính"
+                                    android:text="Thêm Tiến Trình"
                                     android:textColor="@color/black"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -327,11 +235,12 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="10dp"
                             android:background="@color/pink"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="invisible">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp">
+                                android:layout_height="50dp">
 
                                 <LinearLayout
                                     android:id="@+id/linearLayout6"
@@ -358,6 +267,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
 
+                                    android:layout_marginLeft="10dp"
                                     android:text="Quản lý tiến trình làm việc"
                                     android:textColor="@color/black"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -365,8 +275,7 @@
                                     app:layout_constraintHorizontal_bias="0"
                                     app:layout_constraintStart_toEndOf="@+id/linearLayout6"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.5"
-                                    android:layout_marginLeft="10dp" />
+                                    app:layout_constraintVertical_bias="0.5" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
 
@@ -376,11 +285,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
                             android:background="@color/pink"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="invisible">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp">
+                                android:layout_height="50dp">
 
                                 <LinearLayout
                                     android:id="@+id/linearLayout8"
@@ -429,7 +339,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
