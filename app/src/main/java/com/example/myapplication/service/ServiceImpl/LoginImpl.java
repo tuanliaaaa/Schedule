@@ -72,25 +72,28 @@ public class LoginImpl {
                             // Xử lý lỗi
                             Log.i("Success", "in onErrorResponse");
                             if (error.networkResponse != null){
-                                if (error.networkResponse != null && error.networkResponse.statusCode == 400) {
+                                if ( error.networkResponse.statusCode == 400) {
                                     Gson gson = new Gson();
                                     String errorResponse = new String(error.networkResponse.data);
                                     Type responseType = new TypeToken<ErrorResponse<?>>(){}.getType();
                                     ErrorResponse<?> apiResponse = gson.fromJson(errorResponse, responseType);
-//                                    Toast.makeText(context.getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
                                     Log.e("Error", "Bad request: " + apiResponse.getError());
-                                    callback.onError(apiResponse.getError().toString());
+                                    callback.onErrorResponse(apiResponse);
                                 } else {
-
-                                    callback.onErrorResponse(error);
+                                    Gson gson = new Gson();
+                                    String errorResponse = new String(error.networkResponse.data);
+                                    Type responseType = new TypeToken<ErrorResponse<?>>(){}.getType();
+                                    ErrorResponse<?> apiResponse = gson.fromJson(errorResponse, responseType);
+                                    callback.onErrorResponse(apiResponse);
                                 }
                             }else{
                                 if (error instanceof TimeoutError) {
-                                    callback.onError(error.toString());
+                                    callback.onError("Request Time Out");
 //                                Toast.makeText(context.getApplicationContext(), "Request Time Out", Toast.LENGTH_LONG).show();
                                     Log.e("Error", "Request Time Out");
                                 } else {
                                     Log.e("Error", error.toString());
+                                    callback.onError("Lỗi Mạng");
 
                                 }
                             }

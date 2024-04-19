@@ -49,10 +49,9 @@ import java.util.Map;
 
 public class AccountFeatureActivity extends Activity {
     private RequestQueue mRequestQueue;
-    private StringRequest mStringRequest;
     private String token;
     private String domain;
-    private LinearLayout toAssigment,toManageSpent,toManageProcessWork;
+    private LinearLayout toAssigment,toManageSpent,toManageProcessWork,toViewAssigment;
     private ImageView loadIcon_AccountFeature;
     private LinearLayout loading_AccountFeature;
     private ScrollView scrollviewcontent_AccountFeature;
@@ -77,7 +76,7 @@ public class AccountFeatureActivity extends Activity {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
             domain= getResources().getString(R.string.domain);
             getRoles();
-
+            toViewAssigment =findViewById(R.id.viewAssigment_accountFeature);
             toAssigment = findViewById(R.id.addAssigment_accountFeature);
             toManageSpent = findViewById(R.id.manageSpent_accountFeature);
             toManageProcessWork = findViewById(R.id.managePocessWork_accountFeature);
@@ -201,6 +200,15 @@ public class AccountFeatureActivity extends Activity {
 
             @Override
             public void run() {
+                toViewAssigment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(AccountFeatureActivity.this, AllAssigmentUserActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+
                 loading_AccountFeature.setVisibility(View.INVISIBLE);
                 scrollviewcontent_AccountFeature.setVisibility(View.VISIBLE);
                 toManageSpent.setOnClickListener(new View.OnClickListener() {

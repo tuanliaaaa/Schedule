@@ -1,33 +1,28 @@
 package com.example.myapplication.apdater;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.controller.activities.CreateGroupActivity;
 import com.example.myapplication.entity.UserRcm;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecommendUserAdapter extends RecyclerView.Adapter<RecommendUserAdapter.ViewHolder> {
     private List<UserRcm> userRcms;
     private Context context;
-    private OnItemClickListener listener;
-    public interface OnItemClickListener {
+    private OnItemRcmUserClickListener listener;
+    public interface OnItemRcmUserClickListener {
         void onItemClick(UserRcm userRcm,int potition);
     }
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemRcmUserClickListener listener) {
         this.listener = listener;
     }
     public RecommendUserAdapter(Context context, List<UserRcm> userRcms) {
