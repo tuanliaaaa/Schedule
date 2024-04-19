@@ -269,7 +269,7 @@ public class TableAllSpentActivity extends Activity {
         // Thêm dữ liệu từ API vào TableLayout
         for (int i = 0; i < costResponses.size(); i++) {
             CostResponse cost = costResponses.get(i);
-            addDataRowToTableLayout(i + 1, cost.getCostName(), cost.getPrice());
+            addDataRowToTableLayout(i + 1, cost.getCostName(), cost.getPrice(), cost.getIdCost());
         }
     }
     // Thêm hàng tiêu đề vào TableLayout
@@ -292,7 +292,8 @@ public class TableAllSpentActivity extends Activity {
     }
 
     // Thêm dữ liệu hàng vào TableLayout
-    private void addDataRowToTableLayout(int index, String name, int price) {
+    // Thêm dữ liệu hàng vào TableLayout
+    private void addDataRowToTableLayout(int index, String name, int price, final int costId) {
         TableLayout tableLayout = findViewById(R.id.tableLayout);
 
         TableRow row = new TableRow(this);
@@ -307,8 +308,19 @@ public class TableAllSpentActivity extends Activity {
         row.addView(textViewName);
         row.addView(textViewPrice);
 
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo Intent và truyền dữ liệu cần thiết tới activity mới
+                Intent intent = new Intent(TableAllSpentActivity.this, DetailSpentActivity.class);
+                intent.putExtra("costId", costId);
+                startActivity(intent);
+            }
+        });
+
         tableLayout.addView(row);
     }
+
 
     // Tạo TextView mới
     private TextView createTextView(String text) {
