@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/nameAssigment"
+        android:layout_width="0dp"
+        android:layout_height="113dp"
+        android:layout_marginRight="-1dp"
+        android:layout_weight="0.3"
+        android:background="@drawable/background_datatable"
+
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Nhi"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/processAssigment"
+        android:layout_width="0dp"
+        android:layout_height="113dp"
+        android:layout_marginRight="-1dp"
+        android:layout_weight="0.3"
+        android:background="@drawable/background_datatable"
+
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="50%"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/statusProcess"
+        android:layout_width="0dp"
+        android:layout_height="113dp"
+        android:layout_weight="0.3"
+        android:background="@drawable/background_datatable"
+        android:gravity="center"
+
+        android:padding="10dp"
+        android:text="Trễ"
+        android:textColor="@color/black" />
+</LinearLayout>
