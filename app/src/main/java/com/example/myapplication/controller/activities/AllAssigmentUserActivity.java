@@ -53,7 +53,8 @@ public class AllAssigmentUserActivity extends Activity {
             listAssigmentUserAdapter.setOnItemClickListener(new ListAssigmentUserAdapter.OnItemListAssigmentUserClickListener() {
                 @Override
                 public void onItemClick(AssigmentUser assigmentUser, int potition) {
-
+                    Intent intent = new Intent(AllAssigmentUserActivity.this, UpdateAssigmentActivity.class);
+                    startActivity(intent);
                 }
             });
             listAssigmentUserAdapter.notifyDataSetChanged();
@@ -69,12 +70,6 @@ public class AllAssigmentUserActivity extends Activity {
             @Override
             public void onSuccess(List<AssignmentOfUserResponse> result) {
                 dataList.clear();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
                 for (AssignmentOfUserResponse response : result)
                     dataList.add(new AssigmentUser(response));
                 listAssigmentUserAdapter.notifyDataSetChanged();
@@ -83,12 +78,7 @@ public class AllAssigmentUserActivity extends Activity {
 
             @Override
             public void onErrorResponse(ErrorResponse<?> errorResponse) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),errorResponse.toString(),Toast.LENGTH_LONG).show();
-                    }
-                });
+               clearToken();
             }
 
             @Override

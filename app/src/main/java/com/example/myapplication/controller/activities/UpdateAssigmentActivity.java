@@ -3,6 +3,7 @@ package com.example.myapplication.controller.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -56,6 +57,7 @@ public class UpdateAssigmentActivity extends Activity {
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
     private Context context;
+    private String token;
     private ImageView loadIcon_UpdateAssigment;
     private LinearLayout loading_UpdateAssigment;
     private ScrollView scrollviewcontent_UpdateAssigment;
@@ -67,6 +69,7 @@ public class UpdateAssigmentActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updateassigment);
         try{
+            checkLogin();
             loading_UpdateAssigment = findViewById(R.id.loading_UpdateAssigment);
             scrollviewcontent_UpdateAssigment =findViewById(R.id.scrollviewcontent_UpdateAssigment);
             loadIcon_UpdateAssigment =findViewById(R.id.loadIcon_UpdateAssigment);
@@ -188,7 +191,7 @@ public class UpdateAssigmentActivity extends Activity {
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         // Thêm token vào header
                         Map<String, String> headers = new HashMap<>();
-                        headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEyODE0ODAxLCJleHAiOjE3MTI4MTg0MDF9.itUNyrw9N-7M65ifB66JkkKdHrPevkPcUKmKL95OYfo");
+                        headers.put("Authorization", "Bearer "+token);
                         return headers;
                     }
                 };
@@ -309,7 +312,7 @@ public class UpdateAssigmentActivity extends Activity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 // Thêm token vào header
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEyODE0ODAxLCJleHAiOjE3MTI4MTg0MDF9.itUNyrw9N-7M65ifB66JkkKdHrPevkPcUKmKL95OYfo");
+                headers.put("Authorization", "Bearer "+token);
                 return headers;
             }
         };
@@ -320,5 +323,25 @@ public class UpdateAssigmentActivity extends Activity {
 // Thêm yêu cầu vào hàng đợi
         mRequestQueue.add(jsonObjectRequest);
 
+    }
+
+
+    private void checkLogin(){
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        token = sharedPref.getString("Token", null);
+        if(token == null){
+            finish();
+            Intent intent = new Intent(UpdateAssigmentActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+    private  void clearToken(){
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("Token");
+        editor.apply();
+        finish();
+        Intent intent = new Intent(UpdateAssigmentActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }
