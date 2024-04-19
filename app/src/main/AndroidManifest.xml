@@ -36,6 +36,11 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".controller.activities.DetailSpentActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
             android:name=".controller.activities.AssigmentActivity"
             android:exported="true">
         </activity>
