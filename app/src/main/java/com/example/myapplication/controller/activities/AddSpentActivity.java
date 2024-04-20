@@ -1,6 +1,7 @@
 package com.example.myapplication.controller.activities;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -43,7 +45,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +63,9 @@ public class AddSpentActivity extends Activity {
     private String token;
     private RequestQueue mRequestQueue;
     private Integer idAssignment;
+
+    private boolean isClicked = false;
+    private TextView inputRefundDate;
     private LinearLayout loading_AddSpend;
 
 
@@ -65,6 +73,23 @@ public class AddSpentActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addspent);
+        ImageView saved = findViewById(R.id.save_addSpent);
+        dropdownMenu = findViewById(R.id.dropdown_menu);
+        ImageView loadIcon_addSpend =findViewById(R.id.loadIcon_addSpend);
+        inputRefundDate = findViewById(R.id.inputRefundDate);
+
+        RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+        inputRefundDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isClicked) {
+                    isClicked=true;
+                    showStartDatePickerDialog();
+                }
+            }
+        });
         try {
             checkLogin();
             loading_AddSpend=findViewById(R.id.loading_AddSpend);
@@ -111,11 +136,18 @@ public class AddSpentActivity extends Activity {
             int costExpected= Integer.parseInt(String.valueOf(inputMoney_addSpent.getText()));
 
 
+            // Định dạng của chuỗi
+            inputRefundDate = findViewById(R.id.inputRefundDate);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate refundDate = LocalDate.parse(inputRefundDate.getText(), formatter);
+
+
             JSONObject jsonBody = new JSONObject();
 
             try {
                 jsonBody.put("costName", nameSpent);
                 jsonBody.put("price", costExpected);
+                jsonBody.put("refundDate", refundDate);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, domain+"/Cost/Assigment/" + idAssignment, jsonBody,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -295,5 +327,29 @@ public class AddSpentActivity extends Activity {
 
         // Thêm request vào hàng đợi
         mRequestQueue.add(jsonObjectRequest);
+    }
+    public void showStartDatePickerDialog(){
+        try{
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+            // Tạo DatePickerDialog và thiết lập ngày ban đầu là ngày hiện tại
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    // Đặt ngày được chọn vào EditText
+                    inputRefundDate.setText(String.format("%02d/%02d/%04d", dayOfMonth,month, year));
+                    isClicked=false;
+                }
+            }, year, month, dayOfMonth);
+
+            // Hiển thị DatePickerDialog
+            datePickerDialog.show();
+        }catch (Exception e){
+            Log.e("Error","Lỗi ở onclick inputStartDate");
+            Toast.makeText(getApplicationContext(),"không thể mở hộp thoại date",Toast.LENGTH_LONG).show();
+        }
     }
 }
