@@ -70,6 +70,7 @@ public class TableAllProcessActivity extends Activity {
     private RequestQueue mRequestQueue;
     private List<String> options;
     private ArrayAdapter<String> adapter;
+    private  StatusAssigmentOfTeamManageResponse statusAssigmentOfTeamManageResponse;
     private LinearLayout startAt_tableAllProcess,endAt_tableAllProcess;
     private TextView inputStartDate_tableAllProcess,inputStartTime_tableAllProcess,inputEndDate_tableAllProcess,inputEndTime_tableAllProcess;
     @Override
@@ -120,7 +121,7 @@ public class TableAllProcessActivity extends Activity {
             export_tableAllProcess.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new ExcelUltil().createExcelAndDownload(TableAllProcessActivity.this,"hello.xlsx");
+                    new ExcelUltil().createExcelAndDownload(TableAllProcessActivity.this,statusAssigmentOfTeamManageResponse,"hello.xlsx");
                 }
             });
             getAssignmentTeam();
@@ -296,6 +297,7 @@ public class TableAllProcessActivity extends Activity {
                             Type responseType = new TypeToken<ApiResponse<StatusAssigmentOfTeamManageResponse>>(){}.getType();
                             ApiResponse<StatusAssigmentOfTeamManageResponse> apiResponse = gson.fromJson(response.toString(), responseType);
                             StatusAssigmentOfTeamManageResponse assigmentResponse = apiResponse.getData();
+                            statusAssigmentOfTeamManageResponse=assigmentResponse;
                             List<StatusAssigmentAndUserManageResponse> statusAssigmentOfTeamManageResponseList =assigmentResponse.getStatusAssigmentAndUser();
                             dataList.clear();
 
