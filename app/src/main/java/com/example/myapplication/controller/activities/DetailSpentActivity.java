@@ -1,6 +1,7 @@
 package com.example.myapplication.controller.activities;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -42,7 +44,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,22 +58,34 @@ public class DetailSpentActivity extends Activity {
     private TextView inputMoney_addSpent;
     private String domain;
     private TextView inputDescription_addSpent;
+    private TextView inputRefundDate;
     private String token;
     private RequestQueue mRequestQueue;
     private List<AssignmentManagerResponse> assignments;
     private int idAssignment;
     private int costId;
+    private boolean isClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addspent);
+        setContentView(R.layout.activity_detailspent);
         ImageView saved = findViewById(R.id.save_addSpent);
         dropdownMenu = findViewById(R.id.dropdown_menu);
+        inputRefundDate = findViewById(R.id.inputRefundDate);
         ImageView loadIcon_addSpend =findViewById(R.id.loadIcon_addSpend);
         RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
                 Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f);
+        inputRefundDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isClicked) {
+                    isClicked=true;
+                    showStartDatePickerDialog();
+                }
+            }
+        });
         costId = getIntent().getIntExtra("costId", -1);
         try {
             checkLogin();
@@ -115,13 +132,118 @@ public class DetailSpentActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     domain= getResources().getString(R.string.domain);
-
+                    patchSpent();
                 }
             });
         }catch (Exception e){
             Log.e("Errors"," Lỗi Tổng ở AddSpentActivity");
         }
 
+    }
+
+    public void patchSpent() {
+        try{
+            inputSpentName_addSpent =findViewById(R.id.inputSpentName_addSpent);
+            inputDescription_addSpent = findViewById(R.id.inputDescription_addSpent);
+            inputMoney_addSpent = findViewById(R.id.inputMoney_addSpent);
+            dropdownMenu = findViewById(R.id.dropdown_menu);
+            String nameSpent = String.valueOf(inputSpentName_addSpent.getText());
+            int costExpected= Integer.parseInt(String.valueOf(inputMoney_addSpent.getText()));
+
+            // Định dạng của chuỗi
+            inputRefundDate = findViewById(R.id.inputRefundDate);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate refundDate = LocalDate.parse(inputRefundDate.getText(), formatter);
+
+            JSONObject jsonBody = new JSONObject();
+
+            try {
+                jsonBody.put("costName", nameSpent);
+                jsonBody.put("price", costExpected);
+                jsonBody.put("refundDate", refundDate);
+                jsonBody.put("idAssignment", idAssignment);
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, domain+"/Cost/" + costId, jsonBody,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // Xử lý phản hồi thành công
+                                Log.i("success", "in onResponse");
+                                Gson gson = new Gson();
+                                try{
+                                    Log.d("Data",response.toString());
+                                    Type responseType = new TypeToken<ApiResponse<TeamCreateResponse>>(){}.getType();
+                                    ApiResponse<TeamCreateResponse> apiResponse = gson.fromJson(response.toString(), responseType);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(),"Thêm chi phí thành công thành công", Toast.LENGTH_LONG).show();
+                                            finish();
+                                            Intent intent = new Intent(DetailSpentActivity.this, TableAllSpentActivity.class);
+                                            startActivity(intent); // Bắt đầu Activity mới
+                                        }
+                                    });
+                                }catch (Exception e){
+                                    Log.e("Error","Giải mã sai định dạng trả về");
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "Giải mã sai định dạng trả về", Toast.LENGTH_LONG).show();
+
+                                        }
+                                    });
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // Xử lý lỗi
+                                Log.i("Success", "in onErrorResponse");
+                                if (error instanceof TimeoutError) {
+                                    Toast.makeText(getApplicationContext(), "Request Time Out", Toast.LENGTH_LONG).show();
+                                    Log.e("Error", "Request Time Out");
+                                } else {
+                                    Log.e("Error", error.toString());
+                                    if (error.networkResponse != null && error.networkResponse.statusCode == 400) {
+                                        Gson gson = new Gson();
+                                        String errorResponse = new String(error.networkResponse.data);
+                                        Type responseType = new TypeToken<ErrorResponse<?>>(){}.getType();
+                                        ErrorResponse<?> apiResponse = gson.fromJson(errorResponse, responseType);
+                                        Toast.makeText(getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
+                                        Log.e("Error", "Bad request: " + apiResponse.getError());
+
+                                    } else {
+                                        Gson gson = new Gson();
+                                        String errorResponse = new String(error.networkResponse.data);
+                                        Type responseType = new TypeToken<ErrorResponse<?>>(){}.getType();
+                                        ErrorResponse<?> apiResponse = gson.fromJson(errorResponse, responseType);
+                                        Log.e("Error", "Server: " + apiResponse.getError());
+                                        Toast.makeText(getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+                        }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        // Thêm token vào header
+                        Map<String, String> headers = new HashMap<>();
+                        headers.put("Authorization", "Bearer "+token);
+                        return headers;
+                    }
+                };
+
+                // Đặt retry policy
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                mRequestQueue.add(jsonObjectRequest);
+
+            } catch (JSONException e) {
+                Log.e("Error","không đúng định dạng Json");
+            }
+        }catch (Exception e){
+            Log.e("errors",e.toString());
+        }
     }
 
     private void getCostById(Integer idCost) {
@@ -285,5 +407,29 @@ public class DetailSpentActivity extends Activity {
 
         // Thêm request vào hàng đợi
         mRequestQueue.add(jsonObjectRequest);
+    }
+    public void showStartDatePickerDialog(){
+        try{
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+            // Tạo DatePickerDialog và thiết lập ngày ban đầu là ngày hiện tại
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    // Đặt ngày được chọn vào EditText
+                    inputRefundDate.setText(String.format("%02d/%02d/%04d", dayOfMonth,month, year));
+                    isClicked=false;
+                }
+            }, year, month, dayOfMonth);
+
+            // Hiển thị DatePickerDialog
+            datePickerDialog.show();
+        }catch (Exception e){
+            Log.e("Error","Lỗi ở onclick inputStartDate");
+            Toast.makeText(getApplicationContext(),"không thể mở hộp thoại date",Toast.LENGTH_LONG).show();
+        }
     }
 }
