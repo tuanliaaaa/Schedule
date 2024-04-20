@@ -66,47 +66,106 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
         android:layout_height="0dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/footerList_assigment"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_assigment">
 
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <ScrollView
+                android:id="@+id/scrollviewcontent_assigment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/labelAssignment_assigment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="Assigment"
-                        android:textSize="16dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/labelAssignment_assigment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="Assigment"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/inputAssignment_assigment"
+                                android:layout_width="0dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="0.8"
+                                android:background="@drawable/custom_inputtext"
+                                android:ems="10"
+                                android:inputType="text"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.2">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/save_assigment"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="1"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_bias="1"
+                                    app:srcCompat="@drawable/ic_save" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/labelForPeople_assigment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="For People"
+                            android:textSize="14sp" />
 
                         <EditText
-                            android:id="@+id/inputAssignment_assigment"
-                            android:layout_width="0dp"
-                            android:layout_weight="0.8"
+                            android:id="@+id/inputForPeople_assigment"
+                            android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:background="@drawable/custom_inputtext"
                             android:ems="10"
@@ -114,361 +173,223 @@
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
-                            android:text="Design"
-                            android:textSize="20sp" />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2">
-
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/save_assigment"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintHorizontal_bias="1"
-                                app:layout_constraintVertical_bias="1"
-                                app:srcCompat="@drawable/ic_save" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
                     </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/labelForPeople_assigment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="For People"
-                        android:textSize="16dp" />
-
-                    <EditText
-                        android:id="@+id/inputForPeople_assigment"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/custom_inputtext"
-                        android:ems="10"
-                        android:inputType="text"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:text="Nhi"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="40dp"
-                            android:layout_weight="0.2"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/labelStartDate_assigment"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:text="Start Date"
-                                android:textSize="16dp" />
+                                android:layout_marginEnd="40dp"
+                                android:layout_weight="0.2"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/inputStartDate_assigment"
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:background="@drawable/custom_inputtext"
-                                android:inputType="date"
-                                android:paddingLeft="10dp"
-                                android:paddingTop="10dp"
-                                android:text="--/--/----"
-                                android:textColor="@color/black"
-                                android:textSize="20sp" />
-                        </LinearLayout>
+                                <TextView
+                                    android:id="@+id/labelStartDate_assigment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:text="Start Date"
+                                    android:textSize="14sp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="0.2"
-                            android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/inputStartDate_assigment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/custom_inputtext"
+                                    android:gravity="center_vertical"
+                                    android:inputType="date"
+                                    android:paddingLeft="10dp"
+                                    android:text="--/--/----"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+                            </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/labelStartTime_assigment"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:text="Start Time"
-                                android:textSize="16dp" />
+                                android:layout_marginStart="20dp"
+                                android:layout_weight="0.2"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/inputStartTime_assigment"
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:background="@drawable/custom_inputtext"
-                                android:inputType="date"
-                                android:paddingLeft="10dp"
-                                android:paddingTop="10dp"
-                                android:text="--:--"
-                                android:textColor="@color/black"
-                                android:textSize="20sp" />
+                                <TextView
+                                    android:id="@+id/labelStartTime_assigment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:text="Start Time"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/inputStartTime_assigment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/custom_inputtext"
+                                    android:gravity="center_vertical"
+                                    android:inputType="date"
+                                    android:paddingLeft="10dp"
+                                    android:text="--:--"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
                     </LinearLayout>
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="40dp"
+                                android:layout_weight="0.2"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/labelEndDate_assigment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:text="End Date"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/inputEndDate_assigment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/custom_inputtext"
+                                    android:gravity="center_vertical"
+                                    android:inputType="date"
+                                    android:paddingLeft="10dp"
+                                    android:text="--/--/----"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_weight="0.2"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/labelEndTime_assigment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:text="End Time"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/inputEndTime_assigment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/custom_inputtext"
+                                    android:gravity="center_vertical"
+                                    android:inputType="date"
+                                    android:paddingLeft="10dp"
+                                    android:text="--:--"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/labelDescription_assigment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="40dp"
-                            android:layout_weight="0.2"
-                            android:orientation="vertical">
+                            android:layout_marginBottom="5dp"
+                            android:text="Description"
+                            android:textSize="14sp" />
 
-                            <TextView
-                                android:id="@+id/labelEndDate_assigment"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:text="End Date"
-                                android:textSize="16dp" />
-
-                            <TextView
-                                android:id="@+id/inputEndDate_assigment"
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:background="@drawable/custom_inputtext"
-                                android:inputType="date"
-                                android:paddingLeft="10dp"
-                                android:paddingTop="10dp"
-                                android:text="--/--/----"
-                                android:textColor="@color/black"
-                                android:textSize="20sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <EditText
+                            android:id="@+id/inputDescription_assigment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="0.2"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/labelEndTime_assigment"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:text="End Time"
-                                android:textSize="16dp" />
-
-                            <TextView
-                                android:id="@+id/inputEndTime_assigment"
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:background="@drawable/custom_inputtext"
-                                android:inputType="date"
-                                android:paddingLeft="10dp"
-                                android:paddingTop="10dp"
-                                android:text="--:--"
-                                android:textColor="@color/black"
-                                android:textSize="20sp"  />
-                        </LinearLayout>
+                            android:background="@drawable/custom_inputtext"
+                            android:ems="10"
+                            android:inputType="textMultiLine"
+                            android:minHeight="70dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
-                </LinearLayout>
 
-                <LinearLayout
+                </LinearLayout>
+            </ScrollView>
+
+            <LinearLayout
+                android:id="@+id/loading_assigment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/labelDescription_assigment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="Description"
-                        android:textSize="16dp" />
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/loadIcon_assigment"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/load_icon"
+                        android:tint="@color/blueIcon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <EditText
-                        android:id="@+id/inputDescription_assigment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_inputtext"
-                        android:ems="10"
-                        android:inputType="textMultiLine"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="10dp"
-                        android:text="Build a Startup Website with Design about Covid 19 with Responsive with java"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-
+                    </com.google.android.material.imageview.ShapeableImageView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
-        </ScrollView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/footerList_assigment"
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/pink"
-        >
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-
-                android:src="@drawable/ic_button_home"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blueIcon" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_button_schedule"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blueIcon"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_button_mess"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blueIcon" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_button_user"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blueIcon"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/footerMainIcon_assigment"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="48dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_iconadd">
-
-            <ImageView
-                android:id="@+id/footerImgIcon_assigment"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-
-                android:src="@drawable/ic_button_plus"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

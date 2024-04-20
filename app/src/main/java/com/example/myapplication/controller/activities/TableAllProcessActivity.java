@@ -5,18 +5,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.myapplication.R;
 import com.example.myapplication.apdater.ListProcessUserAdapter;
 import com.example.myapplication.dto.ErrorResponse;
 import com.example.myapplication.dto.response.AssigmentUserResponse;
+import com.example.myapplication.dto.response.AssignmentManagerResponse;
 import com.example.myapplication.dto.response.ProcessUserResponse;
 import com.example.myapplication.entity.ProcessUser;
 import com.example.myapplication.service.ListProcessUserInterFace;
@@ -24,9 +37,15 @@ import com.example.myapplication.service.ServiceImpl.ListProcessUserImpl;
 import com.example.myapplication.utils.ExcelUltil;
 import com.example.myapplication.utils.LocalDateTimeUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TableAllProcessActivity extends Activity {
     private RecyclerView recyclerViewLProcessUser;
@@ -36,23 +55,32 @@ public class TableAllProcessActivity extends Activity {
     private List<ProcessUser> dataList;
     private  ImageView edit;
     private ImageView export_tableAllProcess;
-    private TextView inputtableAllProcess_tableAllProcess,inputStartDate_tableAllProcess,inputStartTime_tableAllProcess,inputEndDate_tableAllProcess,inputEndTime_tableAllProcess;
+    private Spinner dropdownMenu;
+    private Integer idAssignment;
+    private RequestQueue mRequestQueue;
+    private List<String> options;
+    private ArrayAdapter<String> adapter;
+    private TextView inputStartDate_tableAllProcess,inputStartTime_tableAllProcess,inputEndDate_tableAllProcess,inputEndTime_tableAllProcess;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tableallprocess);
         try{
+            checkLogin();
+            options=new ArrayList<>();
             domain= getResources().getString(R.string.domain);
-            inputtableAllProcess_tableAllProcess=findViewById(R.id.inputtableAllProcess_tableAllProcess);
+            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+            dropdownMenu=findViewById(R.id.dropdown_menu_tableAllProcess);
+            options.add("All Assigment");
+            adapter = new ArrayAdapter<>(TableAllProcessActivity.this, android.R.layout.simple_spinner_item, options);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            dropdownMenu.setAdapter(adapter);
             inputStartDate_tableAllProcess=findViewById(R.id.inputStartDate_tableAllProcess);
             inputStartTime_tableAllProcess =findViewById(R.id.inputStartTime_tableAllProcess);
             inputEndDate_tableAllProcess =findViewById(R.id.inputEndDate_tableAllProcess);
             inputEndTime_tableAllProcess =findViewById(R.id.inputEndTime_tableAllProcess);
             dataList=new ArrayList<>();
-
-
-
-            checkLogin();
+            getAssignmentManager();
             getAllProcess(15);
             recyclerViewLProcessUser= findViewById(R.id.recyclerViewListProcessUser);
             recyclerViewLProcessUser.setLayoutManager(new LinearLayoutManager(this));
@@ -78,7 +106,7 @@ public class TableAllProcessActivity extends Activity {
             export_tableAllProcess.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new ExcelUltil().createExcelAndDownload(TableAllProcessActivity.this,"hello");
+                    new ExcelUltil().createExcelAndDownload(TableAllProcessActivity.this,"hello.xlsx");
                 }
             });
         }catch (Exception e){
@@ -128,7 +156,7 @@ public class TableAllProcessActivity extends Activity {
                         inputEndDate_tableAllProcess.setText(new LocalDateTimeUtils(endTime).getDate());
                         inputStartDate_tableAllProcess.setText(new LocalDateTimeUtils(startTime).getDate());
                         inputStartTime_tableAllProcess.setText(new LocalDateTimeUtils(startTime).getTime());
-                        inputtableAllProcess_tableAllProcess.setText(result.getNameAssignment());
+//                        inputtableAllProcess_tableAllProcess.setText(result.getNameAssignment());
                     }
                 });
 
@@ -152,5 +180,83 @@ public class TableAllProcessActivity extends Activity {
             }
         },domain,token,id);
         listAssigmentUser.getAll(TableAllProcessActivity.this);
+    }
+
+    private void getAssignmentManager() {
+
+        String idTeam = "1";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Assignment/Team/" + idTeam, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d("Data",response.toString());
+                            // Parse dữ liệu JSON và tạo danh sách các nhiệm vụ
+                            List<AssignmentManagerResponse> assignments = new ArrayList<>();
+                            JSONArray data = response.getJSONArray("data");
+                            for (int i = 0; i < data.length(); i++) {
+                                JSONObject assignmentJson = data.getJSONObject(i);
+                                AssignmentManagerResponse assignment = new AssignmentManagerResponse();
+                                assignment.setIdAssignment(assignmentJson.getInt("idAssignment"));
+                                assignment.setNameAssignment(assignmentJson.getString("teamName"));
+                                assignments.add(assignment);
+                            }
+
+                            // Tạo mảng String chứa tên của các nhiệm vụ
+                            options.clear();
+                            options.add("All Assigment");
+                            for (int i = 0; i < assignments.size(); i++) {
+                                options.add( assignments.get(i).getNameAssignment());
+                            }
+
+                            // Tạo ArrayAdapter từ mảng String
+                            adapter.notifyDataSetChanged();
+
+                            // Lắng nghe sự kiện chọn của spinner
+                            dropdownMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    // Lấy id của nhiệm vụ khi được chọn
+                                    if(position!=0){
+                                        Integer selectedAssignmentId = assignments.get(position-1).getIdAssignment();
+                                        idAssignment = selectedAssignmentId;
+                                        Toast.makeText(getApplicationContext(), "Selected assignment id: " + selectedAssignmentId, Toast.LENGTH_SHORT).show();
+                                        getAllProcess(idAssignment);
+                                    }
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                    // Xử lý khi không có nhiệm vụ nào được chọn
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Xử lý lỗi khi gửi request
+                        Log.e("Error", "Error in request: " + error.toString());
+                        Toast.makeText(getApplicationContext(), "Error in request", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                // Thêm token vào header
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+
+        // Đặt retry policy cho request
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // Thêm request vào hàng đợi
+        mRequestQueue.add(jsonObjectRequest);
     }
 }

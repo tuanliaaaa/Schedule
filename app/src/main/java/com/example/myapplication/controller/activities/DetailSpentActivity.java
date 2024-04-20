@@ -57,6 +57,9 @@ public class DetailSpentActivity extends Activity {
     private RequestQueue mRequestQueue;
     private List<AssignmentManagerResponse> assignments;
     private int idAssignment;
+    private LinearLayout  loading_AddSpend;
+    private  ScrollView scrollviewcontent_addSpent;
+
     private int costId;
 
     @Override
@@ -64,6 +67,8 @@ public class DetailSpentActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addspent);
         ImageView saved = findViewById(R.id.save_addSpent);
+        loading_AddSpend=findViewById(R.id.loading_AddSpend);
+        scrollviewcontent_addSpent=findViewById(R.id.scrollviewcontent_addSpent);
         dropdownMenu = findViewById(R.id.dropdown_menu);
         ImageView loadIcon_addSpend =findViewById(R.id.loadIcon_addSpend);
         RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
@@ -81,35 +86,6 @@ public class DetailSpentActivity extends Activity {
             // Start the animation
             loadIcon_addSpend.startAnimation(rotateAnimation);
             getAssignmentManager();
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // Thực hiện công việc nền ở đây
-                    try {
-                        // Giả định thực hiện công việc nền trong 3 giây
-                        Thread.sleep(3000);
-//
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                LinearLayout l = findViewById(R.id.loading_AddSpend);
-                                l.setVisibility(View.INVISIBLE);
-                                ScrollView s =findViewById(R.id.scrollviewcontent_addSpent);
-                                s.setVisibility(View.VISIBLE);
-                            }
-                        });
-
-                    } catch (InterruptedException e) {
-                        System.out.println("ng");
-                    }
-
-                    // Sau khi công việc nền hoàn thành, cập nhật giao diện người dùng
-
-                }
-            }).start();
-
 
             saved.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -148,7 +124,7 @@ public class DetailSpentActivity extends Activity {
 
 
                             //set spinner có idAssignment
-                            dropdownMenu = findViewById(R.id.dropdown_menu);
+
                             // Tìm vị trí của idAssignment trong danh sách
                             int positionToSelect = -1;
                             for (int i = 0; i < assignments.size(); i++) {
@@ -157,7 +133,8 @@ public class DetailSpentActivity extends Activity {
                                     break;
                                 }
                             }
-
+                            loading_AddSpend.setVisibility(View.INVISIBLE);
+                            scrollviewcontent_addSpent.setVisibility(View.VISIBLE);
                             // Thiết lập Spinner để chọn mục ở vị trí có idAssignment tương ứng
                             if (positionToSelect != -1) {
                                 dropdownMenu.setSelection(positionToSelect);
@@ -256,6 +233,7 @@ public class DetailSpentActivity extends Activity {
                                     // Xử lý khi không có nhiệm vụ nào được chọn
                                 }
                             });
+
                             getCostById(costId);
 
                         } catch (JSONException e) {

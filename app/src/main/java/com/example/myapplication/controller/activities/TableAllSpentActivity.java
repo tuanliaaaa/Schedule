@@ -79,32 +79,6 @@ public class TableAllSpentActivity extends Activity {
 
         try {
             checkLogin();
-
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // Thực hiện công việc nền ở đây
-                    try {
-                        // Giả định thực hiện công việc nền trong 3 giây
-                        Thread.sleep(3000);
-//
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                            }
-                        });
-
-                    } catch (InterruptedException e) {
-                        System.out.println("ng");
-                    }
-
-                    // Sau khi công việc nền hoàn thành, cập nhật giao diện người dùng
-
-                }
-            }).start();
-
             getAssignmentManager();
         }catch (Exception e){
             Log.e("Errors"," Lỗi Tổng ở AddSpentActivity");
