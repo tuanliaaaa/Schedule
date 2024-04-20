@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,20 +28,29 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.R;
 import com.example.myapplication.apdater.ListProcessUserAdapter;
+import com.example.myapplication.dto.ApiResponse;
 import com.example.myapplication.dto.ErrorResponse;
+import com.example.myapplication.dto.response.AssigmentResponse;
 import com.example.myapplication.dto.response.AssigmentUserResponse;
 import com.example.myapplication.dto.response.AssignmentManagerResponse;
 import com.example.myapplication.dto.response.ProcessUserResponse;
+import com.example.myapplication.dto.response.StatusAssigmentAndUserManageResponse;
+import com.example.myapplication.dto.response.StatusAssigmentOfTeamManageResponse;
 import com.example.myapplication.entity.ProcessUser;
 import com.example.myapplication.service.ListProcessUserInterFace;
 import com.example.myapplication.service.ServiceImpl.ListProcessUserImpl;
 import com.example.myapplication.utils.ExcelUltil;
+import com.example.myapplication.utils.LocalDateTimeAdapter;
 import com.example.myapplication.utils.LocalDateTimeUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +70,7 @@ public class TableAllProcessActivity extends Activity {
     private RequestQueue mRequestQueue;
     private List<String> options;
     private ArrayAdapter<String> adapter;
+    private LinearLayout startAt_tableAllProcess,endAt_tableAllProcess;
     private TextView inputStartDate_tableAllProcess,inputStartTime_tableAllProcess,inputEndDate_tableAllProcess,inputEndTime_tableAllProcess;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +78,8 @@ public class TableAllProcessActivity extends Activity {
         setContentView(R.layout.activity_tableallprocess);
         try{
             checkLogin();
+            startAt_tableAllProcess=findViewById(R.id.startAt_tableAllProcess);
+            endAt_tableAllProcess=findViewById(R.id.endAt_tableAllProcess);
             options=new ArrayList<>();
             domain= getResources().getString(R.string.domain);
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -81,7 +94,6 @@ public class TableAllProcessActivity extends Activity {
             inputEndTime_tableAllProcess =findViewById(R.id.inputEndTime_tableAllProcess);
             dataList=new ArrayList<>();
             getAssignmentManager();
-            getAllProcess(15);
             recyclerViewLProcessUser= findViewById(R.id.recyclerViewListProcessUser);
             recyclerViewLProcessUser.setLayoutManager(new LinearLayoutManager(this));
             listProcessUserAdapter = new ListProcessUserAdapter(this, dataList);
@@ -92,6 +104,8 @@ public class TableAllProcessActivity extends Activity {
 //                    startActivity(intent);
                 }
             });
+            recyclerViewLProcessUser.setAdapter(listProcessUserAdapter);
+
 
 
              edit = findViewById(R.id.edit_tableAllProcess);
@@ -109,6 +123,7 @@ public class TableAllProcessActivity extends Activity {
                     new ExcelUltil().createExcelAndDownload(TableAllProcessActivity.this,"hello.xlsx");
                 }
             });
+            getAssignmentTeam();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -137,6 +152,10 @@ public class TableAllProcessActivity extends Activity {
 
     private void getAllProcess(Integer id)
     {
+        edit.setVisibility(View.VISIBLE);
+        startAt_tableAllProcess.setVisibility(View.VISIBLE);
+        endAt_tableAllProcess.setVisibility(View.VISIBLE);
+
         ListProcessUserImpl listAssigmentUser = new ListProcessUserImpl(new ListProcessUserInterFace() {
             @Override
             public void onSuccess(ProcessUserResponse result) {
@@ -144,7 +163,6 @@ public class TableAllProcessActivity extends Activity {
                 for (AssigmentUserResponse response : result.getUserStatus())
                     dataList.add(new ProcessUser(response));
                 listProcessUserAdapter.notifyDataSetChanged();
-                recyclerViewLProcessUser.setAdapter(listProcessUserAdapter);
                 LocalDateTime startTime = result.getStartAt();
                 LocalDateTime endTime = result.getEndAt();
 
@@ -222,7 +240,7 @@ public class TableAllProcessActivity extends Activity {
                                         idAssignment = selectedAssignmentId;
                                         Toast.makeText(getApplicationContext(), "Selected assignment id: " + selectedAssignmentId, Toast.LENGTH_SHORT).show();
                                         getAllProcess(idAssignment);
-                                    }
+                                    }else getAssignmentTeam();
                                 }
 
                                 @Override
@@ -259,4 +277,61 @@ public class TableAllProcessActivity extends Activity {
         // Thêm request vào hàng đợi
         mRequestQueue.add(jsonObjectRequest);
     }
+
+    private void getAssignmentTeam() {
+        edit.setVisibility(View.INVISIBLE);
+        startAt_tableAllProcess.setVisibility(View.GONE);
+        endAt_tableAllProcess.setVisibility(View.GONE);
+
+        String idTeam = "1";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Assignment/TeamStatusAssigmentManage/" + idTeam, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d("Data",response.toString());
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter());
+                            Gson gson = gsonBuilder.create();
+                            Type responseType = new TypeToken<ApiResponse<StatusAssigmentOfTeamManageResponse>>(){}.getType();
+                            ApiResponse<StatusAssigmentOfTeamManageResponse> apiResponse = gson.fromJson(response.toString(), responseType);
+                            StatusAssigmentOfTeamManageResponse assigmentResponse = apiResponse.getData();
+                            List<StatusAssigmentAndUserManageResponse> statusAssigmentOfTeamManageResponseList =assigmentResponse.getStatusAssigmentAndUser();
+                            dataList.clear();
+
+                            for(StatusAssigmentAndUserManageResponse statusAssigmentOfTeamManageResponse:statusAssigmentOfTeamManageResponseList){
+                                dataList.add(new ProcessUser(statusAssigmentOfTeamManageResponse.getIdUser(),statusAssigmentOfTeamManageResponse
+                                        .getIdAssigmentUser(),statusAssigmentOfTeamManageResponse.getUsername(),statusAssigmentOfTeamManageResponse.getStatus(),statusAssigmentOfTeamManageResponse.getProcess()));
+                            }
+                            listProcessUserAdapter.notifyDataSetChanged();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Xử lý lỗi khi gửi request
+                        Log.e("Error", "Error in request: " + error.toString());
+                        Toast.makeText(getApplicationContext(), "Error in request", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                // Thêm token vào header
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+
+        // Đặt retry policy cho request
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // Thêm request vào hàng đợi
+        mRequestQueue.add(jsonObjectRequest);
+    }
+
 }
