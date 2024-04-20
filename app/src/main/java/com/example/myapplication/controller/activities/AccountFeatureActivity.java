@@ -31,6 +31,7 @@ import com.example.myapplication.dto.ErrorResponse;
 import com.example.myapplication.dto.response.AssigmentResponse;
 import com.example.myapplication.dto.response.InforResponse;
 import com.example.myapplication.dto.response.RoleResponse;
+import com.example.myapplication.utils.ExcelUltil;
 import com.example.myapplication.utils.LocalDateTimeAdapter;
 import com.example.myapplication.utils.LocalDateTimeUtils;
 import com.google.gson.Gson;
@@ -49,13 +50,13 @@ import java.util.Map;
 
 public class AccountFeatureActivity extends Activity {
     private RequestQueue mRequestQueue;
-    private StringRequest mStringRequest;
     private String token;
     private String domain;
-    private LinearLayout toAssigment,toManageSpent,toManageProcessWork;
+    private LinearLayout toAssigment,toManageSpent,toManageProcessWork,toViewAssigment;
     private ImageView loadIcon_AccountFeature;
     private LinearLayout loading_AccountFeature;
     private ScrollView scrollviewcontent_AccountFeature;
+    private RotateAnimation rotateAnimation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,7 @@ public class AccountFeatureActivity extends Activity {
             loading_AccountFeature = findViewById(R.id.loading_AccountFeature);
             loadIcon_AccountFeature =findViewById(R.id.loadIcon_AccountFeature);
             scrollviewcontent_AccountFeature= findViewById(R.id.scrollviewcontent_AccountFeature);
-            RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
+             rotateAnimation = new RotateAnimation(0, 360,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -73,11 +74,11 @@ public class AccountFeatureActivity extends Activity {
             rotateAnimation.setInterpolator(new LinearInterpolator());
             rotateAnimation.setRepeatCount(Animation.INFINITE); // Infinite rotation
             rotateAnimation.setDuration(2000); // 2 seconds for each rotation
-            loadIcon_AccountFeature.startAnimation(rotateAnimation);
+
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
             domain= getResources().getString(R.string.domain);
             getRoles();
-
+            toViewAssigment =findViewById(R.id.viewAssigment_accountFeature);
             toAssigment = findViewById(R.id.addAssigment_accountFeature);
             toManageSpent = findViewById(R.id.manageSpent_accountFeature);
             toManageProcessWork = findViewById(R.id.managePocessWork_accountFeature);
@@ -86,6 +87,7 @@ public class AccountFeatureActivity extends Activity {
         }
     }
     public void getRoles(){
+        loadIcon_AccountFeature.startAnimation(rotateAnimation);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, domain + "/api/auth/infor", null,
                 new Response.Listener<JSONObject>() {
@@ -110,7 +112,7 @@ public class AccountFeatureActivity extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+//                                    Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
                                     try{
                                         if(roleNames.contains("admin"))setAdmin();
                                         else setUser();
@@ -160,24 +162,48 @@ public class AccountFeatureActivity extends Activity {
                                 Log.e("Error", "Server: " + apiResponse.getError());
                                 Toast.makeText(getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
                             }
-
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    loading_AccountFeature.setVisibility(View.INVISIBLE);
+                                }
+                            });
                         }else{
                             Log.i("Success", "in onError");
                             if (error instanceof TimeoutError) {
-                                Toast.makeText(getApplicationContext(), "Request Time Out", Toast.LENGTH_LONG).show();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "Request Time Out", Toast.LENGTH_LONG).show();
+                                        loadIcon_AccountFeature.clearAnimation();
+                                        loadIcon_AccountFeature.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                loadIcon_AccountFeature.setOnClickListener(null);
+                                                getRoles();
+                                            }
+                                        });
+                                    }
+                                });
                                 Log.e("Error", "Request Time Out");
                             } else {
-                                Toast.makeText(getApplicationContext(), "Lỗi Mạng", Toast.LENGTH_LONG).show();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "Lỗi Mạng", Toast.LENGTH_LONG).show();
+                                        loadIcon_AccountFeature.clearAnimation();
+                                        loadIcon_AccountFeature.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                loadIcon_AccountFeature.setOnClickListener(null);
+                                                getRoles();
+                                            }
+                                        });
+                                    }
+                                });
                                 Log.e("Error","Lỗi Mạng");
                             }
                         }
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                loading_AccountFeature.setVisibility(View.INVISIBLE);
-                            }
-                        });
                     }
                 }) {
             @Override
@@ -201,6 +227,15 @@ public class AccountFeatureActivity extends Activity {
 
             @Override
             public void run() {
+                toViewAssigment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(AccountFeatureActivity.this, AllAssigmentUserActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+
                 loading_AccountFeature.setVisibility(View.INVISIBLE);
                 scrollviewcontent_AccountFeature.setVisibility(View.VISIBLE);
                 toManageSpent.setOnClickListener(new View.OnClickListener() {
@@ -210,6 +245,7 @@ public class AccountFeatureActivity extends Activity {
                         startActivity(intent);
                     }
                 });
+                toManageSpent.setVisibility(View.VISIBLE);
                 toAssigment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -218,20 +254,36 @@ public class AccountFeatureActivity extends Activity {
                         startActivity(intent); // Bắt đầu Activity mới
                     }
                 });
+                toAssigment.setVisibility(View.VISIBLE);
                 toManageProcessWork.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(AccountFeatureActivity.this, UpdateAssigmentManageActivity.class);
+                        Intent intent = new Intent(AccountFeatureActivity.this, TableAllProcessActivity.class);
                         startActivity(intent);
                     }
                 });
+                toManageProcessWork.setVisibility(View.VISIBLE);
             }
         });
 
     }
 
     public void setUser(){
+        runOnUiThread(new Runnable() {
 
+            @Override
+            public void run() {
+                toViewAssigment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(AccountFeatureActivity.this, AllAssigmentUserActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                loading_AccountFeature.setVisibility(View.INVISIBLE);
+                scrollviewcontent_AccountFeature.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public void checkLogin(){

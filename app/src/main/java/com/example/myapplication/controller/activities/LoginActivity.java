@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 
 import com.android.volley.VolleyError;
 import com.example.myapplication.R;
+import com.example.myapplication.dto.ErrorResponse;
 import com.example.myapplication.dto.request.LoginRequest;
 import com.example.myapplication.dto.response.LoginResponse;
 import com.example.myapplication.service.ServiceImpl.LoginImpl;
@@ -35,12 +36,14 @@ public class LoginActivity extends Activity {
     private EditText password;
     private ImageView loadIcon_login;
     private LinearLayout loading_login;
+    private TextView loginError;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         try {
+            loginError =findViewById(R.id.loginError);
             loading_login = findViewById(R.id.loading_login);
             loading_login.setVisibility(View.INVISIBLE);
             loadIcon_login = findViewById(R.id.loadIcon_login);
@@ -61,6 +64,18 @@ public class LoginActivity extends Activity {
             loginButton = findViewById(R.id.loginButton);
             username = findViewById(R.id.username);
             password = findViewById(R.id.password);
+            username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    loginError.setVisibility(View.GONE);
+                }
+            });
+            password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    loginError.setVisibility(View.GONE);
+                }
+            });
             password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -113,7 +128,8 @@ public class LoginActivity extends Activity {
                     @Override
                     public void run() {
                         loading_login.setVisibility(View.INVISIBLE);
-
+                        loginError.setText(error);
+                        loginError.setVisibility(View.VISIBLE);
                         Toast.makeText(getApplicationContext(), "Lỗi mạng", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -121,18 +137,17 @@ public class LoginActivity extends Activity {
             }
 
             @Override
-            public void onErrorResponse(VolleyError error){
+            public void onErrorResponse(ErrorResponse<?> error){
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         loading_login.setVisibility(View.INVISIBLE);
-
-                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_LONG).show();
+                        loginError.setText("thông tin đăng nhập không chính xác");
+                        loginError.setVisibility(View.VISIBLE);
                     }
                 });
             }
         }, domain);
         volleyManager.postDataToUrl(LoginActivity.this, new LoginRequest(username.getText().toString(), password.getText().toString()));
-
     }
 }

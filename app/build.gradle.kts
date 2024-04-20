@@ -43,6 +43,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation ("org.apache.poi:poi:5.2.4")
+    implementation ("org.apache.poi:poi-ooxml:5.2.4")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

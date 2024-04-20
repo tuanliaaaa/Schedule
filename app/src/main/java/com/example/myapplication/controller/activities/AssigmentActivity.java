@@ -9,9 +9,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -62,6 +67,11 @@ public class AssigmentActivity extends Activity {
     private TextView inputEndDate_assignment;
     private TextView inputEndTime_assignment;
     private EditText inputDescription_assignment;
+    private ImageView loadIcon_assigment;
+    private LinearLayout loading_assigment;
+    private ScrollView scrollviewcontent_assigment;
+    private RotateAnimation rotateAnimation;
+
     private String domain;
     private boolean isClickedStartDay = false,isClickedEndDay=false,isClickedStartTime=false,isClickedEndTime=false;
 
@@ -73,6 +83,18 @@ public class AssigmentActivity extends Activity {
         setContentView(R.layout.activity_assigment);
         try{
             checkLogin();
+            loading_assigment = findViewById(R.id.loading_assigment);
+            scrollviewcontent_assigment =findViewById(R.id.scrollviewcontent_assigment);
+            loadIcon_assigment =findViewById(R.id.loadIcon_assigment);
+            rotateAnimation = new RotateAnimation(0, 360,
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f);
+
+            // Set animation properties
+            rotateAnimation.setInterpolator(new LinearInterpolator());
+            rotateAnimation.setRepeatCount(Animation.INFINITE); // Infinite rotation
+            rotateAnimation.setDuration(2000); // 2 seconds for each rotation
+            loadIcon_assigment.startAnimation(rotateAnimation);
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
             domain= getResources().getString(R.string.domain);
             ImageView linearLayout = findViewById(R.id.save_assigment);
@@ -236,10 +258,9 @@ public class AssigmentActivity extends Activity {
 
 
     public  void postAssignment(){
+        loading_assigment.setVisibility(View.VISIBLE);
         try{
             JSONObject jsonBody = new JSONObject();
-
-            // Tạo danh sách người dùng từ input
             List<Integer> users = new ArrayList<>();
             String peopleID = String.valueOf(inputForPeople_assignment.getText());
             String[] peopleIDArray = peopleID.split(",");
@@ -250,7 +271,7 @@ public class AssigmentActivity extends Activity {
             // Lấy tên bài tập từ input
 
             String assignment = String.valueOf(inputAssignment_assignment.getText());
-
+//            Toast.makeText(getApplicationContext(),assignment,Toast.LENGTH_LONG).show();
             // Lấy mô tả từ input
 
             String description = String.valueOf(inputDescription_assignment.getText());
@@ -272,12 +293,14 @@ public class AssigmentActivity extends Activity {
                 jsonBody.put("endAt", endDateTime);
                 jsonBody.put("description", description);
                 jsonBody.put("usersId", new JSONArray(users));
+                jsonBody.put("nameAssignment",assignment);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, domain+"/Assignment/Team/47",
                         jsonBody,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 Log.i("success", "in onResponse");
+                                Log.d("Data",response.toString());
                                 GsonBuilder gsonBuilder = new GsonBuilder();
                                 gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter());
                                 Gson gson = gsonBuilder.create();
@@ -287,7 +310,7 @@ public class AssigmentActivity extends Activity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(), "Thêm Assigment Thành công", Toast.LENGTH_LONG).show();
                                             finish();
                                             Intent intent = new Intent(AssigmentActivity.this, TableAllProcessActivity.class);
                                             startActivity(intent);
@@ -331,6 +354,8 @@ public class AssigmentActivity extends Activity {
                                         Toast.makeText(getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
                                     }
                                 }
+                                loading_assigment.setVisibility(View.INVISIBLE);
+
                             }
                         }) {
                     @Override
@@ -348,6 +373,8 @@ public class AssigmentActivity extends Activity {
             }
         }catch (Exception e){
             Log.e("errors",e.toString());
+            Toast.makeText(getApplicationContext(),"Lỗi nhập thông tin",Toast.LENGTH_LONG).show();
+            loading_assigment.setVisibility(View.INVISIBLE);
         }
     }
 

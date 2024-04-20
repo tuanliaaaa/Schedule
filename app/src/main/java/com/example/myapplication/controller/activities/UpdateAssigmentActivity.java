@@ -3,6 +3,7 @@ package com.example.myapplication.controller.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -56,21 +57,24 @@ public class UpdateAssigmentActivity extends Activity {
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
     private Context context;
+    private String token;
     private ImageView loadIcon_UpdateAssigment;
     private LinearLayout loading_UpdateAssigment;
+    private RotateAnimation rotateAnimation;
     private ScrollView scrollviewcontent_UpdateAssigment;
     private String domain;
-    private TextView inputDescription_updateAssigment;
+    private TextView inputDescription_updateAssigment,inputAssignment_updateAssigment;
     private TextView inputStartDate_updateAssigment,inputEndDate_updateAssigment,inputStartTime_updateAssigment,inputEndTime_updateAssigment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updateassigment);
         try{
+            checkLogin();
             loading_UpdateAssigment = findViewById(R.id.loading_UpdateAssigment);
             scrollviewcontent_UpdateAssigment =findViewById(R.id.scrollviewcontent_UpdateAssigment);
             loadIcon_UpdateAssigment =findViewById(R.id.loadIcon_UpdateAssigment);
-            RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
+             rotateAnimation = new RotateAnimation(0, 360,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -80,7 +84,6 @@ public class UpdateAssigmentActivity extends Activity {
             rotateAnimation.setDuration(2000); // 2 seconds for each rotation
 
             // Start the animation
-            loadIcon_UpdateAssigment.startAnimation(rotateAnimation);
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
             domain= getResources().getString(R.string.domain);
             getAssigment();
@@ -115,6 +118,7 @@ public class UpdateAssigmentActivity extends Activity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 Log.i("success", "in onResponse");
+                                Log.d("Data",response.toString());
                                 GsonBuilder gsonBuilder = new GsonBuilder();
                                 gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter());
                                 Gson gson = gsonBuilder.create();
@@ -125,7 +129,7 @@ public class UpdateAssigmentActivity extends Activity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(),"Cập Nhật Thành công", Toast.LENGTH_LONG).show();
 
                                             try{
                                                 inputDescription_updateAssigment=findViewById(R.id.inputDescription_updateAssigment);
@@ -188,7 +192,7 @@ public class UpdateAssigmentActivity extends Activity {
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         // Thêm token vào header
                         Map<String, String> headers = new HashMap<>();
-                        headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEyODE0ODAxLCJleHAiOjE3MTI4MTg0MDF9.itUNyrw9N-7M65ifB66JkkKdHrPevkPcUKmKL95OYfo");
+                        headers.put("Authorization", "Bearer "+token);
                         return headers;
                     }
                 };
@@ -215,6 +219,7 @@ public class UpdateAssigmentActivity extends Activity {
     }
 
     public void getAssigment() {
+        loadIcon_UpdateAssigment.startAnimation(rotateAnimation);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, domain + "/Assignment/AssigmentUser/18", null,
                 new Response.Listener<JSONObject>() {
@@ -222,6 +227,7 @@ public class UpdateAssigmentActivity extends Activity {
                     public void onResponse(JSONObject response) {
                         // Xử lý phản hồi thành công
                         Log.i("success", "in onResponse");
+                        Log.d("Data",response.toString());
                         GsonBuilder gsonBuilder = new GsonBuilder();
                         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter());
                         Gson gson = gsonBuilder.create();
@@ -232,7 +238,7 @@ public class UpdateAssigmentActivity extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+//                                    Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
 
                                     try{
                                         LocalDateTimeUtils start = new LocalDateTimeUtils(assigmentResponse.getStartAt());
@@ -247,6 +253,8 @@ public class UpdateAssigmentActivity extends Activity {
                                         inputEndTime_updateAssigment.setText(end.getTime());
                                         inputDescription_updateAssigment=findViewById(R.id.inputDescription_updateAssigment);
                                         inputDescription_updateAssigment.setText(assigmentResponse.getDescription());
+                                        inputAssignment_updateAssigment=findViewById(R.id.inputAssignment_updateAssigment);
+                                        inputAssignment_updateAssigment.setText(assigmentResponse.getAssingmentName());
                                         loading_UpdateAssigment.setVisibility(View.INVISIBLE);
                                         scrollviewcontent_UpdateAssigment.setVisibility(View.VISIBLE);
                                     }catch (Exception e){
@@ -276,12 +284,8 @@ public class UpdateAssigmentActivity extends Activity {
                     public void onErrorResponse(VolleyError error) {
                         // Xử lý lỗi
                         Log.i("Success", "in onErrorResponse");
-                        if (error instanceof TimeoutError) {
-                            Toast.makeText(getApplicationContext(), "Request Time Out", Toast.LENGTH_LONG).show();
-                            Log.e("Error", "Request Time Out");
-                        } else {
-                            Log.e("Error", error.toString());
-                            if (error.networkResponse != null && error.networkResponse.statusCode == 400) {
+                        if (error.networkResponse != null){
+                            if ( error.networkResponse.statusCode == 400) {
                                 Gson gson = new Gson();
                                 String errorResponse = new String(error.networkResponse.data);
                                 Type responseType = new TypeToken<ErrorResponse<?>>(){}.getType();
@@ -296,20 +300,48 @@ public class UpdateAssigmentActivity extends Activity {
                                 Log.e("Error", "Server: " + apiResponse.getError());
                                 Toast.makeText(getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
                             }
-                        }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                loading_UpdateAssigment.setVisibility(View.INVISIBLE);
+                        }else {
+                            if (error instanceof TimeoutError) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "Request Time Out", Toast.LENGTH_LONG).show();
+                                        loadIcon_UpdateAssigment.clearAnimation();
+                                        loadIcon_UpdateAssigment.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                loadIcon_UpdateAssigment.setOnClickListener(null);
+                                                getAssigment();
+                                            }
+                                        });
+                                    }
+                                });
+                                Log.e("Error", "Request Time Out");
+                            } else {
+                                Log.e("Error", error.toString());
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "Lỗi mạng", Toast.LENGTH_LONG).show();
+                                        loadIcon_UpdateAssigment.clearAnimation();
+                                        loadIcon_UpdateAssigment.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                loadIcon_UpdateAssigment.setOnClickListener(null);
+                                                getAssigment();
+                                            }
+                                        });
+                                    }
+                                });
                             }
-                        });
+                        }
                     }
                 }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 // Thêm token vào header
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEyODE0ODAxLCJleHAiOjE3MTI4MTg0MDF9.itUNyrw9N-7M65ifB66JkkKdHrPevkPcUKmKL95OYfo");
+                headers.put("Authorization", "Bearer "+token);
                 return headers;
             }
         };
@@ -320,5 +352,25 @@ public class UpdateAssigmentActivity extends Activity {
 // Thêm yêu cầu vào hàng đợi
         mRequestQueue.add(jsonObjectRequest);
 
+    }
+
+
+    private void checkLogin(){
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        token = sharedPref.getString("Token", null);
+        if(token == null){
+            finish();
+            Intent intent = new Intent(UpdateAssigmentActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+    private  void clearToken(){
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("Token");
+        editor.apply();
+        finish();
+        Intent intent = new Intent(UpdateAssigmentActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.activities.MainActivity"
+    tools:context=".controller.activities.TableAllProcessActivity"
     android:background="@color/white"
     >
 
@@ -53,12 +53,10 @@
                 android:id="@+id/edit_tableAllProcess"
                 android:layout_width="50dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="60dp"
                 android:src="@drawable/icon_edit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.9"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/headerTitle_tableAllProcess"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:shapeAppearanceOverlay="@style/circular" />
@@ -68,28 +66,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/footerList_tableAllProcess"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_tableAllProcess">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="0.3"
                     android:orientation="vertical">
 
                     <TextView
@@ -98,32 +96,29 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:text="Assigment"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/inputtableAllProcess_tableAllProcess"
+                        <Spinner
+                            android:id="@+id/dropdown_menu_tableAllProcess"
                             android:layout_width="0dp"
                             android:layout_height="50dp"
                             android:layout_weight="0.8"
                             android:background="@drawable/custom_inputtext"
-                            android:contentDescription="Enter How Much Cookies You Want"
-                            android:ems="10"
                             android:inputType="text"
-                            android:paddingLeft="10dp"
-                            android:text="Design"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
                             android:textSize="20sp" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.2"
-                            android:orientation="vertical"
-                            >
+                            android:orientation="vertical">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
@@ -131,15 +126,15 @@
 
 
                                 <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/save_tableAllProcess"
+                                    android:id="@+id/export_tableAllProcess"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="1"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/ic_save"
-                                    app:layout_constraintHorizontal_bias="1"/>
+                                    app:srcCompat="@drawable/ic_export" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                         </LinearLayout>
@@ -155,6 +150,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/startAt_tableAllProcess"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -173,20 +169,21 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="Start Date"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputStartDate_tableAllProcess"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
                                 android:ems="10"
+                                android:gravity="center_vertical"
                                 android:inputType="text"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp"
                                 android:paddingBottom="5dp"
-                                android:text="22/12/2002"
-                                android:textSize="20sp" />
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -203,20 +200,19 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="Start Time"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputStartTime_tableAllProcess"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
+                                android:gravity="center_vertical"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp"
                                 android:paddingBottom="5dp"
-                                android:text="22:10 pm"
-                                android:textSize="20sp" />
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -225,11 +221,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/endAt_tableAllProcess"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -248,20 +245,20 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="End Date"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputEndDate_tableAllProcess"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
+                                android:gravity="center_vertical"
                                 android:inputType="text"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp"
                                 android:paddingBottom="5dp"
-                                android:text="22/12/2002"
-                                android:textSize="20sp" />
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -278,20 +275,19 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="End Time"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputEndTime_tableAllProcess"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
+                                android:gravity="center_vertical"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp"
                                 android:paddingBottom="5dp"
-                                android:text="Design:10 pm"
-                                android:textSize="20sp" />
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -300,282 +296,73 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="0.3"
+                    android:layout_height="391dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/labelDescription_tableAllProcess"
+                    <LinearLayout
+                        android:id="@+id/table_processUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="Description"
-                        android:textSize="16sp" />
+                        android:background="#ccc"
+                        android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TableLayout
-                        android:id="@+id/tableLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:stretchColumns="*"
-                        android:background="#ccc">
-
-                        <TableRow
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="42dp">
+                            android:layout_height="42dp"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="42dp"
-                                android:layout_marginRight="-1dp"
+
+                                android:layout_weight="0.3"
+
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
-
                                 android:padding="10dp"
                                 android:text="Name"
+                                android:textColor="@color/black"
                                 android:textFontWeight="600"
                                 android:textSize="16dp" />
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="42dp"
-                                android:layout_marginRight="-1dp"
+                                android:layout_weight="0.3"
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="Process"
+                                android:textColor="@color/black"
                                 android:textFontWeight="600"
                                 android:textSize="16dp" />
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="42dp"
+                                android:layout_weight="0.3"
                                 android:background="@drawable/background_datatable"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="Status"
-
                                 android:textColor="@color/black"
                                 android:textFontWeight="600"
                                 android:textSize="16dp" />
-                        </TableRow>
+                        </LinearLayout>
 
-                        <TableRow
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewListProcessUser"
                             android:layout_width="match_parent"
-                            android:layout_height="113dp">
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="Tuấn"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="20%"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Trễ"
-
-                                android:textColor="@color/black" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="Nhi"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="50%"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Trễ"
-
-                                android:textColor="@color/black" />
-                        </TableRow>
-
-                    </TableLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
 
             </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/footerList_tableAllProcess"
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/pink"
-        >
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-
-                android:src="@drawable/ic_button_home"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blueIcon" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_button_schedule"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blueIcon"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_button_mess"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blueIcon" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_button_user"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blueIcon"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/footerMainIcon_tableAllProcess"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="48dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_iconadd">
-
-            <ImageView
-                android:id="@+id/imgChart_tableAllProcess"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-
-                android:src="@drawable/ic_button_plus"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

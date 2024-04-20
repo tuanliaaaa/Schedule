@@ -74,11 +74,22 @@
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background" />
 
+                <TextView
+                    android:id="@+id/loginError"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thông tin đăng nhập không chính xác"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
                 <Button
                     android:id="@+id/loginButton"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="15dp"
                     android:backgroundTint="@color/purple"
                     android:text="Login"
                     android:textSize="18sp"

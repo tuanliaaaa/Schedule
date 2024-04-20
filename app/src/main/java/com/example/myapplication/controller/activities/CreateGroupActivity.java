@@ -78,7 +78,7 @@ public class CreateGroupActivity extends Activity {
             dataList = new ArrayList<>();
 
             recommendUserAdapter = new RecommendUserAdapter(this, dataList);
-            recommendUserAdapter.setOnItemClickListener(new RecommendUserAdapter.OnItemClickListener() {
+            recommendUserAdapter.setOnItemClickListener(new RecommendUserAdapter.OnItemRcmUserClickListener() {
                 @Override
                 public void onItemClick(UserRcm userRcm,int potition) {
                     if(!inputAddPeople_createGroup.getText().toString().trim().equals(""))

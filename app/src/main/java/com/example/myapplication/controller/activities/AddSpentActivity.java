@@ -59,12 +59,14 @@ public class AddSpentActivity extends Activity {
     private TextView inputMoney_addSpent;
     private String domain;
     private TextView inputDescription_addSpent;
+    private ScrollView scrollviewcontent_addSpent;
     private String token;
     private RequestQueue mRequestQueue;
     private Integer idAssignment;
+
     private boolean isClicked = false;
     private TextView inputRefundDate;
-
+    private LinearLayout loading_AddSpend;
 
 
     @Override
@@ -90,6 +92,16 @@ public class AddSpentActivity extends Activity {
         });
         try {
             checkLogin();
+            loading_AddSpend=findViewById(R.id.loading_AddSpend);
+            scrollviewcontent_addSpent=findViewById(R.id.scrollviewcontent_addSpent);
+            domain= getResources().getString(R.string.domain);
+            ImageView saved = findViewById(R.id.save_addSpent);
+            dropdownMenu = findViewById(R.id.dropdown_menu);
+            ImageView loadIcon_addSpend =findViewById(R.id.loadIcon_addSpend);
+            RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f);
+
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
             // Set animation properties
             rotateAnimation.setInterpolator(new LinearInterpolator());
@@ -98,40 +110,10 @@ public class AddSpentActivity extends Activity {
 
             // Start the animation
             loadIcon_addSpend.startAnimation(rotateAnimation);
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // Thực hiện công việc nền ở đây
-                    try {
-                        // Giả định thực hiện công việc nền trong 3 giây
-                        Thread.sleep(3000);
-//
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                LinearLayout l = findViewById(R.id.loading_AddSpend);
-                                l.setVisibility(View.INVISIBLE);
-                                ScrollView s =findViewById(R.id.scrollviewcontent_addSpent);
-                                s.setVisibility(View.VISIBLE);
-                            }
-                        });
-
-                    } catch (InterruptedException e) {
-                        System.out.println("ng");
-                    }
-
-                    // Sau khi công việc nền hoàn thành, cập nhật giao diện người dùng
-
-                }
-            }).start();
-
             getAssignmentManager();
             saved.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    domain= getResources().getString(R.string.domain);
                     postSpent();
 
                 }
@@ -144,7 +126,8 @@ public class AddSpentActivity extends Activity {
 
     public void postSpent() {
         try{
-
+            loading_AddSpend.setVisibility(View.VISIBLE);
+            scrollviewcontent_addSpent.setVisibility(View.INVISIBLE);
             inputSpentName_addSpent =findViewById(R.id.inputSpentName_addSpent);
             inputDescription_addSpent = findViewById(R.id.inputDescription_addSpent);
             inputMoney_addSpent = findViewById(R.id.inputMoney_addSpent);
@@ -296,8 +279,11 @@ public class AddSpentActivity extends Activity {
                             // Tạo ArrayAdapter từ mảng String
                             ArrayAdapter<String> adapter = new ArrayAdapter<>(AddSpentActivity.this, android.R.layout.simple_spinner_item, options);
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            dropdownMenu.setAdapter(adapter);
 
+                            dropdownMenu.setAdapter(adapter);
+                            loading_AddSpend.setVisibility(View.INVISIBLE);
+
+                            scrollviewcontent_addSpent.setVisibility(View.VISIBLE);
                             // Lắng nghe sự kiện chọn của spinner
                             dropdownMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
