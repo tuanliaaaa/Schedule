@@ -7,6 +7,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -35,15 +41,35 @@ public class AllAssigmentUserActivity extends Activity {
     private RecyclerView recyclerViewLAssigmentUser;
     private String token;
     private String domain;
+    private ImageView loadIcon_allAssigmentUser;
+    private LinearLayout loading_allAssigmentUser;
+    private ScrollView scrollviewcontent_allAssigmentUser;
+    
 
     private List<AssigmentUser> dataList;
     private ListAssigmentUserAdapter listAssigmentUserAdapter;
+    private RotateAnimation rotateAnimation;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allassigmentuser);
         try{
             checkLogin();
+            loading_allAssigmentUser = findViewById(R.id.loading_allAssigmentUser);
+            scrollviewcontent_allAssigmentUser =findViewById(R.id.scrollviewcontent_allAssigmentUser);
+            loadIcon_allAssigmentUser =findViewById(R.id.loadIcon_allAssigmentUser);
+             rotateAnimation = new RotateAnimation(0, 360,
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f);
+
+            // Set animation properties
+            rotateAnimation.setInterpolator(new LinearInterpolator());
+            rotateAnimation.setRepeatCount(Animation.INFINITE); // Infinite rotation
+            rotateAnimation.setDuration(2000); // 2 seconds for each rotation
+
+            // Start the animation
+
+
             domain= getResources().getString(R.string.domain);
             getAllAssigment();
             recyclerViewLAssigmentUser= findViewById(R.id.recyclerViewListAssigmentUser);
@@ -66,6 +92,7 @@ public class AllAssigmentUserActivity extends Activity {
 
     private void getAllAssigment()
     {
+        loadIcon_allAssigmentUser.startAnimation(rotateAnimation);
         ListAssigmentUserImpl listAssigmentUser = new ListAssigmentUserImpl(new ListAssigmentUserInterFace() {
             @Override
             public void onSuccess(List<AssignmentOfUserResponse> result) {
@@ -73,7 +100,13 @@ public class AllAssigmentUserActivity extends Activity {
                 for (AssignmentOfUserResponse response : result)
                     dataList.add(new AssigmentUser(response));
                 listAssigmentUserAdapter.notifyDataSetChanged();
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        scrollviewcontent_allAssigmentUser.setVisibility(View.VISIBLE);
+                        loading_allAssigmentUser.setVisibility(View.INVISIBLE);
+                    }
+                });
             }
 
             @Override
@@ -83,11 +116,20 @@ public class AllAssigmentUserActivity extends Activity {
 
             @Override
             public void onError(String error) {
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(getApplicationContext(),"Lỗi Mạng",Toast.LENGTH_LONG).show();
+                        loadIcon_allAssigmentUser.clearAnimation();
+
+                        loadIcon_allAssigmentUser.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                loadIcon_allAssigmentUser.setOnClickListener(null);
+                                getAllAssigment();
+
+                            }
+                        });
                     }
                 });
 

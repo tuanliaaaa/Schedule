@@ -56,17 +56,17 @@ public class AccountFeatureActivity extends Activity {
     private ImageView loadIcon_AccountFeature;
     private LinearLayout loading_AccountFeature;
     private ScrollView scrollviewcontent_AccountFeature;
+    private RotateAnimation rotateAnimation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_feature);
         try{
-//            new ExcelUltil().openFile(AccountFeatureActivity.this,"g");
             checkLogin();
             loading_AccountFeature = findViewById(R.id.loading_AccountFeature);
             loadIcon_AccountFeature =findViewById(R.id.loadIcon_AccountFeature);
             scrollviewcontent_AccountFeature= findViewById(R.id.scrollviewcontent_AccountFeature);
-            RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
+             rotateAnimation = new RotateAnimation(0, 360,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -74,7 +74,7 @@ public class AccountFeatureActivity extends Activity {
             rotateAnimation.setInterpolator(new LinearInterpolator());
             rotateAnimation.setRepeatCount(Animation.INFINITE); // Infinite rotation
             rotateAnimation.setDuration(2000); // 2 seconds for each rotation
-            loadIcon_AccountFeature.startAnimation(rotateAnimation);
+
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
             domain= getResources().getString(R.string.domain);
             getRoles();
@@ -87,6 +87,7 @@ public class AccountFeatureActivity extends Activity {
         }
     }
     public void getRoles(){
+        loadIcon_AccountFeature.startAnimation(rotateAnimation);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, domain + "/api/auth/infor", null,
                 new Response.Listener<JSONObject>() {
@@ -161,24 +162,48 @@ public class AccountFeatureActivity extends Activity {
                                 Log.e("Error", "Server: " + apiResponse.getError());
                                 Toast.makeText(getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
                             }
-
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    loading_AccountFeature.setVisibility(View.INVISIBLE);
+                                }
+                            });
                         }else{
                             Log.i("Success", "in onError");
                             if (error instanceof TimeoutError) {
-                                Toast.makeText(getApplicationContext(), "Request Time Out", Toast.LENGTH_LONG).show();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "Request Time Out", Toast.LENGTH_LONG).show();
+                                        loadIcon_AccountFeature.clearAnimation();
+                                        loadIcon_AccountFeature.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                loadIcon_AccountFeature.setOnClickListener(null);
+                                                getRoles();
+                                            }
+                                        });
+                                    }
+                                });
                                 Log.e("Error", "Request Time Out");
                             } else {
-                                Toast.makeText(getApplicationContext(), "Lỗi Mạng", Toast.LENGTH_LONG).show();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "Lỗi Mạng", Toast.LENGTH_LONG).show();
+                                        loadIcon_AccountFeature.clearAnimation();
+                                        loadIcon_AccountFeature.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                loadIcon_AccountFeature.setOnClickListener(null);
+                                                getRoles();
+                                            }
+                                        });
+                                    }
+                                });
                                 Log.e("Error","Lỗi Mạng");
                             }
                         }
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                loading_AccountFeature.setVisibility(View.INVISIBLE);
-                            }
-                        });
                     }
                 }) {
             @Override

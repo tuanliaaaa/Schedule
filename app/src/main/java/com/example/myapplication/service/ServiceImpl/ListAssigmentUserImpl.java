@@ -95,7 +95,7 @@ public class ListAssigmentUserImpl {
                                     ErrorResponse<?> apiResponse = gson.fromJson(errorResponse, responseType);
 //                                    Toast.makeText(context.getApplicationContext(), apiResponse.getError().toString(), Toast.LENGTH_LONG).show();
                                     Log.e("Error", "Bad request: " + apiResponse.getError());
-                                    callback.onError(apiResponse.getError().toString());
+                                    callback.onErrorResponse(apiResponse);
                                 } else {
                                     Gson gson = new Gson();
                                     String errorResponse = new String(error.networkResponse.data);

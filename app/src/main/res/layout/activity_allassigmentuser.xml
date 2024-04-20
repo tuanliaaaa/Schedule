@@ -63,108 +63,150 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_allAssigmentUser">
 
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <ScrollView
+                android:id="@+id/scrollviewcontent_allAssigmentUser"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="0.3"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/labelDescription_allAssigmentUser"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:gravity="center"
-                        android:text="Description"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/table_processUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#ccc"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="0.3"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/labelDescription_allAssigmentUser"
                             android:layout_width="match_parent"
-                            android:layout_height="42dp">
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center"
+                            android:text="Table Assigment"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="42dp"
-                                android:layout_marginRight="0dp"
-                                android:layout_weight="0.3"
-                                android:background="@drawable/background_datatable"
-
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Name"
-                                android:textColor="@color/black"
-                                android:textFontWeight="600"
-                                android:textSize="16dp" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="42dp"
-                                android:layout_marginRight="0dp"
-                                android:layout_weight="0.3"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Process"
-                                android:textColor="@color/black"
-                                android:textFontWeight="600"
-                                android:textSize="16dp" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="42dp"
-                                android:layout_weight="0.3"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="Status"
-                                android:textColor="@color/black"
-                                android:textFontWeight="600"
-                                android:textSize="16dp" />
-                        </LinearLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerViewListAssigmentUser"
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
 
-
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/table_processUser"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#ccc"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="42dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="42dp"
+                                    android:layout_marginRight="0dp"
+                                    android:layout_weight="0.3"
+                                    android:background="@drawable/background_datatable"
+
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Name"
+                                    android:textColor="@color/black"
+                                    android:textFontWeight="600"
+                                    android:textSize="16dp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="42dp"
+                                    android:layout_marginRight="0dp"
+                                    android:layout_weight="0.3"
+                                    android:background="@drawable/background_datatable"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Process"
+                                    android:textColor="@color/black"
+                                    android:textFontWeight="600"
+                                    android:textSize="16dp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="42dp"
+                                    android:layout_weight="0.3"
+                                    android:background="@drawable/background_datatable"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+
+                                    android:text="Status"
+                                    android:textColor="@color/black"
+                                    android:textFontWeight="600"
+                                    android:textSize="16dp" />
+                            </LinearLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerViewListAssigmentUser"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
                 </LinearLayout>
+            </ScrollView>
 
+            <LinearLayout
+                android:id="@+id/loading_allAssigmentUser"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/loadIcon_allAssigmentUser"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/load_icon"
+                        android:tint="@color/blueIcon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </com.google.android.material.imageview.ShapeableImageView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
-        </ScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

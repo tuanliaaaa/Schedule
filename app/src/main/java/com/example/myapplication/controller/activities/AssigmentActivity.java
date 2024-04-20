@@ -279,6 +279,7 @@ public class AssigmentActivity extends Activity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 Log.i("success", "in onResponse");
+                                Log.d("Data",response.toString());
                                 GsonBuilder gsonBuilder = new GsonBuilder();
                                 gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter());
                                 Gson gson = gsonBuilder.create();
@@ -288,7 +289,7 @@ public class AssigmentActivity extends Activity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(), "Thêm Assigment Thành công", Toast.LENGTH_LONG).show();
                                             finish();
                                             Intent intent = new Intent(AssigmentActivity.this, TableAllProcessActivity.class);
                                             startActivity(intent);
