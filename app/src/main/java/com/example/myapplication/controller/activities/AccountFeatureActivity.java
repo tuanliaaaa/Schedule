@@ -31,6 +31,7 @@ import com.example.myapplication.dto.ErrorResponse;
 import com.example.myapplication.dto.response.AssigmentResponse;
 import com.example.myapplication.dto.response.InforResponse;
 import com.example.myapplication.dto.response.RoleResponse;
+import com.example.myapplication.utils.ExcelUltil;
 import com.example.myapplication.utils.LocalDateTimeAdapter;
 import com.example.myapplication.utils.LocalDateTimeUtils;
 import com.google.gson.Gson;
@@ -60,6 +61,7 @@ public class AccountFeatureActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_feature);
         try{
+//            new ExcelUltil().openFile(AccountFeatureActivity.this,"g");
             checkLogin();
             loading_AccountFeature = findViewById(R.id.loading_AccountFeature);
             loadIcon_AccountFeature =findViewById(R.id.loadIcon_AccountFeature);

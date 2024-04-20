@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.activities.MainActivity"
+    tools:context=".controller.activities.TableAllSpentActivity"
     android:background="@color/white"
     >
 
@@ -239,81 +239,6 @@
                                 android:textColor="@color/black"
                                 android:textFontWeight="600"
                                 android:textSize="16dp" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="113dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="Cell 4"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="Cell 5"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Cell 6"
-
-                                android:textColor="@color/black" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="Cell 7"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:layout_marginRight="-1dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-
-                                android:text="Cell 8"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="113dp"
-                                android:background="@drawable/background_datatable"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Cell 9"
-
-                                android:textColor="@color/black" />
                         </TableRow>
 
                     </TableLayout>

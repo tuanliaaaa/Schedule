@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -59,6 +60,7 @@ public class UpdateAssigmentManageActivity extends Activity {
     private LinearLayout loading_updateAssigmentManage;
     private ScrollView scrollviewcontent_updateAssigmentManage;
     private String domain;
+    private String token;
     private boolean isClickedStartDay = false,isClickedEndDay=false,isClickedStartTime=false,isClickedEndTime=false;
     private EditText inputDescription_updateAssigmentManage;
     private TextView inputStartDate_updateAssigmentManage,inputEndDate_updateAssigmentManage,inputStartTime_updateAssigmentManage,inputEndTime_updateAssigmentManage;
@@ -67,6 +69,7 @@ public class UpdateAssigmentManageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updateassigmentmanage);
         try{
+            checkLogin();
             loading_updateAssigmentManage = findViewById(R.id.loading_updateAssigmentManage);
             scrollviewcontent_updateAssigmentManage =findViewById(R.id.scrollviewcontent_updateAssigmentManage);
             loadIcon_updateAssigmentManage =findViewById(R.id.loadIcon_updateAssigmentManage);
@@ -241,7 +244,7 @@ public class UpdateAssigmentManageActivity extends Activity {
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         // Thêm token vào header
                         Map<String, String> headers = new HashMap<>();
-                        headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEyODIzODIxLCJleHAiOjE3MTI4Mjc0MjF9.k6p1qoaHSJFr-EQtDYHaUNOmjziNhduMy5vOiXrdeDU");
+                        headers.put("Authorization", "Bearer "+token);
                         return headers;
                     }
                 };
@@ -362,7 +365,7 @@ public class UpdateAssigmentManageActivity extends Activity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 // Thêm token vào header
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaCIsInJvbGUiOlsiYWRtaW4iXSwiaWF0IjoxNzEyODIzODIxLCJleHAiOjE3MTI4Mjc0MjF9.k6p1qoaHSJFr-EQtDYHaUNOmjziNhduMy5vOiXrdeDU");
+                headers.put("Authorization", "Bearer "+token);
                 return headers;
             }
         };
@@ -464,5 +467,23 @@ public class UpdateAssigmentManageActivity extends Activity {
         }
     }
 
+    private void checkLogin(){
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        token = sharedPref.getString("Token", null);
+        if(token == null){
+            finish();
+            Intent intent = new Intent(UpdateAssigmentManageActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+    private  void clearToken(){
+        SharedPreferences sharedPref = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("Token");
+        editor.apply();
+        finish();
+        Intent intent = new Intent(UpdateAssigmentManageActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
 
 }

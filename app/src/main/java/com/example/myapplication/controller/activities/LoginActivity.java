@@ -67,13 +67,13 @@ public class LoginActivity extends Activity {
             username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    loginError.setVisibility(View.INVISIBLE);
+                    loginError.setVisibility(View.GONE);
                 }
             });
             password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    loginError.setVisibility(View.INVISIBLE);
+                    loginError.setVisibility(View.GONE);
                 }
             });
             password.setOnEditorActionListener(new TextView.OnEditorActionListener() {

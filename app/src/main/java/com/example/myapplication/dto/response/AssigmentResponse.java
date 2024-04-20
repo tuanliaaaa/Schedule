@@ -11,4 +11,5 @@ public class AssigmentResponse {
     private LocalDateTime endAt;
     private String description;
     private String status;
+    private String assingmentName;
 }

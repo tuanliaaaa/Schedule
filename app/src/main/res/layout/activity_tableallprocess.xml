@@ -53,12 +53,10 @@
                 android:id="@+id/edit_tableAllProcess"
                 android:layout_width="50dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="60dp"
                 android:src="@drawable/icon_edit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.9"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/headerTitle_tableAllProcess"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:shapeAppearanceOverlay="@style/circular" />
@@ -99,14 +97,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:text="Assigment"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <EditText
+                        <TextView
                             android:id="@+id/inputtableAllProcess_tableAllProcess"
                             android:layout_width="0dp"
                             android:layout_height="50dp"
@@ -115,8 +113,10 @@
                             android:ems="10"
                             android:inputType="text"
                             android:paddingLeft="10dp"
+                            android:gravity="center_vertical"
                             android:text="Design"
-                            android:textSize="20sp" />
+                            android:textSize="16sp"
+                            android:textColor="@color/black"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -130,7 +130,7 @@
 
 
                                 <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/save_tableAllProcess"
+                                    android:id="@+id/export_tableAllProcess"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -172,9 +172,9 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="Start Date"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputStartDate_tableAllProcess"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
@@ -185,7 +185,9 @@
                                 android:paddingTop="5dp"
                                 android:paddingBottom="5dp"
                                 android:text="22/12/2002"
-                                android:textSize="20sp" />
+                                android:textSize="16sp"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/black"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -202,20 +204,20 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="Start Time"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputStartTime_tableAllProcess"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp"
                                 android:paddingBottom="5dp"
                                 android:text="22:10 pm"
-                                android:textSize="20sp" />
+                                android:gravity="center_vertical"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -247,20 +249,20 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="End Date"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputEndDate_tableAllProcess"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
+                               android:textColor="@color/black"                                android:inputType="text"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp"
+                                android:gravity="center_vertical"
                                 android:paddingBottom="5dp"
                                 android:text="22/12/2002"
-                                android:textSize="20sp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -277,20 +279,20 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="End Time"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputEndTime_tableAllProcess"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
+                                android:textColor="@color/black"
+                                android:gravity="center_vertical"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp"
                                 android:paddingBottom="5dp"
                                 android:text="10 pm"
-                                android:textSize="20sp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                     </LinearLayout>

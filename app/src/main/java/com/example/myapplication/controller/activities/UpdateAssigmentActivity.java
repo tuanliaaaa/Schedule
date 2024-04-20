@@ -62,7 +62,7 @@ public class UpdateAssigmentActivity extends Activity {
     private LinearLayout loading_UpdateAssigment;
     private ScrollView scrollviewcontent_UpdateAssigment;
     private String domain;
-    private TextView inputDescription_updateAssigment;
+    private TextView inputDescription_updateAssigment,inputAssignment_updateAssigment;
     private TextView inputStartDate_updateAssigment,inputEndDate_updateAssigment,inputStartTime_updateAssigment,inputEndTime_updateAssigment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,6 +250,8 @@ public class UpdateAssigmentActivity extends Activity {
                                         inputEndTime_updateAssigment.setText(end.getTime());
                                         inputDescription_updateAssigment=findViewById(R.id.inputDescription_updateAssigment);
                                         inputDescription_updateAssigment.setText(assigmentResponse.getDescription());
+                                        inputAssignment_updateAssigment=findViewById(R.id.inputAssignment_updateAssigment);
+                                        inputAssignment_updateAssigment.setText(assigmentResponse.getAssingmentName());
                                         loading_UpdateAssigment.setVisibility(View.INVISIBLE);
                                         scrollviewcontent_UpdateAssigment.setVisibility(View.VISIBLE);
                                     }catch (Exception e){
