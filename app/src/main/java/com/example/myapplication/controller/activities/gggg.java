@@ -42,6 +42,14 @@ public class gggg extends Activity {
         setContentView(R.layout.activity_groupmess);
         idTeam=1;
         checkLogin();
+        ImageView imageView4 =findViewById(R.id.imageView4);
+        imageView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(gggg.this, LogOutActivity.class);
+                startActivity(intent);
+            }
+        });
         LinearLayout linearLayout = findViewById(R.id.ahihi);
         ImageView i = findViewById(R.id.footerImgIcon_updateAssigment);
 

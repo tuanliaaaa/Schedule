@@ -41,6 +41,10 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".controller.activities.LogOutActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".controller.activities.AddSpentActivity"
             android:exported="true">
         </activity>

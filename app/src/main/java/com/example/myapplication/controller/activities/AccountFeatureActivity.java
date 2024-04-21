@@ -92,7 +92,7 @@ public class AccountFeatureActivity extends Activity {
     public void getRoles(){
         loadIcon_AccountFeature.startAnimation(rotateAnimation);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, domain + "/api/auth/infor", null,
+                Request.Method.GET, domain + "/api/auth/infor/"+String.valueOf(idTeam), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -104,20 +104,14 @@ public class AccountFeatureActivity extends Activity {
                         try {
                             Type responseType = new TypeToken<ApiResponse<InforResponse>>(){}.getType();
                             ApiResponse<InforResponse> apiResponse = gson.fromJson(response.toString(), responseType);
-                            InforResponse assigmentResponse =(InforResponse) apiResponse.getData();
-                            List<String> roleNames = new ArrayList<>();
+                            InforResponse assigmentResponse = apiResponse.getData();
 
-                            // Duyệt qua mảng roles và thêm giá trị roleName vào danh sách
-                            for (RoleResponse role : assigmentResponse.getRoles()) {
-                                String roleName = role.getRoleName();
-                                roleNames.add(roleName);
-                            }
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
 //                                    Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
                                     try{
-                                        if(roleNames.contains("admin"))setAdmin();
+                                        if(assigmentResponse.getPotition().equals("manage"))setAdmin();
                                         else setUser();
                                     }catch (Exception e){
                                         Log.e("Error","lỗi giao diện");

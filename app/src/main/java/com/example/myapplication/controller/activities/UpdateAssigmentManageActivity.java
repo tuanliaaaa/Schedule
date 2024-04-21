@@ -61,6 +61,8 @@ public class UpdateAssigmentManageActivity extends Activity {
     private ScrollView scrollviewcontent_updateAssigmentManage;
     private String domain;
     private String token;
+    private Integer idAssigment;
+    private EditText inputAssignment_updateAssigmentManage;
     private boolean isClickedStartDay = false,isClickedEndDay=false,isClickedStartTime=false,isClickedEndTime=false;
     private EditText inputDescription_updateAssigmentManage;
     private TextView inputStartDate_updateAssigmentManage,inputEndDate_updateAssigmentManage,inputStartTime_updateAssigmentManage,inputEndTime_updateAssigmentManage;
@@ -70,6 +72,8 @@ public class UpdateAssigmentManageActivity extends Activity {
         setContentView(R.layout.activity_updateassigmentmanage);
         try{
             checkLogin();
+            idAssigment=getIntent().getIntExtra("idAssigment",0);
+            inputAssignment_updateAssigmentManage=findViewById(R.id.inputAssignment_updateAssigmentManage);
             inputDescription_updateAssigmentManage=findViewById(R.id.inputDescription_updateAssigmentManage);
             loading_updateAssigmentManage = findViewById(R.id.loading_updateAssigmentManage);
             scrollviewcontent_updateAssigmentManage =findViewById(R.id.scrollviewcontent_updateAssigmentManage);
@@ -166,7 +170,8 @@ public class UpdateAssigmentManageActivity extends Activity {
                 // Đưa dữ liệu vào JSONObject
 
                 jsonBody.put("description", inputDescription_updateAssigmentManage.getText());
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, domain+"/Assignment/AssigmentManage/18",
+                jsonBody.put("nameAssignment",inputAssignment_updateAssigmentManage.getText());
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, domain+"/Assignment/AssigmentManage/"+String.valueOf(idAssigment),
                         jsonBody,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -274,7 +279,7 @@ public class UpdateAssigmentManageActivity extends Activity {
 
     public void getAssigment() {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, domain + "/Assignment/AssigmentUser/18", null,
+                Request.Method.GET, domain + "/Assignment/AssigmentUser/"+String.valueOf(idAssigment), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -294,6 +299,7 @@ public class UpdateAssigmentManageActivity extends Activity {
 //                                    Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
 
                                     try{
+                                        inputAssignment_updateAssigmentManage.setText(assigmentResponse.getAssingmentName());
                                         LocalDateTimeUtils start = new LocalDateTimeUtils(assigmentResponse.getStartAt());
                                         inputStartDate_updateAssigmentManage=findViewById(R.id.inputStartDate_updateAssigmentManage);
                                         inputStartDate_updateAssigmentManage.setText(start.getDate());
