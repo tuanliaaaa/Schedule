@@ -36,6 +36,7 @@ import com.example.myapplication.dto.ErrorResponse;
 import com.example.myapplication.dto.response.AssignmentManagerResponse;
 import com.example.myapplication.dto.response.CostResponse;
 import com.example.myapplication.dto.response.TeamCreateResponse;
+import com.example.myapplication.utils.LocalDateTimeUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -231,13 +232,19 @@ public class DetailSpentActivity extends Activity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            Log.d("Data",response.toString());
                             // Parse dữ liệu JSON và tạo danh sách các nhiệm vụ
                             JSONObject dataCost = response.getJSONObject("data");
                             int idCost = dataCost.getInt("idCost");
                             String codeName = dataCost.getString("costName");
                             int price = dataCost.getInt("price");
                             int idAssignment = dataCost.getInt("idassigment");
+                            String s=dataCost.getString("refundDate");
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+                            // Chuyển đổi chuỗi thành LocalDate
+                            LocalDate localDate = LocalDate.parse(s, formatter);
+                            inputRefundDate.setText(localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                             inputSpentName_addSpent = findViewById(R.id.inputSpentName_addSpent);
                             inputSpentName_addSpent.setText(codeName);
 

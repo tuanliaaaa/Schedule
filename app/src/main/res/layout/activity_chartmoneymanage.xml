@@ -78,7 +78,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -104,7 +105,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
-                            android:text="Actually spent" />
+                            android:text="Actually spent"
+                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -119,9 +121,9 @@
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
                                 android:paddingLeft="5dp"
-                                android:text="100 $"
+                                android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="20sp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
 
 
@@ -139,7 +141,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
-                            android:text="Estimated spent" />
+                            android:text="Estimated spent"
+                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -154,9 +157,9 @@
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
                                 android:paddingLeft="5dp"
-                                android:text="80 $"
+                                android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="20sp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -199,7 +202,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_inputtext"
                         android:text="Xem nguồn chi"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -207,19 +210,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="40dp"
                             android:layout_weight="0.2"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingRight="5dp">
 
                             <TextView
                                 android:id="@+id/labelStartDate_chartMoneyManage"
@@ -228,73 +232,34 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="Start Date"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputStartDate_chartMoneyManage"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
+                                android:gravity="center_vertical"
                                 android:paddingLeft="10dp"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="22/12/2002"
-                                android:textSize="20sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="0.2"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/labelStartTime_chartMoneyManage"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:text="Start Time"
-                                android:textSize="16dp" />
-
-                            <EditText
-                                android:id="@+id/inputStartTime_chartMoneyManage"
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
-                                android:paddingLeft="10dp"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="22:10 pm"
-                                android:textSize="20sp" />
+                                android:text="--/--/----"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                     </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="40dp"
                             android:layout_weight="0.2"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingLeft="5dp">
 
                             <TextView
                                 android:id="@+id/labelEndDate_chartMoneyManage"
@@ -303,50 +268,18 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:text="End Date"
-                                android:textSize="16dp" />
+                                android:textSize="14sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/inputEndDate_chartMoneyManage"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
+                                android:gravity="center_vertical"
                                 android:paddingLeft="10dp"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="22/12/2002"
-                                android:textSize="20sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="0.2"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/labelEndTime_chartMoneyManage"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:text="End Time"
-                                android:textSize="16dp" />
-
-                            <EditText
-                                android:id="@+id/inputEndTime_chartMoneyManage"
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:background="@drawable/custom_inputtext"
-                                android:ems="10"
-                                android:inputType="text"
-                                android:paddingLeft="10dp"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="22:10 pm"
-                                android:textSize="20sp" />
+                                android:text="--/--/---"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -356,24 +289,192 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <com.example.myapplication.view.PieChartView
+                        android:id="@+id/pieChartView"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp">
 
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/imgChart_chartMoneyManage"
+                    </com.example.myapplication.view.PieChartView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/max1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <View
+                            android:id="@+id/viewMax1"
+                            android:layout_width="100dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="30dp"
+                            android:background="#0022FF" />
+
+                        <TextView
+                            android:id="@+id/nameMax1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/chart" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            android:gravity="center_horizontal"
+                            android:minWidth="100dp"
+                            android:textColor="@color/black" />
 
+                        <TextView
+                            android:id="@+id/valueMax1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:gravity="center_horizontal"
+                            android:minWidth="100dp"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/max2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <View
+                            android:id="@+id/viewMax2"
+                            android:layout_width="100dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="30dp"
+                            android:background=" #FFFFFF00"
+                             />
+
+                        <TextView
+                            android:id="@+id/nameMax2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:minWidth="100dp"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/valueMax2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:gravity="center_horizontal"
+                            android:minWidth="100dp"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/max3"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <View
+                            android:id="@+id/viewMax3"
+                            android:layout_width="100dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="30dp"
+                            android:background="#FFFF0000" />
+
+                        <TextView
+                            android:id="@+id/nameMax3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:minWidth="100dp"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/valueMax3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:gravity="center_horizontal"
+                            android:minWidth="100dp"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/max4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <View
+                            android:id="@+id/viewMax4"
+                            android:layout_width="100dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="30dp"
+                            android:background="#FF00FF00" />
+
+                        <TextView
+                            android:id="@+id/nameMax4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:minWidth="100dp"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/valueMax4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:gravity="center_horizontal"
+                            android:minWidth="100dp"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/max5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <View
+                            android:id="@+id/viewMax5"
+                            android:layout_width="100dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="30dp"
+                            android:background="#ccc" />
+
+                        <TextView
+                            android:id="@+id/nameMax5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:minWidth="100dp"
+                            android:text="Other"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/valueMax5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:gravity="center_horizontal"
+                            android:minWidth="100dp"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
                 </LinearLayout>
 
 

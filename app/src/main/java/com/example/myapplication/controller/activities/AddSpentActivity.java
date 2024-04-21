@@ -95,10 +95,10 @@ public class AddSpentActivity extends Activity {
             loading_AddSpend=findViewById(R.id.loading_AddSpend);
             scrollviewcontent_addSpent=findViewById(R.id.scrollviewcontent_addSpent);
             domain= getResources().getString(R.string.domain);
-            ImageView saved = findViewById(R.id.save_addSpent);
+             saved = findViewById(R.id.save_addSpent);
             dropdownMenu = findViewById(R.id.dropdown_menu);
-            ImageView loadIcon_addSpend =findViewById(R.id.loadIcon_addSpend);
-            RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
+             loadIcon_addSpend =findViewById(R.id.loadIcon_addSpend);
+             rotateAnimation = new RotateAnimation(0, 360,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 

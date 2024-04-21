@@ -57,10 +57,8 @@ import java.util.Map;
 public class TableAllSpentActivity extends Activity {
     private RequestQueue mRequestQueue;
     private Spinner inputAssignment_TableAllSpent;
-    private StringRequest mStringRequest;
     private String token;
     private String domain;
-    private String url = "http://192.168.114.61:8080/Cost/Team/1";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
