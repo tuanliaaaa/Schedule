@@ -191,6 +191,7 @@ public class CreateGroupActivity extends Activity {
                                             Toast.makeText(getApplicationContext(),"Tạo nhóm thành công", Toast.LENGTH_LONG).show();
                                             finish();
                                             Intent intent = new Intent(CreateGroupActivity.this, gggg.class);
+
                                             startActivity(intent);
                                         }
                                     });

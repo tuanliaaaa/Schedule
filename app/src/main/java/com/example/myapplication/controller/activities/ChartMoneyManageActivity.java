@@ -78,12 +78,14 @@ public class ChartMoneyManageActivity extends Activity {
     private TextView nameMax1,nameMax2,nameMax3,nameMax4,nameMax5;
     private LinearLayout max1,max2,max3,max4,max5;
     private ImageView export_tableAllSpent;
+    private Integer idTeam;
     private Map<Integer,List<CostResponse>> listMap=new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chartmoneymanage);
+        idTeam=getIntent().getIntExtra("idTeam",0);
         nameMax1=findViewById(R.id.nameMax1);
         export_tableAllSpent=findViewById(R.id.export_tableAllSpent);
          nameMax2 = findViewById(R.id.nameMax2);
@@ -144,6 +146,7 @@ public class ChartMoneyManageActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChartMoneyManageActivity.this, TableAllSpentActivity.class);
+                intent.putExtra("idTeam",idTeam);
                 startActivity(intent); // Bắt đầu Activity mới
             }
         });
@@ -225,7 +228,7 @@ public class ChartMoneyManageActivity extends Activity {
 //        loading_assigment.setVisibility(View.VISIBLE);
 
             try {
-                String url=domain+"/Cost/team/1";
+                String url=domain+"/Cost/team/"+String.valueOf(idTeam);
                 if(check==0)check=1;
                 else{
                     url+="?fromDate="+from.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+"&toDate="+to.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -302,7 +305,7 @@ public class ChartMoneyManageActivity extends Activity {
                                     for(int i=0;i<list.size();i++)
                                     {
                                         vlEs+=list.get(i).getValue().getNumber();
-                                        if(i>=5)sum+=list.get(i).getValue().getNumber();
+                                        if(i>=4)sum+=list.get(i).getValue().getNumber();
                                     }
                                     valueEstimateSpent_ChartMoneyManage=findViewById(R.id.valueEstimateSpent_ChartMoneyManage);
                                     valueEstimateSpent_ChartMoneyManage.setText(String.valueOf(vlEs));
@@ -341,10 +344,8 @@ public class ChartMoneyManageActivity extends Activity {
                                                     if (list.size() >= 5) {
                                                         max5.setVisibility(View.VISIBLE);
 
-                                                        labels.add("Other");
-                                                        values.add(sum);
-                                                        valueMax5.setText(String.valueOf(list.get(4).getValue().getNumber()));
-                                                        nameMax5.setText(String.valueOf(list.get(4).getValue().getName()));
+                                                        valueMax5.setText(String.valueOf(sum));
+//                                                        nameMax5.setText(String.valueOf(list.get(4).getValue().getName()));
                                                         values.add(sum);
                                                         labels.add("others");
                                                         colors.add(Color.rgb(204,204,204));

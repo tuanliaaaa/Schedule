@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,11 +59,14 @@ public class UpdateAssigmentActivity extends Activity {
     private StringRequest mStringRequest;
     private Context context;
     private String token;
+    private String process="0";
     private ImageView loadIcon_UpdateAssigment;
     private LinearLayout loading_UpdateAssigment;
     private RotateAnimation rotateAnimation;
     private ScrollView scrollviewcontent_UpdateAssigment;
     private String domain;
+    private String idAssigment;
+    private SeekBar numberSeekBar;
     private TextView inputDescription_updateAssigment,inputAssignment_updateAssigment;
     private TextView inputStartDate_updateAssigment,inputEndDate_updateAssigment,inputStartTime_updateAssigment,inputEndTime_updateAssigment;
     @Override
@@ -70,7 +74,31 @@ public class UpdateAssigmentActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updateassigment);
         try{
+            Intent t =getIntent();
+            idAssigment=String.valueOf(t.getIntExtra("idAssigment",0));
+
             checkLogin();
+             numberSeekBar = findViewById(R.id.numberSeekBar);
+
+            numberSeekBar.setMax(100);
+
+            // Đặt sự kiện lắng nghe để theo dõi sự thay đổi trong SeekBar
+            numberSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    process=String.valueOf(progress);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    // Không cần thực hiện gì khi bắt đầu theo dõi
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    // Không cần thực hiện gì khi kết thúc theo dõi
+                }
+            });
             loading_UpdateAssigment = findViewById(R.id.loading_UpdateAssigment);
             scrollviewcontent_UpdateAssigment =findViewById(R.id.scrollviewcontent_UpdateAssigment);
             loadIcon_UpdateAssigment =findViewById(R.id.loadIcon_UpdateAssigment);
@@ -110,9 +138,9 @@ public class UpdateAssigmentActivity extends Activity {
 
             try {
                 // Đưa dữ liệu vào JSONObject
-                jsonBody.put("process", "2");
+                jsonBody.put("process", process);
 
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, domain+"/Assignment/AssigmentUser/18",
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, domain+"/Assignment/AssigmentUser/"+idAssigment,
                         jsonBody,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -221,7 +249,7 @@ public class UpdateAssigmentActivity extends Activity {
     public void getAssigment() {
         loadIcon_UpdateAssigment.startAnimation(rotateAnimation);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, domain + "/Assignment/AssigmentUser/18", null,
+                Request.Method.GET, domain + "/Assignment/AssigmentUser/"+idAssigment, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -241,6 +269,8 @@ public class UpdateAssigmentActivity extends Activity {
 //                                    Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
 
                                     try{
+                                        numberSeekBar.setProgress(Integer.parseInt(assigmentResponse.getProcess()));
+                                        process=assigmentResponse.getProcess();
                                         LocalDateTimeUtils start = new LocalDateTimeUtils(assigmentResponse.getStartAt());
                                         inputStartDate_updateAssigment=findViewById(R.id.inputStartDate_updateAssigment);
                                         inputStartDate_updateAssigment.setText(start.getDate());

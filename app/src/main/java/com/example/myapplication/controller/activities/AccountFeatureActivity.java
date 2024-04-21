@@ -56,12 +56,15 @@ public class AccountFeatureActivity extends Activity {
     private ImageView loadIcon_AccountFeature;
     private LinearLayout loading_AccountFeature;
     private ScrollView scrollviewcontent_AccountFeature;
+    private Integer idTeam;
     private RotateAnimation rotateAnimation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_feature);
         try{
+            Intent t =getIntent();
+            idTeam=t.getIntExtra("idTeam",0);
             checkLogin();
             loading_AccountFeature = findViewById(R.id.loading_AccountFeature);
             loadIcon_AccountFeature =findViewById(R.id.loadIcon_AccountFeature);
@@ -231,6 +234,7 @@ public class AccountFeatureActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(AccountFeatureActivity.this, AllAssigmentUserActivity.class);
+                        intent.putExtra("idTeam",idTeam);
                         startActivity(intent);
                     }
                 });
@@ -242,6 +246,7 @@ public class AccountFeatureActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(AccountFeatureActivity.this, ChartMoneyManageActivity.class);
+                        intent.putExtra("idTeam",idTeam);
                         startActivity(intent);
                     }
                 });
@@ -251,6 +256,7 @@ public class AccountFeatureActivity extends Activity {
                     public void onClick(View v) {
                         // Tạo Intent để chuyển từ MainActivity sang Activity mới
                         Intent intent = new Intent(AccountFeatureActivity.this, AssigmentActivity.class);
+                        intent.putExtra("idTeam",idTeam);
                         startActivity(intent); // Bắt đầu Activity mới
                     }
                 });
@@ -259,6 +265,7 @@ public class AccountFeatureActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(AccountFeatureActivity.this, TableAllProcessActivity.class);
+                        intent.putExtra("idTeam",idTeam);
                         startActivity(intent);
                     }
                 });
@@ -277,6 +284,7 @@ public class AccountFeatureActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(AccountFeatureActivity.this, AllAssigmentUserActivity.class);
+                        intent.putExtra("idTeam",idTeam);
                         startActivity(intent);
                     }
                 });

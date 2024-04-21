@@ -76,12 +76,14 @@ public class AssigmentActivity extends Activity {
     private boolean isClickedStartDay = false,isClickedEndDay=false,isClickedStartTime=false,isClickedEndTime=false;
 
     private RequestQueue mRequestQueue;
+    private Integer idTeam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assigment);
         try{
+            idTeam=getIntent().getIntExtra("idTeam",0);
             checkLogin();
             loading_assigment = findViewById(R.id.loading_assigment);
             scrollviewcontent_assigment =findViewById(R.id.scrollviewcontent_assigment);
@@ -294,7 +296,7 @@ public class AssigmentActivity extends Activity {
                 jsonBody.put("description", description);
                 jsonBody.put("usersId", new JSONArray(users));
                 jsonBody.put("nameAssignment",assignment);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, domain+"/Assignment/Team/47",
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, domain+"/Assignment/Team/"+String.valueOf(idTeam),
                         jsonBody,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -313,6 +315,7 @@ public class AssigmentActivity extends Activity {
                                             Toast.makeText(getApplicationContext(), "Thêm Assigment Thành công", Toast.LENGTH_LONG).show();
                                             finish();
                                             Intent intent = new Intent(AssigmentActivity.this, TableAllProcessActivity.class);
+                                            intent.putExtra("idTeam",idTeam);
                                             startActivity(intent);
                                         }
                                     });

@@ -59,10 +59,12 @@ public class TableAllSpentActivity extends Activity {
     private Spinner inputAssignment_TableAllSpent;
     private String token;
     private String domain;
+    private Integer idTeam;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tableallspent);
+        idTeam=getIntent().getIntExtra("idTeam",0);
 
 //        getAssignmentManager();
         Button linearLayout1 = findViewById(R.id.buttonAddSpent_tableAllSpent);
@@ -87,8 +89,8 @@ public class TableAllSpentActivity extends Activity {
         // Tạo request để lấy danh sách các nhiệm vụ
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         domain= getResources().getString(R.string.domain);
-        String idTeam = "1";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Assignment/Team/" + idTeam, null,
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Assignment/Team/" + String.valueOf(idTeam), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -165,7 +167,7 @@ public class TableAllSpentActivity extends Activity {
     private void getCostByIdAssignment(Integer idAssignment) {
         // Tạo request để lấy danh sách các nhiệm vụ
         domain= getResources().getString(R.string.domain);
-        String idTeam = "1";
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Cost/assignment/" + idAssignment, null,
                 new Response.Listener<JSONObject>() {
                     @Override

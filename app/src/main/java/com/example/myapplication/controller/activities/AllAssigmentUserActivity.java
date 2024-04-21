@@ -49,11 +49,14 @@ public class AllAssigmentUserActivity extends Activity {
     private List<AssigmentUser> dataList;
     private ListAssigmentUserAdapter listAssigmentUserAdapter;
     private RotateAnimation rotateAnimation;
+    private Integer idTeam;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allassigmentuser);
         try{
+            Intent t =getIntent();
+            idTeam=t.getIntExtra("idTeam",0);
             checkLogin();
             loading_allAssigmentUser = findViewById(R.id.loading_allAssigmentUser);
             scrollviewcontent_allAssigmentUser =findViewById(R.id.scrollviewcontent_allAssigmentUser);
@@ -80,6 +83,7 @@ public class AllAssigmentUserActivity extends Activity {
                 @Override
                 public void onItemClick(AssigmentUser assigmentUser, int potition) {
                     Intent intent = new Intent(AllAssigmentUserActivity.this, UpdateAssigmentActivity.class);
+                    intent.putExtra("idAssigment", assigmentUser.getIdAssigment());
                     startActivity(intent);
                 }
             });
@@ -134,7 +138,7 @@ public class AllAssigmentUserActivity extends Activity {
                 });
 
             }
-        },domain,token,1);
+        },domain,token,idTeam);
         listAssigmentUser.getAll(AllAssigmentUserActivity.this);
     }
     private void checkLogin(){

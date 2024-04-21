@@ -35,10 +35,12 @@ import java.net.URISyntaxException;
 import dev.gustavoavila.websocketclient.WebSocketClient;
 
 public class gggg extends Activity {
+    private Integer idTeam;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groupmess);
+        idTeam=1;
         checkLogin();
         LinearLayout linearLayout = findViewById(R.id.ahihi);
         ImageView i = findViewById(R.id.footerImgIcon_updateAssigment);
@@ -48,6 +50,7 @@ public class gggg extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(gggg.this, CreateGroupActivity.class);
+                intent.putExtra("idTeam",idTeam);
                 startActivity(intent);
             }
         });
@@ -57,6 +60,7 @@ public class gggg extends Activity {
             public void onClick(View v) {
                 // Tạo Intent để chuyển từ MainActivity sang Activity mới
                 Intent intent = new Intent(gggg.this, AccountFeatureActivity.class);
+                intent.putExtra("idTeam",idTeam);
                 startActivity(intent);
             }
         });
@@ -69,6 +73,7 @@ public class gggg extends Activity {
 
             finish();
             Intent intent = new Intent(gggg.this, LoginActivity.class);
+
             startActivity(intent);
         }
     }

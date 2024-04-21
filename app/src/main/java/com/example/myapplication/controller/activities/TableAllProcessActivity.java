@@ -72,12 +72,14 @@ public class TableAllProcessActivity extends Activity {
     private ArrayAdapter<String> adapter;
     private  StatusAssigmentOfTeamManageResponse statusAssigmentOfTeamManageResponse;
     private LinearLayout startAt_tableAllProcess,endAt_tableAllProcess;
+    private Integer idTeam;
     private TextView inputStartDate_tableAllProcess,inputStartTime_tableAllProcess,inputEndDate_tableAllProcess,inputEndTime_tableAllProcess;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tableallprocess);
         try{
+            idTeam=getIntent().getIntExtra("idTeam",0);
             checkLogin();
             startAt_tableAllProcess=findViewById(R.id.startAt_tableAllProcess);
             endAt_tableAllProcess=findViewById(R.id.endAt_tableAllProcess);
@@ -114,6 +116,7 @@ public class TableAllProcessActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(TableAllProcessActivity.this, UpdateAssigmentManageActivity.class);
+                    intent.putExtra("idAssigment",idAssignment);
                     startActivity(intent); // Bắt đầu Activity mới
                 }
             });
@@ -203,8 +206,7 @@ public class TableAllProcessActivity extends Activity {
 
     private void getAssignmentManager() {
 
-        String idTeam = "1";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Assignment/Team/" + idTeam, null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Assignment/Team/" + String.valueOf(idTeam), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -284,8 +286,7 @@ public class TableAllProcessActivity extends Activity {
         startAt_tableAllProcess.setVisibility(View.GONE);
         endAt_tableAllProcess.setVisibility(View.GONE);
 
-        String idTeam = "1";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Assignment/TeamStatusAssigmentManage/" + idTeam, null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Assignment/TeamStatusAssigmentManage/" + String.valueOf(idTeam), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

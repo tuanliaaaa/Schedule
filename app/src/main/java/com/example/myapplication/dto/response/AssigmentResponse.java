@@ -12,4 +12,5 @@ public class AssigmentResponse {
     private String description;
     private String status;
     private String assingmentName;
+    private String process;
 }

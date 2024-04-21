@@ -70,6 +70,7 @@ public class UpdateAssigmentManageActivity extends Activity {
         setContentView(R.layout.activity_updateassigmentmanage);
         try{
             checkLogin();
+            inputDescription_updateAssigmentManage=findViewById(R.id.inputDescription_updateAssigmentManage);
             loading_updateAssigmentManage = findViewById(R.id.loading_updateAssigmentManage);
             scrollviewcontent_updateAssigmentManage =findViewById(R.id.scrollviewcontent_updateAssigmentManage);
             loadIcon_updateAssigmentManage =findViewById(R.id.loadIcon_updateAssigmentManage);
@@ -163,9 +164,9 @@ public class UpdateAssigmentManageActivity extends Activity {
 
             try {
                 // Đưa dữ liệu vào JSONObject
-                jsonBody.put("process", "2");
 
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, domain+"/Assignment/AssigmentUser/18",
+                jsonBody.put("description", inputDescription_updateAssigmentManage.getText());
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, domain+"/Assignment/AssigmentManage/18",
                         jsonBody,
                         new Response.Listener<JSONObject>() {
                             @Override
