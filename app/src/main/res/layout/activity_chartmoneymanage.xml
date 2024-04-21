@@ -174,7 +174,7 @@
                             android:layout_height="match_parent">
 
                             <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/save_tableAllSpent"
+                                android:id="@+id/export_tableAllSpent"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 app:layout_constraintBottom_toBottomOf="parent"

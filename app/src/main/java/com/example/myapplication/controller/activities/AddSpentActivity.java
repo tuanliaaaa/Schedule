@@ -340,7 +340,7 @@ public class AddSpentActivity extends Activity {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     // Đặt ngày được chọn vào EditText
-                    inputRefundDate.setText(String.format("%02d/%02d/%04d", dayOfMonth,month, year));
+                    inputRefundDate.setText(String.format("%02d/%02d/%04d", dayOfMonth,month+1, year));
                     isClicked=false;
                 }
             }, year, month, dayOfMonth);

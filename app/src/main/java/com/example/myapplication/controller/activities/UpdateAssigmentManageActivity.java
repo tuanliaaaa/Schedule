@@ -388,7 +388,7 @@ public class UpdateAssigmentManageActivity extends Activity {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     // Đặt ngày được chọn vào EditText
-                    inputStartDate_updateAssigmentManage.setText(String.format("%02d/%02d/%04d", dayOfMonth,month, year));
+                    inputStartDate_updateAssigmentManage.setText(String.format("%02d/%02d/%04d", dayOfMonth,month+1, year));
                     isClickedStartDay=false;
                 }
             }, year, month, dayOfMonth);
@@ -413,7 +413,7 @@ public class UpdateAssigmentManageActivity extends Activity {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     // Đặt ngày được chọn vào EditText
-                    inputEndDate_updateAssigmentManage.setText(String.format("%02d/%02d/%04d", dayOfMonth,month, year));
+                    inputEndDate_updateAssigmentManage.setText(String.format("%02d/%02d/%04d", dayOfMonth,month+1, year));
                     isClickedEndDay=false;
                 }
             }, year, month, dayOfMonth);

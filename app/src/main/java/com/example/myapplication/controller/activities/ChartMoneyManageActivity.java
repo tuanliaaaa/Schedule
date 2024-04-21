@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import com.example.myapplication.dto.response.CostResponse;
 import com.example.myapplication.dto.response.StatusAssigmentAndUserManageResponse;
 import com.example.myapplication.dto.response.TeamCostResponse;
 import com.example.myapplication.dto.response.TeamCreateResponse;
+import com.example.myapplication.utils.ExcelUltil;
 import com.example.myapplication.utils.LocalDateAdapter;
 import com.example.myapplication.utils.LocalDateTimeAdapter;
 import com.example.myapplication.utils.LocalDateTimeUtils;
@@ -65,6 +67,8 @@ public class ChartMoneyManageActivity extends Activity {
     private TextView inputStartDate_assignment;
     private TextView inputEndDate_assignment;
     private RequestQueue mRequestQueue;
+    private Integer check=0,check1=0;
+    private LocalDate from,to;
     private PieChartView pieChartView;
     private boolean isClickedStartDay = false,isClickedEndDay=false;
     private TextView valueActuallySpent_chartMoneyManage;
@@ -73,6 +77,7 @@ public class ChartMoneyManageActivity extends Activity {
     private TextView valueMax1,valueMax2,valueMax3,valueMax4,valueMax5;
     private TextView nameMax1,nameMax2,nameMax3,nameMax4,nameMax5;
     private LinearLayout max1,max2,max3,max4,max5;
+    private ImageView export_tableAllSpent;
     private Map<Integer,List<CostResponse>> listMap=new HashMap<>();
 
     @Override
@@ -80,6 +85,7 @@ public class ChartMoneyManageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chartmoneymanage);
         nameMax1=findViewById(R.id.nameMax1);
+        export_tableAllSpent=findViewById(R.id.export_tableAllSpent);
          nameMax2 = findViewById(R.id.nameMax2);
          nameMax3 = findViewById(R.id.nameMax3);
          nameMax4 = findViewById(R.id.nameMax4);
@@ -128,7 +134,12 @@ public class ChartMoneyManageActivity extends Activity {
             }
         });
         getCost();
-
+        export_tableAllSpent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ExcelUltil().createExcelAndDownloaded(ChartMoneyManageActivity.this,listMap,"Spent.xlsx");
+            }
+        });
         linearLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,8 +180,10 @@ public class ChartMoneyManageActivity extends Activity {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     // Đặt ngày được chọn vào EditText
-                    inputStartDate_assignment.setText(String.format("%02d/%02d/%04d", dayOfMonth,month, year));
+                    inputStartDate_assignment.setText(String.format("%02d/%02d/%04d", dayOfMonth,month+1, year));
                     isClickedStartDay=false;
+                    from=LocalDate.of(year, month+1, dayOfMonth);
+                    getCost();
                 }
             }, year, month, dayOfMonth);
 
@@ -193,8 +206,11 @@ public class ChartMoneyManageActivity extends Activity {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     // Đặt ngày được chọn vào EditText
-                    inputEndDate_assignment.setText(String.format("%02d/%02d/%04d", dayOfMonth,month, year));
+                    inputEndDate_assignment.setText(String.format("%02d/%02d/%04d", dayOfMonth,month+1, year));
                     isClickedEndDay=false;
+                    to=LocalDate.of(year, month+1, dayOfMonth);
+
+                    getCost();
                 }
             }, year, month, dayOfMonth);
 
@@ -209,13 +225,18 @@ public class ChartMoneyManageActivity extends Activity {
 //        loading_assigment.setVisibility(View.VISIBLE);
 
             try {
+                String url=domain+"/Cost/team/1";
+                if(check==0)check=1;
+                else{
+                    url+="?fromDate="+from.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+"&toDate="+to.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                }
                 vlEs=0.0F;
                 max1.setVisibility(View.GONE);
                 max2.setVisibility(View.GONE);
                 max3.setVisibility(View.GONE);
                 max4.setVisibility(View.GONE);
                 max5.setVisibility(View.GONE);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain+"/Cost/team/1",
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,
                         null,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -232,25 +253,36 @@ public class ChartMoneyManageActivity extends Activity {
                                     Type responseType = new TypeToken<ApiResponse<TeamCostResponse>>(){}.getType();
                                     ApiResponse<TeamCostResponse> apiResponse = gson.fromJson(response.toString(), responseType);
                                     List<CostResponse> costResponseList = apiResponse.getData().getCostResponseList();
+                                    Map<Integer,List<CostResponse>> a= new HashMap<>();
                                     Map<Integer, ObjChartUtil> listMapResponse = new HashMap<>();
                                     for (CostResponse costResponse:costResponseList) {
                                         if (listMapResponse.containsKey(costResponse.getIdassigment())) {
-
+                                            List<CostResponse> b= a.get(costResponse.getIdassigment());
+                                            b.add(costResponse);
                                             ObjChartUtil obj = listMapResponse.get(costResponse.getIdassigment());
                                             obj.add(costResponse.getPrice());
                                         } else {
+                                            List<CostResponse> new1= new ArrayList<>();
+                                            new1.add(costResponse);
+                                            a.put(costResponse.getIdassigment(),new1);
                                             // Nếu key chưa tồn tại, tạo một danh sách mới và thêm vào map
                                            ObjChartUtil obj1= new ObjChartUtil(costResponse.getNameAssigment(),costResponse.getPrice());
 
                                             listMapResponse.put(costResponse.getIdassigment(), obj1);
                                         }
                                     }
+                                    if(check1==0)
+                                    {
+                                        listMap=a;
+                                        check1=1;
+                                    }
                                     if(costResponseList.size()>0)
                                     {
                                         inputStartDate_assignment.setText(costResponseList.get(0).getRefundDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                                        if(costResponseList.size()>1){
-                                            inputEndDate_assignment.setText(costResponseList.get(costResponseList.size()-1).getRefundDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                                        }
+                                       from=costResponseList.get(0).getRefundDate();
+                                       to=costResponseList.get(costResponseList.size()-1).getRefundDate();
+                                        inputEndDate_assignment.setText(costResponseList.get(costResponseList.size()-1).getRefundDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
                                     }
                                     List<Map.Entry<Integer, ObjChartUtil>> list = new ArrayList<>(listMapResponse.entrySet());
 
@@ -329,7 +361,6 @@ public class ChartMoneyManageActivity extends Activity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            inputEndDate_assignment.setText(new LocalDateTimeUtils(LocalDateTime.now()).getDate());
                                             valueActuallySpent_chartMoneyManage.setText(String.valueOf(apiResponse.getData().getCost())+" VND");
                                         }
                                     });
