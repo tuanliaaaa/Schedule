@@ -21,6 +21,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -32,12 +35,19 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.R;
+import com.example.myapplication.apdater.RecommendUserAdapter;
 import com.example.myapplication.dto.ApiResponse;
 import com.example.myapplication.dto.ErrorResponse;
 import com.example.myapplication.dto.request.AssignmentCreateRequest;
 import com.example.myapplication.dto.request.Team;
 import com.example.myapplication.dto.response.AssignmentResponse;
+import com.example.myapplication.dto.response.RecommendUserResponse;
 import com.example.myapplication.dto.response.TeamCreateResponse;
+import com.example.myapplication.entity.UserRcm;
+import com.example.myapplication.service.ListUserInTeamInterFace;
+import com.example.myapplication.service.RecommendUserInterFace;
+import com.example.myapplication.service.ServiceImpl.ListUserInTeamImpl;
+import com.example.myapplication.service.ServiceImpl.RecommendUserImpl;
 import com.example.myapplication.utils.LocalDateTimeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -67,6 +77,9 @@ public class AssigmentActivity extends Activity {
     private TextView inputEndDate_assignment;
     private TextView inputEndTime_assignment;
     private EditText inputDescription_assignment;
+    private RecyclerView recyclerViewRcmuser;
+    private RecommendUserAdapter recommendUserAdapter;
+
     private ImageView loadIcon_assigment;
     private LinearLayout loading_assigment;
     private ScrollView scrollviewcontent_assigment;
@@ -76,6 +89,8 @@ public class AssigmentActivity extends Activity {
     private boolean isClickedStartDay = false,isClickedEndDay=false,isClickedStartTime=false,isClickedEndTime=false;
 
     private RequestQueue mRequestQueue;
+    private List<UserRcm> dataList;
+    private List<Integer> userList=new ArrayList<>();
     private Integer idTeam;
 
     @Override
@@ -107,7 +122,26 @@ public class AssigmentActivity extends Activity {
             inputStartTime_assignment = findViewById(R.id.inputStartTime_assigment);
             inputEndDate_assignment = findViewById(R.id.inputEndDate_assigment);
             inputEndTime_assignment = findViewById(R.id.inputEndTime_assigment);
+//            inputForPeople_assignment = findViewById(R.id.inputAddPeople_createGroup);
+            recyclerViewRcmuser= findViewById(R.id.recyclerViewUserList);
+            recyclerViewRcmuser.setLayoutManager(new LinearLayoutManager(this));
+            dataList = new ArrayList<>();
 
+            recommendUserAdapter = new RecommendUserAdapter(this, dataList);
+            recommendUserAdapter.setOnItemClickListener(new RecommendUserAdapter.OnItemRcmUserClickListener() {
+                @Override
+                public void onItemClick(UserRcm userRcm,int potition) {
+                    if(!inputForPeople_assignment.getText().toString().trim().equals(""))
+                        inputForPeople_assignment.setText(inputForPeople_assignment.getText()+", "+userRcm.getUsername());
+                    else inputForPeople_assignment.setText(userRcm.getUsername());
+                    dataList.get(potition).setStatus("1");
+                    userList.add(dataList.get(potition).getIdUser());
+                    recommendUserAdapter.notifyDataSetChanged();
+                }
+            });
+
+            recyclerViewRcmuser.setAdapter(recommendUserAdapter);
+            getSuggestUser();
             // click startDay
             inputStartDate_assignment.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -263,14 +297,7 @@ public class AssigmentActivity extends Activity {
         loading_assigment.setVisibility(View.VISIBLE);
         try{
             JSONObject jsonBody = new JSONObject();
-            List<Integer> users = new ArrayList<>();
-            String peopleID = String.valueOf(inputForPeople_assignment.getText());
-            String[] peopleIDArray = peopleID.split(",");
-            for (String id : peopleIDArray){
-                users.add(Integer.parseInt(id.trim()));
-            }
 
-            // Lấy tên bài tập từ input
 
             String assignment = String.valueOf(inputAssignment_assignment.getText());
 //            Toast.makeText(getApplicationContext(),assignment,Toast.LENGTH_LONG).show();
@@ -283,7 +310,7 @@ public class AssigmentActivity extends Activity {
             LocalDate startDate = LocalDate.parse(inputStartDate_assignment.getText().toString(),DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             LocalTime startTime = LocalTime.parse(inputStartTime_assignment.getText().toString());
             LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
-
+            Toast.makeText(getApplicationContext(),userList.toString(),Toast.LENGTH_LONG).show();
 
 
             LocalDate endDate = LocalDate.parse(inputEndDate_assignment.getText().toString(),DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -294,7 +321,7 @@ public class AssigmentActivity extends Activity {
                 jsonBody.put("startAt", startDateTime);
                 jsonBody.put("endAt", endDateTime);
                 jsonBody.put("description", description);
-                jsonBody.put("usersId", new JSONArray(users));
+                jsonBody.put("usersId", new JSONArray(userList));
                 jsonBody.put("nameAssignment",assignment);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, domain+"/Assignment/Team/"+String.valueOf(idTeam),
                         jsonBody,
@@ -400,5 +427,43 @@ public class AssigmentActivity extends Activity {
         Intent intent = new Intent(AssigmentActivity.this, LoginActivity.class);
         startActivity(intent);
     }
+
+    public void getSuggestUser(){
+        ListUserInTeamImpl recommendUser = new ListUserInTeamImpl(new ListUserInTeamInterFace() {
+            @Override
+            public void onSuccess(List<RecommendUserResponse> result) {
+                dataList.clear();
+                for(RecommendUserResponse response:result)
+                    dataList.add(new UserRcm(response));
+                recommendUserAdapter.notifyDataSetChanged();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//                        loading_createGroup.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError errorResponse) {
+                clearToken();
+            }
+
+            @Override
+            public void onError(String error) {
+                clearToken();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),"Lỗi",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            }
+        },domain,token,idTeam);
+        recommendUser.getAllUser(AssigmentActivity.this);
+
+    }
+
 
 }

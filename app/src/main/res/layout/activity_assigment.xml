@@ -354,6 +354,204 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="204dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <View
+                                    android:id="@+id/view"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/blueIcon"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/labelSugget_createGroup"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sugget"
+                                    android:textSize="14sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/view"
+                                    app:layout_constraintVertical_bias="0.1" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewUserList"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <!--                <ScrollView-->
+                        <!--                    android:layout_width="match_parent"-->
+                        <!--                    android:layout_height="0dp"-->
+                        <!--                    android:layout_weight="0.9">-->
+
+                        <!--                    <LinearLayout-->
+                        <!--                        android:layout_width="match_parent"-->
+                        <!--                        android:layout_height="wrap_content"-->
+                        <!--                        android:orientation="vertical">-->
+
+                        <!--                        <LinearLayout-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="0dp"-->
+                        <!--                            android:layout_marginBottom="20dp"-->
+                        <!--                            android:layout_weight="33"-->
+                        <!--                            android:orientation="horizontal">-->
+
+                        <!--                            <LinearLayout-->
+                        <!--                                android:layout_width="0dp"-->
+                        <!--                                android:layout_height="match_parent"-->
+                        <!--                                android:layout_weight="0.2"-->
+                        <!--                                android:orientation="vertical">-->
+
+                        <!--                                <androidx.constraintlayout.widget.ConstraintLayout-->
+                        <!--                                    android:layout_width="match_parent"-->
+                        <!--                                    android:layout_height="match_parent">-->
+
+                        <!--                                    <com.google.android.material.imageview.ShapeableImageView-->
+                        <!--                                        android:id="@+id/imageView7a"-->
+                        <!--                                        android:layout_width="60dp"-->
+                        <!--                                        android:layout_height="60dp"-->
+                        <!--                                        app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--                                        app:layout_constraintEnd_toEndOf="parent"-->
+                        <!--                                        app:layout_constraintStart_toStartOf="parent"-->
+                        <!--                                        app:layout_constraintTop_toTopOf="parent"-->
+
+                        <!--                                        app:shapeAppearanceOverlay="@style/circular"-->
+                        <!--                                        app:srcCompat="@drawable/tuan" />-->
+                        <!--                                </androidx.constraintlayout.widget.ConstraintLayout>-->
+                        <!--                            </LinearLayout>-->
+
+                        <!--                            <LinearLayout-->
+                        <!--                                android:layout_width="0dp"-->
+                        <!--                                android:layout_height="match_parent"-->
+                        <!--                                android:layout_weight="0.8"-->
+                        <!--                                android:gravity="center"-->
+                        <!--                                android:orientation="vertical"-->
+                        <!--                                android:paddingLeft="40dp">-->
+
+                        <!--                                <TextView-->
+                        <!--                                    android:id="@+id/textView7a"-->
+                        <!--                                    android:layout_width="match_parent"-->
+                        <!--                                    android:layout_height="wrap_content"-->
+                        <!--                                    android:text="Nhật tuấn"-->
+                        <!--                                    android:textSize="16sp" />-->
+                        <!--                            </LinearLayout>-->
+                        <!--                        </LinearLayout>-->
+
+                        <!--                        <LinearLayout-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="0dp"-->
+                        <!--                            android:layout_marginBottom="20dp"-->
+                        <!--                            android:layout_weight="33"-->
+                        <!--                            android:orientation="horizontal">-->
+
+                        <!--                            <LinearLayout-->
+                        <!--                                android:layout_width="0dp"-->
+                        <!--                                android:layout_height="match_parent"-->
+                        <!--                                android:layout_weight="0.2"-->
+                        <!--                                android:orientation="vertical">-->
+
+                        <!--                                <androidx.constraintlayout.widget.ConstraintLayout-->
+                        <!--                                    android:layout_width="match_parent"-->
+                        <!--                                    android:layout_height="match_parent">-->
+
+                        <!--                                    <com.google.android.material.imageview.ShapeableImageView-->
+                        <!--                                        android:id="@+id/imageView7b"-->
+                        <!--                                        android:layout_width="60dp"-->
+                        <!--                                        android:layout_height="60dp"-->
+                        <!--                                        app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--                                        app:layout_constraintEnd_toEndOf="parent"-->
+                        <!--                                        app:layout_constraintStart_toStartOf="parent"-->
+                        <!--                                        app:layout_constraintTop_toTopOf="parent"-->
+                        <!--                                        app:shapeAppearanceOverlay="@style/circular"-->
+                        <!--                                        app:srcCompat="@drawable/nhi" />-->
+                        <!--                                </androidx.constraintlayout.widget.ConstraintLayout>-->
+                        <!--                            </LinearLayout>-->
+
+                        <!--                            <LinearLayout-->
+                        <!--                                android:layout_width="0dp"-->
+                        <!--                                android:layout_height="match_parent"-->
+                        <!--                                android:layout_weight="0.8"-->
+                        <!--                                android:gravity="center"-->
+                        <!--                                android:orientation="vertical"-->
+                        <!--                                android:paddingLeft="40dp">-->
+
+                        <!--                                <TextView-->
+                        <!--                                    android:id="@+id/textView7b"-->
+                        <!--                                    android:layout_width="match_parent"-->
+                        <!--                                    android:layout_height="wrap_content"-->
+                        <!--                                    android:text="Quỳnh Nhi"-->
+                        <!--                                    android:textSize="16sp" />-->
+                        <!--                            </LinearLayout>-->
+                        <!--                        </LinearLayout>-->
+
+                        <!--                        <LinearLayout-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="0dp"-->
+                        <!--                            android:layout_marginBottom="20dp"-->
+                        <!--                            android:layout_weight="33"-->
+                        <!--                            android:orientation="horizontal">-->
+
+                        <!--                            <LinearLayout-->
+                        <!--                                android:layout_width="0dp"-->
+                        <!--                                android:layout_height="match_parent"-->
+                        <!--                                android:layout_weight="0.2"-->
+                        <!--                                android:orientation="vertical">-->
+
+                        <!--                                <androidx.constraintlayout.widget.ConstraintLayout-->
+                        <!--                                    android:layout_width="match_parent"-->
+                        <!--                                    android:layout_height="match_parent">-->
+
+                        <!--                                    <com.google.android.material.imageview.ShapeableImageView-->
+                        <!--                                        android:id="@+id/imageView7"-->
+                        <!--                                        android:layout_width="60dp"-->
+                        <!--                                        android:layout_height="60dp"-->
+                        <!--                                        app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--                                        app:layout_constraintEnd_toEndOf="parent"-->
+                        <!--                                        app:layout_constraintStart_toStartOf="parent"-->
+                        <!--                                        app:layout_constraintTop_toTopOf="parent"-->
+                        <!--                                        app:shapeAppearanceOverlay="@style/circular"-->
+                        <!--                                        app:srcCompat="@drawable/thao" />-->
+                        <!--                                </androidx.constraintlayout.widget.ConstraintLayout>-->
+                        <!--                            </LinearLayout>-->
+
+                        <!--                            <LinearLayout-->
+                        <!--                                android:layout_width="0dp"-->
+                        <!--                                android:layout_height="match_parent"-->
+                        <!--                                android:layout_weight="0.8"-->
+                        <!--                                android:gravity="center"-->
+                        <!--                                android:orientation="vertical"-->
+                        <!--                                android:paddingLeft="40dp">-->
+
+                        <!--                                <TextView-->
+                        <!--                                    android:id="@+id/textView6"-->
+                        <!--                                    android:layout_width="match_parent"-->
+                        <!--                                    android:layout_height="wrap_content"-->
+                        <!--                                    android:text="Thu Thảo"-->
+                        <!--                                    android:textSize="16sp" />-->
+                        <!--                            </LinearLayout>-->
+                        <!--                        </LinearLayout>-->
+                        <!--                    </LinearLayout>-->
+                        <!--                </ScrollView>-->
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
             </ScrollView>
