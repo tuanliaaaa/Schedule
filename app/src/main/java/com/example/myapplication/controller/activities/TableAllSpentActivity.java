@@ -73,6 +73,7 @@ public class TableAllSpentActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TableAllSpentActivity.this, AddSpentActivity.class);
+                intent.putExtra("idTeam",idTeam);
                 startActivity(intent); // Bắt đầu Activity mới
             }
         });

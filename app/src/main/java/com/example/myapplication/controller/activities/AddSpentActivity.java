@@ -61,6 +61,7 @@ public class AddSpentActivity extends Activity {
     private TextView inputDescription_addSpent;
     private ScrollView scrollviewcontent_addSpent;
     private String token;
+    private Integer idTeam;
     private RequestQueue mRequestQueue;
     private Integer idAssignment;
 
@@ -72,6 +73,7 @@ public class AddSpentActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        idTeam=getIntent().getIntExtra("idTeam",0);
         setContentView(R.layout.activity_addspent);
         ImageView saved = findViewById(R.id.save_addSpent);
         dropdownMenu = findViewById(R.id.dropdown_menu);
@@ -164,8 +166,7 @@ public class AddSpentActivity extends Activity {
                                         public void run() {
                                             Toast.makeText(getApplicationContext(),"Thêm chi phí thành công thành công", Toast.LENGTH_LONG).show();
                                             finish();
-                                            Intent intent = new Intent(AddSpentActivity.this, TableAllSpentActivity.class);
-                                            startActivity(intent); // Bắt đầu Activity mới
+
                                         }
                                     });
                                 }catch (Exception e){
@@ -253,7 +254,6 @@ public class AddSpentActivity extends Activity {
     private void getAssignmentManager() {
         // Tạo request để lấy danh sách các nhiệm vụ
         domain= getResources().getString(R.string.domain);
-        String idTeam = "1";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, domain + "/Assignment/Team/" + idTeam, null,
                 new Response.Listener<JSONObject>() {
                     @Override
