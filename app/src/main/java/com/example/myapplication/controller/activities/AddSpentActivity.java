@@ -165,6 +165,9 @@ public class AddSpentActivity extends Activity {
                                         @Override
                                         public void run() {
                                             Toast.makeText(getApplicationContext(),"Thêm chi phí thành công thành công", Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent();
+                                            intent.putExtra("idTeam", idTeam);
+                                            setResult(RESULT_OK, intent);
                                             finish();
 
                                         }

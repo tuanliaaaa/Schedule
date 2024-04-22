@@ -56,7 +56,10 @@ import java.util.Map;
 
 public class TableAllSpentActivity extends Activity {
     private RequestQueue mRequestQueue;
+    private Integer idAssignment=0;
     private Spinner inputAssignment_TableAllSpent;
+    private static final int REQUEST_CODE_ADD_SPENT = 1;
+
     private String token;
     private String domain;
     private Integer idTeam;
@@ -74,7 +77,7 @@ public class TableAllSpentActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(TableAllSpentActivity.this, AddSpentActivity.class);
                 intent.putExtra("idTeam",idTeam);
-                startActivity(intent); // Bắt đầu Activity mới
+                startActivityForResult(intent,REQUEST_CODE_ADD_SPENT); // Bắt đầu Activity mới
             }
         });
 
@@ -125,7 +128,7 @@ public class TableAllSpentActivity extends Activity {
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     // Lấy id của nhiệm vụ khi được chọn
                                     Integer selectedAssignmentId = assignments.get(position).getIdAssignment();
-                                    Integer idAssignment = selectedAssignmentId;
+                                     idAssignment = selectedAssignmentId;
                                     Toast.makeText(getApplicationContext(), "Selected assignment id: " + selectedAssignmentId, Toast.LENGTH_SHORT).show();
                                     getCostByIdAssignment(idAssignment);
                                 }
@@ -310,5 +313,15 @@ public class TableAllSpentActivity extends Activity {
         textView.setTextColor(getResources().getColor(R.color.black));
         return textView;
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getApplicationContext(),String.valueOf(requestCode),Toast.LENGTH_LONG).show();
+        if (requestCode == REQUEST_CODE_ADD_SPENT) {
+            if (resultCode == RESULT_OK) {
+                idTeam=data.getIntExtra("idTeam",0);
+                getCostByIdAssignment(idAssignment);
+            }
+        }
+    }
 }
