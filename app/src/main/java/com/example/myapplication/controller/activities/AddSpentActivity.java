@@ -228,6 +228,9 @@ public class AddSpentActivity extends Activity {
                 Log.e("Error","không đúng định dạng Json");
             }
         }catch (Exception e){
+            loading_AddSpend.setVisibility(View.INVISIBLE);
+            scrollviewcontent_addSpent.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(),"Lỗi giá trị nhập vào",Toast.LENGTH_LONG).show();
             Log.e("errors",e.toString());
         }
     }
